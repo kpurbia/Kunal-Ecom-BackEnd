@@ -1,0 +1,15 @@
+{
+  "name": "ecom-backend",
+  "version": "1.0.0",
+  "description": "This is backend of ecommerce project which is connected with mysql database.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kunal Purbia",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "mysql": "^2.18.1"
+  }
+}

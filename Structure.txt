@@ -1,0 +1,62 @@
+
+------------------------------------------------------------------------USER SIDE------------------------------------------------------------------------
+1. Create user entry page-
+	--> Welcome page for user ("/user")
+	--> Products display for guest ("/user/guest")
+	--> User register page ("/user/register") after registration shift to user page
+		[Requirements for registration- Name, Email, Password, Confirm Password]
+	--> User login page ("/user/login") after login shift to user page
+	--> Save all the details in ecommerce database 
+	--> Database table - USER TABLE
+
+2. Create Product page-
+	--> Use vendor product table
+	--> Use get to see all products available ("/user/products" & "/user/products/:category")
+	--> Database table - PRODUCT TABLE
+
+3. Create shopping cart page-
+	--> Create shopping cart table and add all the selected items to buy with userId ("/user/cart")
+	--> Use post to add products in cart
+	--> Use delete to remove product from cart
+	--> Use patch to update quantity of product in cart
+	--> Use get to fetch all product list and total price
+	--> Database table - CART TABLE
+
+4. Create Billing and order place page
+	--> Create billing page where method of payment and address are required ("/user/order")
+	--> Use post to add details of payment and address 
+	--> Database table - ORDER TABLE
+
+
+
+
+-----------------------------------------------------------------------VENDOR SIDE------------------------------------------------------------------------
+1. Create vendor entry page-
+	--> Welcome page for vendor ("/vendor")
+	--> Vendor register page ("/vendor/register") after registration shift to vendor page
+		[Requirements for registration- Name, Email, Password, Confirm Password, Location]
+	--> Vendor login page ("/vendor/login") after login shift to vendor page
+	--> Save all the details in ecommerce database 
+	--> Database table - VENDOR TABLE
+
+2. Create Product page-
+	--> Create product table and provide category, id, brand, product name, available stock and price ("/user/products" & "/user/products/:category")
+	--> Use get to display all products
+	--> Use post to add product to products page
+	--> Use delete to remove product from products page
+	--> Use patch to update the details and stocks of product on products page
+	--> Database table - PRODUCT TABLE
+
+
+------------------------------------------------------------------------AGENT SIDE------------------------------------------------------------------------
+1. Create agent entry page-
+	--> Welcome page for vendor ("/agent")
+	--> Vendor register page ("/agent/register") after registration shift to vendor page
+		[Requirements for registration- Name, Email, Password, Confirm Password, Location]
+	--> Vendor login page ("/agent/login") after login shift to vendor page
+	--> Save all the details in ecommerce database 
+	--> Database table - AGENT TABLE
+
+2. Create Assign page-
+	--> Use ORDER TABLE and check location and assign agent to deliver
+	--> Filter all orders using location and assign using agent location

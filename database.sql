@@ -81,7 +81,7 @@ CREATE TABLE `ecommerce`.`cart` (
     REFERENCES `ecommerce`.`user` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `product_id`
+    CONSTRAINT `product_id`
     FOREIGN KEY (`product_id`)
     REFERENCES `ecommerce`.`product` (`product_id`)
     ON DELETE NO ACTION
@@ -89,5 +89,38 @@ CREATE TABLE `ecommerce`.`cart` (
 
 --ADDING USER AND PRODUCT TO CART TABLE
 SELECT `cart.cart_id`, `user.user_name`, `product.product_name`, `cart.product_quantity`, `cart_price` FROM `cart` INNER JOIN `product` ON `cart.cart_id` = `product.product_id` INNER JOIN `user` ON `cart.user_id` = `user.user_id`;
+
+--CREATE ORDER TABLE
+CREATE TABLE `ecommerce`.`order` (
+  `order_id` INT NOT NULL AUTO_INCREMENT,
+  `order_cart_id` INT NULL,
+  `order_cust_name` VARCHAR(100) NULL DEFAULT NULL,
+  `order_ship_address` VARCHAR(100) NULL DEFAULT NULL,
+  `order_ship_city` VARCHAR(100) NULL DEFAULT NULL,
+  `order_ship_state` VARCHAR(100) NULL DEFAULT NULL,
+  `order_ship_zip` VARCHAR(100) NULL DEFAULT NULL,
+  `order_cust_contact` VARCHAR(100) NULL DEFAULT NULL,
+  `order_cust_email` VARCHAR(100) NULL DEFAULT NULL,
+  `order_status` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`order_id`),
+  INDEX `order_cart_id_idx` (`order_cart_id` ASC) VISIBLE,
+  CONSTRAINT `order_cart_id`
+    FOREIGN KEY (`order_cart_id`)
+    REFERENCES `ecommerce`.`cart` (`cart_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+--ADDING AGENT WITH ORDER TABLE
+ALTER TABLE `ecommerce`.`order` 
+ADD COLUMN `order_agent_id` INT NULL AFTER `order_status`,
+ADD INDEX `order_agent_id_idx` (`order_agent_id` ASC) VISIBLE;
+;
+ALTER TABLE `ecommerce`.`order` 
+ADD CONSTRAINT `order_agent_id`
+  FOREIGN KEY (`order_agent_id`)
+  REFERENCES `ecommerce`.`agent` (`agent_id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
 
 

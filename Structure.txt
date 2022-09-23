@@ -1,4 +1,9 @@
 
+Steps-
+1. Create vendor side
+2. Add products in product table
+3. Check linking of vendor and product in product table
+
 ------------------------------------------------------------------------USER SIDE------------------------------------------------------------------------
 1. Create user entry page-
 	--> Welcome page for user ("/user")
@@ -24,7 +29,9 @@
 
 4. Create Billing and order place page
 	--> Create billing page where method of payment and address are required ("/user/order")
-	--> Use post to add details of payment and address 
+	--> Use post to add details of payment and address
+	--> Estimate delivery time and pass to agent
+	--> Remove items and update 
 	--> Database table - ORDER TABLE
 
 
@@ -46,6 +53,7 @@
 	--> Use delete to remove product from products page
 	--> Use patch to update the details and stocks of product on products page
 	--> Database table - PRODUCT TABLE
+
 
 
 ------------------------------------------------------------------------AGENT SIDE------------------------------------------------------------------------

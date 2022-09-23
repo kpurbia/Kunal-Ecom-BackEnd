@@ -1,9 +1,4 @@
 
-Steps-
-1. Create vendor side
-2. Add products in product table
-3. Check linking of vendor and product in product table
-
 ------------------------------------------------------------------------USER SIDE------------------------------------------------------------------------
 1. Create user entry page-
 	--> Welcome page for user ("/user")

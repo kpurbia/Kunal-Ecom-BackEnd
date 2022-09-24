@@ -1,4 +1,59 @@
 
+STEPS:
+	VENDOR
+01. Register vendor account
+02. Login vendor account (provide vendor_id)
+03. Update vendor account details
+04. Delete vendor account
+05. Add products and quantity
+06. Display own products and quantity
+07. Update quantity
+08. Remove product
+
+
+	CUSTOMER
+01. Display guest product page (without product id)
+02. Register customer account
+03. Login customer account (provide customer_id)
+04. Update customer account details
+05. Delete customer account
+06. Display product page with product id
+
+07. Add product to cart (provide cart_id)
+08. Display cart with added products
+09. Update quantity of product
+10. Delete cart product
+
+11. Order the products in cart
+12. Add all required details to place order
+13. Delete order
+
+	
+	AGENT
+01. Register agent account
+02. Login agent account (provide agent_id)
+03. Update agent account detail
+03. Delete agent account
+04. Display orders
+05. Fetch order_id and place delivery
+06. Add delivery details in track table
+07. Update delivery status in order table
+
+	
+	ADMIN
+01. Register admin account
+02. Login admin account (provide admin_id)
+03. Update admin account
+04. Delete admin account
+05. See all users
+06. See all vendors
+07. See all agents
+08. See tracking tables
+
+
+
+
+
 ------------------------------------------------------------------------USER SIDE------------------------------------------------------------------------
 1. Create user entry page-
 	--> Welcome page for user ("/user")

@@ -1,4 +1,5 @@
 const vendorDB = require('../model/vendordb');
+let vendor_id;
 
 exports.registerDetail = function(req, res){
     res.send("<h3>Hello vendor, welcome to registration page, follow the instructions given below</h3><p>Fill all the required details and press send</p><h5>Details required for registering your account as a vendor</h5><ul><li>Company Name</li><li>GovtId</li><li>Email</li><li>Password</li><li>Confirm Password</li><li>Product Category (if any specific)</li><li>State</li><li>City</li></ul>");
@@ -31,12 +32,25 @@ exports.loginDetail = function(req, res){
 }
 
 exports.login = async function(req, res){
-    let userData = req.body;
-    let userDetail = await vendorDB.login(userData);
-    if(userDetail.length == 0){
+    let vendorData = req.body;
+    let vendorDetail = await vendorDB.login(vendorData);
+    // console.log(vendorDetail);
+    if(vendorDetail.length == 0){
         res.send("Incorrect login details");
     } else{
-        // res.send("<h1>Welcome, "+userData.email+ "</h1><p>Use '/vendor/login/product' to view your uploaded products or upload your new product to sell</p>");
-        res.redirect("/vendor");
+        vendor_id = vendorDetail[0].vendor_id;
+        // console.log(vendor_id);
+        res.send("<h1>Welcome, "+vendorDetail[0].vendor_name+ "</h1><h3>Your id for further use is "+vendor_id+"</h3><p>Use '/vendor/login/:id/product' to view your uploaded products or upload your new product to sell</p>");
+    }
+}
+
+exports.vendor_product_display = async function(req, res){
+    let vendor_login_id = req.params.id;
+    console.log(vendor_id);
+    if(vendor_id == vendor_login_id){
+        let vendor_product = await vendorDB.vendor_product_display(vendor_login_id);
+        res.send(vendor_product);
+    } else{
+        res.send("Use your correct id or login again to your get your id");
     }
 }

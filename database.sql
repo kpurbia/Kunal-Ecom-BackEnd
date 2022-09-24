@@ -54,6 +54,7 @@ CREATE TABLE `ecommerce`.`product` (
   `product_name` VARCHAR(100) NULL,
   `product_category` VARCHAR(100) NULL,
   `product_price` FLOAT NOT NULL,
+  `product_quantity` INT,
   `product_vendor_id` INT NOT NULL,  
   `product_vendor` VARCHAR(100) NULL,
   PRIMARY KEY (`product_id`));
@@ -62,6 +63,10 @@ CREATE TABLE `ecommerce`.`product` (
 ALTER TABLE `ecommerce`.`product` 
 ADD CONSTRAINT `FK_VendorId`
 FOREIGN KEY (`product_vendor_id`) REFERENCES `vendor`(`vendor_id`);
+ALTER TABLE `ecommerce`.`product` 
+ADD COLUMN `product_vendor_name` VARCHAR(100) NULL AFTER `product_vendor_id`;
+ALTER TABLE `ecommerce`.`product` RENAME INDEX `FK_VendorId` TO `FK_VendorId_idx`;
+ALTER TABLE `ecommerce`.`product` ALTER INDEX `FK_VendorId_idx` VISIBLE;
 
 --ADDING vendor info in product table DISPLAY OF PRODUCT TABLE
 SELECT `product.product_name`, `product.product_price`, `vendor.vendor_name` FROM `vendor` INNER JOIN `product` ON `product.product_vendor_id` = `vendor.vendor_id` ORDER BY `product_category`;
@@ -116,6 +121,9 @@ CREATE TABLE `ecommerce`.`order` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
+ALTER TABLE `ecommerce`.`order` 
+ADD COLUMN `order_tracking_id` INT NULL AFTER `order_agent_id`,
+ADD COLUMN `order_status` INT NULL AFTER `order_tracking_id`;
 
 
 

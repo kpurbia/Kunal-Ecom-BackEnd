@@ -13,4 +13,8 @@ module.exports = function(app){
         .get(vendorcontrol.loginDetail)
         .post(vendorcontrol.login);
 
+    app.route("/vendor/login/:id/product")
+        .get(vendorcontrol.vendor_product_display)
+        .post(vendorcontrol.vendor_add_product);
+
 }

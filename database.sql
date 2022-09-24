@@ -54,6 +54,7 @@ CREATE TABLE `ecommerce`.`product` (
   `product_name` VARCHAR(100) NULL,
   `product_category` VARCHAR(100) NULL,
   `product_price` FLOAT NOT NULL,
+  `product_quantity` INT,
   `product_vendor_id` INT NOT NULL,  
   `product_vendor` VARCHAR(100) NULL,
   PRIMARY KEY (`product_id`));
@@ -62,6 +63,10 @@ CREATE TABLE `ecommerce`.`product` (
 ALTER TABLE `ecommerce`.`product` 
 ADD CONSTRAINT `FK_VendorId`
 FOREIGN KEY (`product_vendor_id`) REFERENCES `vendor`(`vendor_id`);
+ALTER TABLE `ecommerce`.`product` 
+ADD COLUMN `product_vendor_name` VARCHAR(100) NULL AFTER `product_vendor_id`;
+ALTER TABLE `ecommerce`.`product` RENAME INDEX `FK_VendorId` TO `FK_VendorId_idx`;
+ALTER TABLE `ecommerce`.`product` ALTER INDEX `FK_VendorId_idx` VISIBLE;
 
 --ADDING vendor info in product table DISPLAY OF PRODUCT TABLE
 SELECT `product.product_name`, `product.product_price`, `vendor.vendor_name` FROM `vendor` INNER JOIN `product` ON `product.product_vendor_id` = `vendor.vendor_id` ORDER BY `product_category`;
@@ -93,7 +98,7 @@ SELECT `cart.cart_id`, `user.user_name`, `product.product_name`, `cart.product_q
 --CREATE ORDER TABLE
 CREATE TABLE `ecommerce`.`order` (
   `order_id` INT NOT NULL AUTO_INCREMENT,
-  `order_cart_id` INT NULL,
+  `order_cart_id` INT NULL DEFAULT NULL,
   `order_cust_name` VARCHAR(100) NULL DEFAULT NULL,
   `order_ship_address` VARCHAR(100) NULL DEFAULT NULL,
   `order_ship_city` VARCHAR(100) NULL DEFAULT NULL,
@@ -101,26 +106,38 @@ CREATE TABLE `ecommerce`.`order` (
   `order_ship_zip` VARCHAR(100) NULL DEFAULT NULL,
   `order_cust_contact` VARCHAR(100) NULL DEFAULT NULL,
   `order_cust_email` VARCHAR(100) NULL DEFAULT NULL,
-  `order_status` INT NULL DEFAULT NULL,
+  `order_agent_id` INT NULL,
   PRIMARY KEY (`order_id`),
   INDEX `order_cart_id_idx` (`order_cart_id` ASC) VISIBLE,
+  INDEX `order_agent_id_idx` (`order_agent_id` ASC) VISIBLE,
   CONSTRAINT `order_cart_id`
     FOREIGN KEY (`order_cart_id`)
     REFERENCES `ecommerce`.`cart` (`cart_id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `order_agent_id`
+    FOREIGN KEY (`order_agent_id`)
+    REFERENCES `ecommerce`.`agent` (`agent_id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
---ADDING AGENT WITH ORDER TABLE
 ALTER TABLE `ecommerce`.`order` 
-ADD COLUMN `order_agent_id` INT NULL AFTER `order_status`,
-ADD INDEX `order_agent_id_idx` (`order_agent_id` ASC) VISIBLE;
-;
-ALTER TABLE `ecommerce`.`order` 
-ADD CONSTRAINT `order_agent_id`
-  FOREIGN KEY (`order_agent_id`)
-  REFERENCES `ecommerce`.`agent` (`agent_id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION;
+ADD COLUMN `order_tracking_id` INT NULL AFTER `order_agent_id`,
+ADD COLUMN `order_status` INT NULL AFTER `order_tracking_id`;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

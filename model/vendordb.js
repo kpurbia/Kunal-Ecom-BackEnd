@@ -30,7 +30,7 @@ exports.login = function(data){
     return new Promise((resolve)=>{
         let searchCmd = "SELECT * FROM vendor WHERE vendor_email = ? AND vendor_password = ? AND vendor_govtid = ?"
         let searchQuery = vendordb.format(searchCmd, [data.email, data.password, data.govtid])
-        // console.log(searchQuery);
+        console.log(searchQuery);
         vendordb.query(searchQuery, (err, result)=>{
             if(err){
                 throw err;
@@ -41,3 +41,22 @@ exports.login = function(data){
         })
     })
 }
+
+exports.vendor_product_display = function(vendor_login_id){
+    return new Promise((resolve)=>{
+        let searchQuery = "SELECT * FROM product WHERE product_vendor_id = "+vendor_login_id;
+        console.log(searchQuery);
+        vendordb.query(searchQuery, (err, result)=>{
+            if(err){
+                throw err;
+            } else{
+                console.log(result);
+                resolve(result);
+            }
+        })
+    });
+}
+
+// exports.vendor_add_product = function(data){
+//     let insertcmd = 
+// }

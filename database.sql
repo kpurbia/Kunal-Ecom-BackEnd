@@ -9,7 +9,7 @@ USE ecommerce;
 
 -------------------------------------------------------------------CREATING VENDOR TABLE
 CREATE TABLE `ecommerce`.`vendor` (
-  `vendor_id` INT NOT NULL DEFAULT 101,
+  `vendor_id` INT NOT NULL AUTO_INCREMENT,
   `vendor_name` VARCHAR(100) NULL,
   `vendor_email` VARCHAR(100) NULL,
   `vendor_password` VARCHAR(100) NULL,
@@ -33,7 +33,7 @@ CREATE TABLE `ecommerce`.`vendor` (
 
 -------------------------------------------------------------------CREATING PRODUCT TABLE
 CREATE TABLE `ecommerce`.`product` (
-  `product_id` INT NOT NULL DEFAULT 201,
+  `product_id` INT NOT NULL AUTO_INCREMENT,
   `product_vendor_id` INT NULL,
   `product_name` VARCHAR(100) NULL,
   `product_category` VARCHAR(100) NULL,
@@ -47,9 +47,17 @@ CREATE TABLE `ecommerce`.`product` (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
+-------------------------------------------------------------------PRODUCT DATA FORMAT
+{
+    "product_name":"Cadbury Silk",
+    "product_category":"Chocolate",
+    "product_price":"100.50",
+    "product_quantity":"500"
+}
+
 -------------------------------------------------------------------CREATING USER TABLE
 CREATE TABLE `ecommerce`.`customer` (
-  `customer_id` INT NOT NULL DEFAULT 1001,
+  `customer_id` INT NOT NULL AUTO_INCREMENT,
   `customer_name` VARCHAR(100) NULL,
   `customer_email` VARCHAR(100) NULL,
   `customer_password` VARCHAR(100) NULL,
@@ -60,7 +68,7 @@ CREATE TABLE `ecommerce`.`customer` (
 
 -------------------------------------------------------------------CREATING CART TABLE
 CREATE TABLE `ecommerce`.`cart` (
-  `cart_id` INT NOT NULL DEFAULT 11,
+  `cart_id` INT NOT NULL AUTO_INCREMENT,
   `cart_customer_id` INT NULL,
   `cart_product_id` INT NULL,
   `cart_product_quantity` INT NULL,
@@ -80,7 +88,7 @@ CREATE TABLE `ecommerce`.`cart` (
 
 -------------------------------------------------------------------CREATE ORDER TABLE
 CREATE TABLE `ecommerce`.`order` (
-  `order_id` INT NOT NULL DEFAULT 10001,
+  `order_id` INT NOT NULL AUTO_INCREMENT,
   `order_cart_id` INT NULL,
   `order_tracking_id` INT NULL,
   `order_customer_id` INT NULL,
@@ -106,7 +114,7 @@ CREATE TABLE `ecommerce`.`order` (
 
 -------------------------------------------------------------------CREATING DELIVERY AGENT TABLE
 CREATE TABLE `ecommerce`.`agent` (
-  `agent_id` INT NOT NULL DEFAULT 301,
+  `agent_id` INT NOT NULL AUTO_INCREMENT,
   `agent_name` VARCHAR(100) NULL,
   `agent_email` VARCHAR(100) NULL,
   `agent_password` VARCHAR(100) NULL,
@@ -118,7 +126,7 @@ CREATE TABLE `ecommerce`.`agent` (
 
 -------------------------------------------------------------------CREATING TRACKING TABLE
 CREATE TABLE `ecommerce`.`tracking` (
-  `tracking_id` INT NOT NULL,
+  `tracking_id` INT NOT NULL AUTO_INCREMENT,
   `tracking_track_id` INT NULL,
   `tracking_order_id` INT NULL,
   `tracking_agent_id` INT NULL,

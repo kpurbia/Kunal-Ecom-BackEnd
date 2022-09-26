@@ -5,23 +5,23 @@ exports.registerDetail = function(req, res){
     res.send("<h3>Hello vendor, welcome to registration page, follow the instructions given below</h3><p>Fill all the required details and press send</p><h5>Details required for registering your account as a vendor</h5><ul><li>Company Name</li><li>GovtId</li><li>Email</li><li>Password</li><li>Confirm Password</li><li>Product Category (if any specific)</li><li>State</li><li>City</li></ul>");
 }
 
-exports.register = async function(req, res){
+exports.registerVendor = async function(req, res){
     let vendorData = req.body;
     if(vendorData.password == vendorData.conpassword){
         let vendor = await vendorDB.register(vendorData);
         // console.log(vendor);
-        let checkVendor = await vendorDB.searchVendor(vendorData);
+        let checkVendor = await vendorDB.checkVendor(vendorData);
         // console.log(checkVendor);
         if(checkVendor.length == 1){
             res.send("<h1>Your account is registered, " +vendor.name+"</h1>");
         } else{
             // console.log("Inside else");
             vendorDB.remove(checkVendor);
-            res.send("Your account is already registered, try login");
+            res.send("<h1>Your account is already registered, try login</h1>");
         }
 
     } else {
-        res.send("Password do not match, try again")
+        res.send("<h1>Password do not match, try again</h1>")
     }
 }
 
@@ -29,16 +29,50 @@ exports.loginDetail = function(req, res){
     res.send("<h3>Hello vendor, welcome to login page, please be ready with the following details to login to your account</h3><ul><li>Email</li><li>Password</li><li>GovtId</li></ul>");
 }
 
-exports.login = async function(req, res){
+exports.loginVendor = async function(req, res){
     let vendorData = req.body;
     let vendorDetail = await vendorDB.login(vendorData);
     // console.log(vendorDetail);
     if(vendorDetail.length == 0){
-        res.send("Incorrect login details");
+        res.send("<h1>Incorrect login details</h1>");
     } else{
         vendor_id = vendorDetail[0].vendor_id;
         // console.log(vendor_id);
-        res.send("<h1>Welcome, "+vendorDetail[0].vendor_name+ "</h1><h3>Your id for further use is "+vendor_id+"</h3><p>Use 'http://localhost:3000/vendor/login/:id/product' to add, update, display or delete your products</p>");
+        res.send("<h1>Welcome, "+vendorDetail[0].vendor_name+ "</h1><h3>Your id for further use is "+vendor_id+"</h3><p>Use <ul><li>To get your all details and to update or delete your account--    'http://localhost:3000/vendor/login/:id'</li><li>To add, update, display or delete your products--    'http://localhost:3000/vendor/login/:id/product'</p></li></ul>");
+    }
+}
+
+exports.vendorDetail = async function(req, res){
+    let vendorId = req.params.id;
+    console.log(vendorId);
+    if(vendor_id == vendorId){
+        let vendorDetail = await vendorDB.searchVendor(vendorId);
+        vendorDetail = JSON.stringify(vendorDetail);
+        res.send(vendorDetail);
+    } else{
+        res.send("<h1>Login details do not match, login again</h1>");
+    }
+}
+
+exports.updateDetail = async function(req, res){
+    let vendorData = req.body;
+    if(vendorData.id == vendor_id){
+        vendorDB.updateVendor(vendorData, vendor_id);
+        let vendorDetail = await vendorDB.searchVendor(vendorData.id);
+        vendorDetail = JSON.stringify(vendorDetail);
+        res.send("<h1>Your details are updated, New details are--</h1>"+vendorDetail);   
+    } else{
+        res.send("<h1>Data not found, login again</h1>");
+    }
+}
+
+exports.deleteVendor = function(req, res){
+    let vendorId = req.body.id;
+    if(vendor_id == vendorId){
+        vendorDB.deleteVendor(vendorId);
+        res.send("<h1>Your account is deleted</h1>")
+    } else{
+        res.send("<h1>You are not logged in, login again</h1>")
     }
 }
 
@@ -67,7 +101,9 @@ exports.addProduct = async function(req, res){
     let checkProduct = await vendorDB.searchProduct(productData, vendor_id);
     // console.log(checkProduct);
     if(checkProduct.length == 1){
-        res.send("<h1>Your product is added to display</h1>");
+        let vendor_product = await vendorDB.productDisplay(vendor_id);
+        let displayProduct = JSON.stringify(vendor_product);
+        res.send("<h1>Product added</h1>"+displayProduct+"\n<h1>Add more products to sell</h1><h3>Details of product required:</h3><ul><li>Product Name</li><li>Product Category</li><li>Product Price</li><li>Product quantity</li></ul>");
     } else{
         vendorDB.removeDuplicateProduct(checkProduct);
         res.send("<h1>This product is already added, you can update the details if you want</h1>");
@@ -78,14 +114,14 @@ exports.updateProduct = async function(req, res){
     let updateData = req.body;
     vendorDB.updateProduct(updateData, vendor_id);
     let vendor_product = await vendorDB.productDisplay(vendor_id);
-    let productDisplay = JSON.stringify(vendor_product);
-    res.send(productDisplay+"\n<h1>Add more products to sell</h1><h3>Details of product required:</h3><ul><li>Product Name</li><li>Product Category</li><li>Product Price</li><li>Product quantity</li></ul>");
+    let displayProduct = JSON.stringify(vendor_product);
+    res.send(displayProduct+"\n<h1>Add more products to sell</h1><h3>Details of product required:</h3><ul><li>Product Name</li><li>Product Category</li><li>Product Price</li><li>Product quantity</li></ul>");
 }
 
 exports.deleteProduct = async function(req, res){
     let delete_product = req.body;
     vendorDB.deleteProduct(delete_product);
     let vendor_product = await vendorDB.productDisplay(vendor_id);
-    let productDisplay = JSON.stringify(vendor_product);
-    res.send(productDisplay+"\n<h1>Add more products to sell</h1><h3>Details of product required:</h3><ul><li>Product Name</li><li>Product Category</li><li>Product Price</li><li>Product quantity</li></ul>");
+    let displayProduct = JSON.stringify(vendor_product);
+    res.send(displayProduct+"\n<h1>Add more products to sell</h1><h3>Details of product required:</h3><ul><li>Product Name</li><li>Product Category</li><li>Product Price</li><li>Product quantity</li></ul>");
 }

@@ -21,12 +21,13 @@ CREATE TABLE `ecommerce`.`vendor` (
 
 -------------------------------------------------------------------VENDOR DATA FORMAT
 {
+    "id": 0,
     "name":"Dhanshree Furniture",
-    "govtid":"dhanshree123",
+    "govtid":"dhanshree12345",
     "email":"head@dhanshree.com",
     "password":"123456789",
     "conpassword":"123456789",
-    "category":"Wooden Furniture",
+    "category":"Wooden Office Furniture",
     "state":"Rajasthan",
     "city":"Udaipur"
 }
@@ -49,10 +50,11 @@ CREATE TABLE `ecommerce`.`product` (
 
 -------------------------------------------------------------------PRODUCT DATA FORMAT
 {
-    "product_name":"Cadbury Silk",
-    "product_category":"Chocolate",
-    "product_price":"100.50",
-    "product_quantity":"500"
+    "id":0,
+    "name":"Cadbury Silk",
+    "category":"Chocolate",
+    "price":"100.50",
+    "quantity":"500"
 }
 
 -------------------------------------------------------------------CREATING USER TABLE
@@ -65,6 +67,18 @@ CREATE TABLE `ecommerce`.`customer` (
   `customer_state` VARCHAR(100) NULL,
   `customer_city` VARCHAR(100) NULL,
   PRIMARY KEY (`customer_id`));
+
+-------------------------------------------------------------------USER DATA FORMAT
+{
+    "id": 0,
+    "name":"Raj Champawat",
+    "email":"raj@gmail.com",
+    "password":"raj123",
+    "conpassword":"raj123",
+    "contact":"0789456123",
+    "state":"Maharashtra",
+    "city":"Mumbai"
+}
 
 -------------------------------------------------------------------CREATING CART TABLE
 CREATE TABLE `ecommerce`.`cart` (

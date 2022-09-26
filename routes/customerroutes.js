@@ -27,4 +27,8 @@ module.exports = function(app){
         .post(customercontrol.addToCart);
 
     app.route("/customer/login/:id/cart").get(customercontrol.cartDetail);
+
+    app.route("/customer/login/:id/cart/:cartid/order")
+        .get(customercontrol.cartItemDetail)
+        .post(customercontrol.placeOrder);
 }

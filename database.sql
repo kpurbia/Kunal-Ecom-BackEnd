@@ -100,6 +100,11 @@ CREATE TABLE `ecommerce`.`cart` (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
+-------------------------------------------------------------------USER CART FORMAT
+{
+    "quantity":"125"
+}
+
 -------------------------------------------------------------------CREATE ORDER TABLE
 CREATE TABLE `ecommerce`.`order` (
   `order_id` INT NOT NULL AUTO_INCREMENT,
@@ -125,6 +130,15 @@ CREATE TABLE `ecommerce`.`order` (
     REFERENCES `ecommerce`.`cart` (`cart_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+-------------------------------------------------------------------USER DATA FORMAT
+{
+    "name":"Raj Champawat",
+    "contact":1234567890,
+    "address":"Ashwini Bajar, Hatipole",
+    "city":"Udaipur",
+    "state":"Rajasthan"
+}
 
 -------------------------------------------------------------------CREATING DELIVERY AGENT TABLE
 CREATE TABLE `ecommerce`.`agent` (

@@ -208,22 +208,72 @@ exports.cartItemDisplay = function(cartid){
     });
 }
 
-//////////////////////////////////////////////////////Place order or selected cart item
+//////////////////////////////////////////////////////Remove selected cart item or cart item placed for order
+exports.removeCartItem = function(cartId){
+    let deleteItemQuery = "DELETE FROM cart WHERE cart_id = "+cartId;
+    customerDB.query(deleteItemQuery, (err, result)=>{
+        if(err){
+            throw err;
+        }
+    })
+}
+
+//////////////////////////////////////////////////////Place order of selected cart item
 exports.placeOrder = function(data, cartId, customerId){
     return new Promise((resolve) => {
-        let trackId = Math.floor(Math.random() * 1000) + 1;
+        let trackId = Math.floor(Math.random() * 10000) + 1;
         const timeElapsed = Date.now();
         const today = new Date(timeElapsed);
         const placeDate = today.toDateString();
-        let insertCmd = "INSERT INTO `order` (order_cart_id, order_tracking_id, order_customer_id, order_delivery_name, order_delivery_contact, order_delivery_address, order_delivery_city, order_delivery_state, order_place_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        let insertCmd = "INSERT INTO `order` (order_cart_id, order_tracking_id, order_customer_id, order_delivery_name, order_delivery_contact, order_delivery_address, order_delivery_city, order_delivery_state, order_place_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"
         let insertQuery = customerDB.format(insertCmd, [cartId, trackId, customerId, data.name, data.contact, data.address, data.city, data.state, placeDate]);
         customerDB.query(insertQuery, (err, result)=>{
         if(err){
             throw err;
         } else{
-            resolve(trackId)
+            resolve(cartId)
         }
     });
+    })
+}
+
+//////////////////////////////////////////////////////Delete selected order
+exports.deleteOrder = function(id){
+    let deleteQuery = "DELETE FROM `order` WHERE order_tracking_id = "+id;
+    customerDB.query(deleteQuery, (err, result)=>{
+        if(err){
+            throw err;
+        } else{
+            console.log(result);
+        }
+    })
+}
+
+//////////////////////////////////////////////////////Searching order to check data duplication
+exports.searchOrder = function(cartId){
+    return new Promise((resolve) => {
+        let searchQuery = "SELECT * FROM `order` WHERE order_cart_id = "+cartId;
+        customerDB.query(searchQuery, (err, result)=>{
+            if(err){
+                throw err;
+            } else{
+                resolve(result)
+            }
+        })
+    })
+}
+
+//////////////////////////////////////////////////////Order detail display
+exports.orderDisplay = function(orderId){
+    return new Promise((resolve)=>{
+        let searchQuery = "SELECT * FROM `order` WHERE order_id = "+orderId;
+        customerDB.query(searchQuery, (err, result)=>{
+            if(err){
+                throw err;
+            } else{
+                resolve(result);
+            }
+        })
     })
 }
 

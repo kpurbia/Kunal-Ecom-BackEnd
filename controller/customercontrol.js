@@ -146,7 +146,7 @@ exports.addToCart = async function(req, res){
     }
 }
 
-//////////////////////////////////////////////////////After login- display all cart items
+//////////////////////////////////////////////////////After adding product to cart- display all cart items
 exports.cartDetail = async function(req, res){
     let customerId = req.params.id;
     if(customerId == customer_id){
@@ -158,12 +158,13 @@ exports.cartDetail = async function(req, res){
     }
 }
 
-//////////////////////////////////////////////////////After login- display single item in cart
+//////////////////////////////////////////////////////After adding product to cart- display single item in cart
 exports.cartItemDetail = async function(req, res) {
     let cartId = req.params.cartid;
     let customerId = req.params.id;
     if(customerId == customer_id){
         let cartItemDisplay = await customerDB.cartItemDisplay(cartId);
+        console.log(cartItemDisplay);
         cartItemDisplay = JSON.stringify(cartItemDisplay);
         res.send("<h1>To order this item in cart use cart id and place order</h1>" +cartItemDisplay);   
     } else{
@@ -171,15 +172,53 @@ exports.cartItemDetail = async function(req, res) {
     }
 }
 
+//////////////////////////////////////////////////////After adding product to cart- removing single item from cart
+exports.removeItem = function(req, res){
+    let cartId = req.params.cartid;
+    let customerId = req.params.id;
+    if(customerId == customer_id){
+        customerDB.removeCartItem(cartId);
+        res.send("Item removed from cart");
+    } else{
+        res.send("<h1>Session expired, login again</h1>");
+    }
+}
+
+//////////////////////////////////////////////////////Checking all required details to place order
+exports.detailsForOrder = function(req, res){
+    res.send("<h2>Details of reciever required to place order:</h2><ul><li>Name</li><li>Contact</li><li>Address</li><li>City</li><li>State</li></ul>");
+}
+
+
 //////////////////////////////////////////////////////After selecting cart- Placing Order
 exports.placeOrder = async function (req, res) {
     let cartId = req.params.cartid;
     let customerId = req.params.id;
     let orderDetail = req.body;     
     if(customerId == customer_id){
-        let trackId = await customerDB.placeOrder(orderDetail, cartId, customerId);
-        res.send("<h1>Your order is successfully placed, your track id for tracking your is: </h1>" +trackId);
+        let cartIdReturn = await customerDB.placeOrder(orderDetail, cartId, customerId);
+        if(cartIdReturn != null || cartIdReturn != undefined || cartIdReturn != 0){
+            let similarOrder = await customerDB.searchOrder(cartIdReturn);
+            let lastOrder = similarOrder[similarOrder.length - 1]
+            console.log(lastOrder);
+            res.send("<h1>Your order is placed successfully</h1><ul><li>Your order id: "+lastOrder.order_id+"</li><li>Your tracking id: "+lastOrder.order_tracking_id+"</li></ul>");
+        } else{
+            res.send("<h1>Error occured, TRY AGAIN</h1>")
+        }
     } else{
-        res.send("<h1>Session expired, login again</h1>");   
+        res.send("<h1>Session expired, login again</h1>");
     }
 }
+
+//////////////////////////////////////////////////////After placing order- Checking Order Details
+exports.getOrderDetail = async function(req, res){
+    let customerId = req.params.id;
+    let orderId = req.params.orderid;
+    if(customerId == customer_id){
+        let orderDisplay = await customerDB.orderDisplay(orderId)
+        res.send(orderDisplay);
+    } else{
+        res.send("<h1>Session expired, login again</h1>");
+    }
+}
+

@@ -26,9 +26,16 @@ module.exports = function(app){
         .get(customercontrol.productDetail)
         .post(customercontrol.addToCart);
 
-    app.route("/customer/login/:id/cart").get(customercontrol.cartDetail);
+    app.route("/customer/login/:id/cart")
+        .get(customercontrol.cartDetail);
+    
+    app.route("/customer/login/:id/cart/:cartid")
+        .get(customercontrol.cartItemDetail)
+        .delete(customercontrol.removeItem);
 
     app.route("/customer/login/:id/cart/:cartid/order")
-        .get(customercontrol.cartItemDetail)
+        .get(customercontrol.detailsForOrder)
         .post(customercontrol.placeOrder);
+    
+    app.route("/customer/login/:id/order/:orderid").get(customercontrol.getOrderDetail);
 }

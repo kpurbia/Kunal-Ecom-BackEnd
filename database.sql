@@ -45,8 +45,8 @@ CREATE TABLE `ecommerce`.`product` (
   CONSTRAINT `vendor_id`
     FOREIGN KEY (`product_vendor_id`)
     REFERENCES `ecommerce`.`vendor` (`vendor_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE);
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
 
 -------------------------------------------------------------------PRODUCT DATA FORMAT
 {
@@ -92,13 +92,13 @@ CREATE TABLE `ecommerce`.`cart` (
   CONSTRAINT `customer_id`
     FOREIGN KEY (`cart_customer_id`)
     REFERENCES `ecommerce`.`customer` (`customer_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `product_id`
     FOREIGN KEY (`cart_product_id`)
     REFERENCES `ecommerce`.`product` (`product_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE);
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
 
 -------------------------------------------------------------------USER CART FORMAT
 {
@@ -131,7 +131,7 @@ CREATE TABLE `ecommerce`.`order` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
--------------------------------------------------------------------USER DATA FORMAT
+-------------------------------------------------------------------USER DATA FORMAT FOR ORDER
 {
     "name":"Raj Champawat",
     "contact":1234567890,

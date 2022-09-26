@@ -15,7 +15,7 @@ exports.register = function(data){
     })
 }
 
-exports.searchVendor = function(data){
+exports.checkVendor = function(data){
     return new Promise((resolve)=>{
         let searchQuery = "SELECT * FROM vendor WHERE vendor_govt_id = '"+data.govtid + "'";
         // console.log(searchQuery);
@@ -59,6 +59,37 @@ exports.login = function(data){
     })
 }
 
+exports.searchVendor = function(id){
+    return new Promise((resolve) => {
+        let searchQuery = "SELECT * FROM vendor WHERE vendor_id = "+id;
+        vendordb.query(searchQuery, (err, result)=>{
+            if(err){
+                throw err;
+            } else{
+                resolve(result);
+            }
+        })
+    })
+}
+
+exports.deleteVendor = function(id){
+    let deleteQuery = "DELETE FROM vendor WHERE vendor_id = "+id;
+    vendordb.query(deleteQuery, (err, result)=>{
+        if(err){
+            throw err;
+        }
+    })
+}
+
+exports.updateVendor = function(data, id){
+    let updateQuery = "UPDATE vendor SET vendor_name = '"+data.name+"', vendor_email= '"+data.email+"', vendor_password = '"+data.password+"', vendor_govt_id = '"+data.govtid+"', vendor_category = '"+data.category+"', vendor_state = '"+data.state+"', vendor_city = '"+data.city+"' WHERE vendor_id =" +id;
+    vendordb.query(updateQuery, (err, result)=>{
+        if(err){
+            throw err;
+        }
+    })  
+}
+
 exports.productDisplay = function(vendor_login_id){
     return new Promise((resolve)=>{
         let searchQuery = "SELECT * FROM product WHERE product_vendor_id = "+vendor_login_id;
@@ -79,7 +110,7 @@ exports.addProduct = function(data, id){
     // console.log(id);
     return new Promise((resolve) => {
         let insertCmd = "INSERT INTO product (product_vendor_id, product_name, product_category, product_price, product_quantity) VALUES (?, ?, ?, ?, ?)"
-        let insertQuery = vendordb.format(insertCmd, [id, data.product_name, data.product_category, data.product_price, data.product_quantity]);
+        let insertQuery = vendordb.format(insertCmd, [id, data.name, data.category, data.price, data.quantity]);
         vendordb.query(insertQuery, (err, result)=>{
             if(err){
                 throw err;
@@ -93,7 +124,7 @@ exports.addProduct = function(data, id){
 
 exports.searchProduct = function(data, id){
     return new Promise((resolve)=>{
-        let searchQuery = "SELECT * FROM product WHERE product_name ='"+data.product_name+"' AND product_vendor_id ="+id;
+        let searchQuery = "SELECT * FROM product WHERE product_name ='"+data.name+"' AND product_vendor_id ="+id;
         vendordb.query(searchQuery, (err, result)=>{
             if(err){
                 throw err;
@@ -107,32 +138,30 @@ exports.searchProduct = function(data, id){
 exports.removeDuplicateProduct = function(data){
     // console.log("Inside duplicate");
     // console.log(data);
-    let deleteQuery = "DELETE FROM product WHERE product_id!="+data[0].product_id;
+    let deleteQuery = "DELETE FROM product WHERE product_id!="+data[0].id;
     vendordb.query(deleteQuery, (err, result)=>{
         if(err){
             throw err;
         } else{
             console.log(result);
         }
-    })
+    });
 }
 
 exports.updateProduct = function(data, vendor_id){
     // console.log(data);
     // console.log(vendor_id);
-    return new Promise((resolve) => {
-        let updateQuery = "UPDATE product SET product_price = "+data.product_price+", product_quantity= "+data.product_quantity+" WHERE product_vendor_id =" +vendor_id;
-        vendordb.query(updateQuery, (err, result)=>{
-            if(err){
-                throw err;
-            }
-        })  
-    })
+    let updateQuery = "UPDATE product SET product_name = '"+data.name+"', product_category = '"+data.category+"', product_price = '"+data.price+"', product_quantity= '"+data.quantity+"' WHERE product_vendor_id =" +vendor_id+ " AND product_id ="+data.id;
+    vendordb.query(updateQuery, (err, result)=>{
+        if(err){
+            throw err;
+        }
+    });
 }
 
 exports.deleteProduct = function(deleteProduct){
-    let deleteQuery = "DELETE FROM product WHERE product_id = "+deleteProduct.product_id;
-    console.log(deleteQuery);
+    let deleteQuery = "DELETE FROM product WHERE product_id = "+deleteProduct.id;
+    // console.log(deleteQuery);
     vendordb.query(deleteQuery, (err, result)=>{
         if(err){
             throw err;

@@ -7,16 +7,20 @@ module.exports = function(app){
 
     app.route("/vendor/register")
         .get(vendorcontrol.registerDetail)
-        .post(vendorcontrol.register);
+        .post(vendorcontrol.registerVendor);
     
     app.route("/vendor/login")
         .get(vendorcontrol.loginDetail)
-        .post(vendorcontrol.login);
+        .post(vendorcontrol.loginVendor);
+
+    app.route("/vendor/login/:id")
+        .get(vendorcontrol.vendorDetail)
+        .patch(vendorcontrol.updateDetail)
+        .delete(vendorcontrol.deleteVendor);
 
     app.route("/vendor/login/:id/product")
         .get(vendorcontrol.productDisplay)
         .post(vendorcontrol.addProduct)
         .patch(vendorcontrol.updateProduct)
         .delete(vendorcontrol.deleteProduct);
-
 }

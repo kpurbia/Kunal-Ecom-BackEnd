@@ -1,5 +1,6 @@
 const vendordb = require('./dbserver.js');
 
+//////////////////////////////////////////////////////Adding vendor data to vendor table
 exports.register = function(data){
     return new Promise((resolve)=>{
         // let vendorData = data;
@@ -15,6 +16,7 @@ exports.register = function(data){
     })
 }
 
+//////////////////////////////////////////////////////Checking repeat vendor registered in vendor table
 exports.checkVendor = function(data){
     return new Promise((resolve)=>{
         let searchQuery = "SELECT * FROM vendor WHERE vendor_govt_id = '"+data.govtid + "'";
@@ -29,6 +31,7 @@ exports.checkVendor = function(data){
     });
 }
 
+//////////////////////////////////////////////////////Removing repeated vendor detail
 exports.remove = function(data){
     // console.log("Inside remove");
     // console.log(data);
@@ -43,6 +46,7 @@ exports.remove = function(data){
     })
 }
 
+//////////////////////////////////////////////////////Checking vendor table and log in vendor
 exports.login = function(data){
     return new Promise((resolve)=>{
         let searchCmd = "SELECT * FROM vendor WHERE vendor_email = ? AND vendor_password = ? AND vendor_govt_id = ?"
@@ -59,6 +63,7 @@ exports.login = function(data){
     })
 }
 
+//////////////////////////////////////////////////////Searching vendor data using vendor id
 exports.searchVendor = function(id){
     return new Promise((resolve) => {
         let searchQuery = "SELECT * FROM vendor WHERE vendor_id = "+id;
@@ -72,6 +77,7 @@ exports.searchVendor = function(id){
     })
 }
 
+//////////////////////////////////////////////////////Deleting vendor data from vendor table
 exports.deleteVendor = function(id){
     let deleteQuery = "DELETE FROM vendor WHERE vendor_id = "+id;
     vendordb.query(deleteQuery, (err, result)=>{
@@ -81,6 +87,7 @@ exports.deleteVendor = function(id){
     })
 }
 
+//////////////////////////////////////////////////////Updating vendor data in vendor table
 exports.updateVendor = function(data, id){
     let updateQuery = "UPDATE vendor SET vendor_name = '"+data.name+"', vendor_email= '"+data.email+"', vendor_password = '"+data.password+"', vendor_govt_id = '"+data.govtid+"', vendor_category = '"+data.category+"', vendor_state = '"+data.state+"', vendor_city = '"+data.city+"' WHERE vendor_id =" +id;
     vendordb.query(updateQuery, (err, result)=>{
@@ -90,6 +97,7 @@ exports.updateVendor = function(data, id){
     })  
 }
 
+//////////////////////////////////////////////////////Displaying products of vendor using vendor id
 exports.productDisplay = function(vendor_login_id){
     return new Promise((resolve)=>{
         let searchQuery = "SELECT * FROM product WHERE product_vendor_id = "+vendor_login_id;
@@ -105,6 +113,7 @@ exports.productDisplay = function(vendor_login_id){
     });
 }
 
+//////////////////////////////////////////////////////Vendor adding products to product table
 exports.addProduct = function(data, id){
     // console.log(data);
     // console.log(id);
@@ -122,6 +131,7 @@ exports.addProduct = function(data, id){
     })
 }
 
+//////////////////////////////////////////////////////Vendor searching single product using product name and vendor id
 exports.searchProduct = function(data, id){
     return new Promise((resolve)=>{
         let searchQuery = "SELECT * FROM product WHERE product_name ='"+data.name+"' AND product_vendor_id ="+id;
@@ -135,10 +145,11 @@ exports.searchProduct = function(data, id){
     })
 }
 
+//////////////////////////////////////////////////////Deleting repeated product by same vendor
 exports.removeDuplicateProduct = function(data){
     // console.log("Inside duplicate");
     // console.log(data);
-    let deleteQuery = "DELETE FROM product WHERE product_id!="+data[0].id;
+    let deleteQuery = "DELETE FROM product WHERE product_id!="+data[1].id;
     vendordb.query(deleteQuery, (err, result)=>{
         if(err){
             throw err;
@@ -148,6 +159,7 @@ exports.removeDuplicateProduct = function(data){
     });
 }
 
+//////////////////////////////////////////////////////Vendor updating selected product
 exports.updateProduct = function(data, vendor_id){
     // console.log(data);
     // console.log(vendor_id);
@@ -159,6 +171,7 @@ exports.updateProduct = function(data, vendor_id){
     });
 }
 
+//////////////////////////////////////////////////////Vendor deleting product
 exports.deleteProduct = function(deleteProduct){
     let deleteQuery = "DELETE FROM product WHERE product_id = "+deleteProduct.id;
     // console.log(deleteQuery);

@@ -36,6 +36,10 @@ module.exports = function(app){
     app.route("/customer/login/:id/cart/:cartid/order")
         .get(customercontrol.detailsForOrder)
         .post(customercontrol.placeOrder);
+
+    app.route("/customer/login/:id/order").get(customercontrol.getAllOrders);
     
-    app.route("/customer/login/:id/order/:orderid").get(customercontrol.getOrderDetail);
+    app.route("/customer/login/:id/order/:orderid")
+        .get(customercontrol.getOrderDetail)
+        .delete(customercontrol.deleteOrder);
 }

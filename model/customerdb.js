@@ -120,7 +120,7 @@ exports.allProductDisplay = function(){
             if(err){
                 throw err;
             } else{
-                console.log(result);
+                // console.log(result);
                 resolve(result);
             }
         })
@@ -237,18 +237,6 @@ exports.placeOrder = function(data, cartId, customerId){
     })
 }
 
-//////////////////////////////////////////////////////Delete selected order
-exports.deleteOrder = function(id){
-    let deleteQuery = "DELETE FROM `order` WHERE order_tracking_id = "+id;
-    customerDB.query(deleteQuery, (err, result)=>{
-        if(err){
-            throw err;
-        } else{
-            console.log(result);
-        }
-    })
-}
-
 //////////////////////////////////////////////////////Searching order to check data duplication
 exports.searchOrder = function(cartId){
     return new Promise((resolve) => {
@@ -258,6 +246,20 @@ exports.searchOrder = function(cartId){
                 throw err;
             } else{
                 resolve(result)
+            }
+        })
+    })
+}
+
+//////////////////////////////////////////////////////Display of all order using customer id
+exports.allOrders = function(customerId){
+    return new Promise((resolve) => {
+        let searchQuery = "SELECT * FROM `order` WHERE order_customer_id = "+customerId;
+        customerDB.query(searchQuery, (err, result)=>{
+            if(err){
+                throw err;
+            } else{
+                resolve(result);
             }
         })
     })
@@ -278,7 +280,15 @@ exports.orderDisplay = function(orderId){
 }
 
 
-
+//////////////////////////////////////////////////////Delete selected order
+exports.deleteOrder = function(orderId){
+    let deleteQuery = "DELETE FROM `order` WHERE order_id = "+orderId;
+    customerDB.query(deleteQuery, (err, result)=>{
+        if(err){
+            throw err;
+        }
+    })
+}
 
 
 

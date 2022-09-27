@@ -26,7 +26,10 @@ STEPS:
 
 11. Order the products in cart
 12. Add all required details to place order
-13. Delete order
+
+13. Display all orders placed
+14. Display single order in detail
+15. Delete order placed
 
 	
 	AGENT

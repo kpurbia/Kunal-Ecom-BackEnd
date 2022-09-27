@@ -282,8 +282,8 @@ exports.orderDisplay = function(orderId){
 
 //////////////////////////////////////////////////////Delete selected order
 exports.deleteOrder = function(orderId){
-    let deleteQuery = "DELETE FROM `order` WHERE order_id = "+orderId;
-    customerDB.query(deleteQuery, (err, result)=>{
+    let updateQuery = "UPDATE `order` SET order_status = 'cancelled' WHERE order_id = "+orderId;
+    customerDB.query(updateQuery, (err, result)=>{
         if(err){
             throw err;
         }

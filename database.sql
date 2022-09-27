@@ -11,9 +11,10 @@ USE ecommerce;
 CREATE TABLE `ecommerce`.`vendor` (
   `vendor_id` INT NOT NULL AUTO_INCREMENT,
   `vendor_name` VARCHAR(100) NULL,
+  `vendor_govt_id` VARCHAR(100) NULL,
+  `vendor_contact` INT NULL,
   `vendor_email` VARCHAR(100) NULL,
   `vendor_password` VARCHAR(100) NULL,
-  `vendor_govt_id` VARCHAR(100) NULL,
   `vendor_category` VARCHAR(100) NULL,
   `vendor_state` VARCHAR(100) NULL,
   `vendor_city` VARCHAR(100) NULL,
@@ -27,6 +28,7 @@ CREATE TABLE `ecommerce`.`vendor` (
     "email":"head@dhanshree.com",
     "password":"123456789",
     "conpassword":"123456789",
+    "contact":"9999955555",
     "category":"Wooden Office Furniture",
     "state":"Rajasthan",
     "city":"Udaipur"
@@ -117,6 +119,7 @@ CREATE TABLE `ecommerce`.`order` (
   `order_delivery_city` VARCHAR(100) NULL,
   `order_delivery_state` VARCHAR(100) NULL,
   `order_place_date` VARCHAR(100) NULL,
+  `order_status` VARCHAR(100) NULL,
   PRIMARY KEY (`order_id`),
   INDEX `customer_id_idx` (`order_customer_id` ASC) VISIBLE,
   INDEX `cart_id_idx` (`order_cart_id` ASC) VISIBLE,
@@ -152,12 +155,26 @@ CREATE TABLE `ecommerce`.`agent` (
   `agent_city` VARCHAR(100) NULL,
   PRIMARY KEY (`agent_id`));
 
+-------------------------------------------------------------------AGENT DATA FORMAT
+{
+    "name":"XpressBees",
+    "email":"head@xpressbees.com",
+    "password":"XpressBees123",
+    "conpassword":"XpressBees123",
+    "govtid":"india123",
+    "contact":1478520369,
+    "state":"Rajasthan",
+    "city":"Udaipur"
+}
+
 -------------------------------------------------------------------CREATING TRACKING TABLE
 CREATE TABLE `ecommerce`.`tracking` (
   `tracking_id` INT NOT NULL AUTO_INCREMENT,
   `tracking_track_id` INT NULL,
   `tracking_order_id` INT NULL,
   `tracking_agent_id` INT NULL,
+  `tracking_employee_name` VARCHAR(100) NULL,
+  `tracking_employee_contact` VARCHAR(100) NULL,
   `tracking_expect_date` VARCHAR(100) NULL,
   `tracking_delivery_date` VARCHAR(100) NULL,
   `tracking_delivery_status` VARCHAR(100) NULL,
@@ -175,6 +192,15 @@ CREATE TABLE `ecommerce`.`tracking` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
+-------------------------------------------------------------------TRACKING TABLE DATA FORMAT
+{
+    "name":"Piyush",
+    "contact":"2582582580",
+    "date":"30 Sept, 2022",
+    "status":"placed",
+    "deliveryDate":NULL
+}
+
 -------------------------------------------------------------------CREATING ADMIN TABLE
 CREATE TABLE `ecommerce`.`admin` (
   `admin_id` INT NOT NULL AUTO_INCREMENT,
@@ -184,5 +210,3 @@ CREATE TABLE `ecommerce`.`admin` (
   `admin_password` VARCHAR(100) NULL,
   PRIMARY KEY (`admin_id`));
 
--------------------------------------------------------------------ADDING USER AND PRODUCT TO CART TABLE
-SELECT `cart.cart_id`, `user.user_name`, `product.product_name`, `cart.product_quantity`, `cart_price` FROM `cart` INNER JOIN `product` ON `cart.cart_id` = `product.product_id` INNER JOIN `user` ON `cart.user_id` = `user.user_id`;

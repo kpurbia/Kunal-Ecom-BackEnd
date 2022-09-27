@@ -164,7 +164,7 @@ exports.cartItemDetail = async function(req, res) {
     let customerId = req.params.id;
     if(customerId == customer_id){
         let cartItemDisplay = await customerDB.cartItemDisplay(cartId);
-        console.log(cartItemDisplay);
+        // console.log(cartItemDisplay);
         cartItemDisplay = JSON.stringify(cartItemDisplay);
         res.send("<h1>To order this item in cart use cart id and place order</h1>" +cartItemDisplay);   
     } else{
@@ -200,7 +200,7 @@ exports.placeOrder = async function (req, res) {
         if(cartIdReturn != null || cartIdReturn != undefined || cartIdReturn != 0){
             let similarOrder = await customerDB.searchOrder(cartIdReturn);
             let lastOrder = similarOrder[similarOrder.length - 1]
-            console.log(lastOrder);
+            // console.log(lastOrder);
             res.send("<h1>Your order is placed successfully</h1><ul><li>Your order id: "+lastOrder.order_id+"</li><li>Your tracking id: "+lastOrder.order_tracking_id+"</li></ul>");
         } else{
             res.send("<h1>Error occured, TRY AGAIN</h1>")
@@ -209,6 +209,22 @@ exports.placeOrder = async function (req, res) {
         res.send("<h1>Session expired, login again</h1>");
     }
 }
+
+//////////////////////////////////////////////////////Display all orders placed
+exports.getAllOrders = async function(req, res){
+    let customerId = req.params.id;
+    if(customerId == customer_id){
+        let allOrders = await customerDB.allOrders(customerId);
+        if(allOrders.length == 0){
+            res.send("<h1>No orders placed yet, check your cart and place order</h1>")
+        } else{
+            res.send(allOrders);
+        }
+    } else{
+        res.send("<h1>Session expired, login again</h1>");
+    }
+}
+
 
 //////////////////////////////////////////////////////After placing order- Checking Order Details
 exports.getOrderDetail = async function(req, res){
@@ -222,3 +238,16 @@ exports.getOrderDetail = async function(req, res){
     }
 }
 
+//////////////////////////////////////////////////////After placing order- cancelling or deleteing order
+exports.deleteOrder = function(req, res){
+    let customerId = req.params.id;
+    let orderId = req.params.orderid;
+    if(customerId == customer_id){
+        customerDB.deleteOrder(orderId);
+        res.send("<h1>Order deleted successfully.</h1>")
+    } else{
+        res.send("<h1>Session expired, login again</h1>");
+    }
+}
+
+//////////////////////////////////////////////////////Tracking order using orderid and trackid

@@ -213,6 +213,7 @@ exports.placeOrder = async function (req, res) {
 //////////////////////////////////////////////////////Display all orders placed
 exports.getAllOrders = async function(req, res){
     let customerId = req.params.id;
+    // console.log(customer_id);
     if(customerId == customer_id){
         let allOrders = await customerDB.allOrders(customerId);
         if(allOrders.length == 0){

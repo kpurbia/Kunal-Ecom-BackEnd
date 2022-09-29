@@ -1,0 +1,55 @@
+
+
+--------------------------------------------Customer Scenarios (customerDML.sql)-----------------------------------------
+
+    1.  To display all products for guest                           --SQL QUERY 1
+    
+    2.  To add customer details in database                         --SQL QUERY 2
+    3.  To check duplicate registration                             --SQL QUERY 3
+    4.  If duplicate registration found then deleting               --SQL QUERY 4
+
+    5.  To check details from table and loggin in                   --SQL QUERY 5
+    6.  To view profile of customer                                 --SQL QUERY 6
+    7.  To update profile of customer                               --SQL QUERY 7
+    8.  To delete customer account                                  --SQL QUERY 8
+
+    9.  To see all products available                               --SQL QUERY 9
+    10. To see single product in detail                             --SQL QUERY 10
+    
+    11. To add that product to cart                                 --SQL QUERY 11
+    12. To check repeated product in cart                           --SQL QUERY 12
+    13. To delete repeated product in cart                          --SQL QUERY 13
+
+    14. To display all the products in cart by customer             --SQL QUERY 14
+
+    15. To display single product in detail in cart                 --SQL QUERY 15
+    16. To remove that product from cart                            --SQL QUERY 16
+    
+    17. To add all details and place order                          --SQL QUERY 17
+    18. To generate bill                                            --SQL QUERY 18
+    
+    19. To see all orders placed                                    --SQL QUERY 19
+
+    20. To see any order in detail                                  --SQL QUERY 20
+    21. To delete/cancel that order                                 --SQL QUERY 21
+    22. After delete updating tracking table                        --SQL QUERY 22
+    
+    23. Tracking order                                              --SQL QUERY 23
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

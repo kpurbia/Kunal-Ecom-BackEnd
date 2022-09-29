@@ -225,7 +225,7 @@ exports.placeOrder = function(data, cartId, customerId){
         const timeElapsed = Date.now();
         const today = new Date(timeElapsed);
         const placeDate = today.toDateString();
-        let insertCmd = "INSERT INTO `order` (order_cart_id, order_tracking_id, order_customer_id, order_delivery_name, order_delivery_contact, order_delivery_address, order_delivery_city, order_delivery_state, order_place_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"
+        let insertCmd = "INSERT INTO `order` (order_cart_id, order_tracking_id, order_customer_id, order_delivery_name, order_delivery_contact, order_delivery_address, order_delivery_city, order_delivery_state, order_place_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?);"
         let insertQuery = customer.format(insertCmd, [cartId, trackId, customerId, data.name, data.contact, data.address, data.city, data.state, placeDate]);
         customer.query(insertQuery, (err, result)=>{
         if(err){

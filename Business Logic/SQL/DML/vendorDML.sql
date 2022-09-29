@@ -43,7 +43,7 @@ INSERT INTO product (product_vendor_id, product_name, product_category, product_
 SELECT * FROM product WHERE product_id = 1;
 
 -- 11.  TO UPDATE DETAIL OF PRODUCT 
-UPDATE product SET product_name = "Golden Sunflower", product_category = "Flowers", product_price = 150, product_quantity= 400 WHERE product_vendor_id = 1 AND product_id =1;
+UPDATE product SET product_name = "Golden Sunflower", product_category = "Flowers", product_price = 150, product_quantity= 400 WHERE product_vendor_id = 1 AND product_id = 1;
 
 -- 12.  TO DELETE PRODUCT
 DELETE FROM product WHERE product_id = 1;

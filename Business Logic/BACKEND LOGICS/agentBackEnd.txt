@@ -1,0 +1,46 @@
+
+--------------------------------------------Delivery Agent Scenarios (agentDML.sql)-----------------------------------------
+    1.  To add agent details in database                        --SQL QUERY 1
+    2.  To check duplicate registration                         --SQL QUERY 2
+    3.  If duplicate registration found then deleting           --SQL QUERY 3
+
+    4.  To check details from table and loggin in               --SQL QUERY 4
+    5.  To view profile of agent                                --SQL QUERY 5
+    6.  To update profile of agent                              --SQL QUERY 6
+    7.  To delete agent account                                 --SQL QUERY 7
+
+    8.  To display all orders which are not 
+        picked by any other agent                               --SQL QUERY 8
+
+    9.  To pick any single order and get its all details        --SQL QUERY 9
+
+    10. To pick that selected order for delivery                --SQL QUERY 10
+
+    11. To check duplicate order picking                        --SQL QUERY 11
+
+    12. To remove duplicate order picked                        --SQL QUERY 12
+
+    13. After successfully adding order to delivery     
+        updating delivery status inside order table             --SQL QUERY 13
+
+    14. To check all the order under agent tracking             --SQL QUERY 14
+
+    15. To display single track full detail                     --SQL QUERY 15
+
+    16. To update details of selected track                     --SQL QUERY 16
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        

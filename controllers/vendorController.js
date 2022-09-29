@@ -120,11 +120,11 @@ exports.productDisplay = async function(req, res){
 }
 
 
-productDetail
+// productDetail
 
-updateProduct
+// updateProduct
 
-deleteProduct
+// deleteProduct
 
 
 //////////////////////////////////////////////////////Updating detail of product

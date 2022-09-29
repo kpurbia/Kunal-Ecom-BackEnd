@@ -13,12 +13,17 @@
     7.  To update profile of customer                               --SQL QUERY 7
     8.  To delete customer account                                  --SQL QUERY 8
 
-    9.  To see all products available                               --SQL QUERY 9
-    10. To see single product in detail                             --SQL QUERY 10
+    9.  To display all categories of products available             --SQL QUERY 9
+
+    10.  To see all products available                              --SQL QUERY 10
+
+    11. To display all products in single category                  --SQL QUERY 11
+
+    11. To see single product in detail                             --SQL QUERY 11
     
-    11. To add that product to cart                                 --SQL QUERY 11
-    12. To check repeated product in cart                           --SQL QUERY 12
-    13. To delete repeated product in cart                          --SQL QUERY 13
+    12. To add that product to cart                                 --SQL QUERY 12
+    13. To check repeated product in cart                           --SQL QUERY 13
+    13. To delete repeated product in cart                          --SQL QUERY 14
 
     14. To display all the products in cart by customer             --SQL QUERY 14
 

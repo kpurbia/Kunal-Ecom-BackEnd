@@ -1,4 +1,4 @@
-const customerController = require('../controllers/customerControllerler');
+const customerController = require('../controllers/customerController');
 
 module.exports = function(app){
     app.route("/customer").get((req, res)=>{

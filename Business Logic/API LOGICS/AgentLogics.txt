@@ -1,0 +1,57 @@
+
+--------------------------------------------Delivery Agent SIDE APIs-----------------------------------------
+1. Welcome page for agent:
+    API-        http://localhost:3000/agent
+    METHOD-     GET METHOD
+
+2. To get details required to register
+    API-        http://localhost:3000/agent/register
+    METHOD-     GET METHOD
+
+3. To register account
+    API-        http://localhost:3000/agent/register
+    METHOD-     POST METHOD
+
+4. To get details required to login
+    API-        http://localhost:3000/agent/login
+    METHOD-     GET METHOD
+
+5. To login account
+    API-        http://localhost:3000/agent/login
+    METHOD-     POST METHOD
+
+6. To get agent own details
+    API-        http://localhost:3000/agent/login/:id
+    METHOD-     GET METHOD
+
+7. To update agent own details
+    API-        http://localhost:3000/agent/login/:id
+    METHOD-     PATCH METHOD
+
+8. To delete agent own account
+    API-        http://localhost:3000/agent/login/:id
+    METHOD-     DELETE METHOD
+
+9.  To get all order ready for delivery and are not picked by any other delivery agent
+    API-        http://localhost:3000/agent/login/:id/order
+    METHOD-     GET METHOD
+
+10. To get full detail of any particular order, and check details required to add to pick delivery
+    API-        http://localhost:3000/agent/login/:id/order/:orderid
+    METHOD-     GET METHOD
+
+11. To pick any order for delivery, agent needs to provide delivery detail
+    API-        http://localhost:3000/agent/login/:id/order/:orderid
+    METHOD-     POST METHOD
+
+12. To track or see all order picked by agent
+    API-        http://localhost:3000/agent/login/:id/track
+    METHOD-     GET METHOD
+
+13. To get any particular track detail using its track id
+    API-        http://localhost:3000/agent/login/:id/track/:trackid
+    METHOD-     GET METHOD
+
+14. To update tracking details of selected track id
+    API-        http://localhost:3000/agent/login/:id/track/:trackid
+    METHOD-     PATCH METHOD

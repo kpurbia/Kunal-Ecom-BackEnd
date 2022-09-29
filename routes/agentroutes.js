@@ -1,4 +1,4 @@
-const agentcontrol = require('../controller/agentcontrol');
+const agentController = require('../controllers/agentControllerler');
 
 module.exports = function(app){
     app.route("/agent").get((req, res)=>{
@@ -6,27 +6,27 @@ module.exports = function(app){
     });
 
     app.route("/agent/register")
-        .get(agentcontrol.registerDetail)
-        .post(agentcontrol.registerAgent);
+        .get(agentController.registerDetail)
+        .post(agentController.registerAgent);
     
     app.route("/agent/login")
-        .get(agentcontrol.loginDetail)
-        .post(agentcontrol.loginAgent);
+        .get(agentController.loginDetail)
+        .post(agentController.loginAgent);
 
     app.route("/agent/login/:id")
-        .get(agentcontrol.agentDetail)
-        .patch(agentcontrol.updateDetail)
-        .delete(agentcontrol.deleteAgent);
+        .get(agentController.agentDetail)
+        .patch(agentController.updateDetail)
+        .delete(agentController.deleteAgent);
 
-    app.route("/agent/login/:id/order").get(agentcontrol.orderDisplay);
+    app.route("/agent/login/:id/order").get(agentController.orderDisplay);
 
     app.route("/agent/login/:id/order/:orderid")
-        .get(agentcontrol.orderDetail)
-        .post(agentcontrol.addTrack);
+        .get(agentController.orderDetail)
+        .post(agentController.addTrack);
     
-    app.route("/agent/login/:id/track").get(agentcontrol.fullTrackDisplay);
+    app.route("/agent/login/:id/track").get(agentController.fullTrackDisplay);
 
     app.route("/agent/login/:id/track/:trackid")
-        .get(agentcontrol.trackDetail)
-        .patch(agentcontrol.trackUpdate);   
+        .get(agentController.trackDetail)
+        .patch(agentController.trackUpdate);   
 }

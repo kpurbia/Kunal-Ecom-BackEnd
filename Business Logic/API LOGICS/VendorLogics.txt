@@ -1,0 +1,53 @@
+
+--------------------------------------------Product Vendor SIDE APIs-----------------------------------------
+1. Welcome page for vendor:
+    API-        http://localhost:3000/vendor
+    METHOD-     GET METHOD
+
+2. To get details required to register
+    API-        http://localhost:3000/vendor/register
+    METHOD-     GET METHOD
+
+3. To register account
+    API-        http://localhost:3000/vendor/register
+    METHOD-     POST METHOD
+
+4. To get details required to login
+    API-        http://localhost:3000/vendor/login
+    METHOD-     GET METHOD
+
+5. To login account
+    API-        http://localhost:3000/vendor/login
+    METHOD-     POST METHOD
+
+6. To get vendor own details
+    API-        http://localhost:3000/vendor/login/:id
+    METHOD-     GET METHOD
+
+7. To update vendor own details
+    API-        http://localhost:3000/vendor/login/:id
+    METHOD-     PATCH METHOD
+
+8. To delete vendor own account
+    API-        http://localhost:3000/vendor/login/:id
+    METHOD-     DELETE METHOD
+
+9.  To see all list of products uploaded by own vendor for sell
+    API-        http://localhost:3000/vendor/login/:id/product
+    METHOD-     GET METHOD
+
+10. To upload or add more product to sell
+    API-        http://localhost:3000/vendor/login/:id/product
+    METHOD-     POST METHOD
+
+11. To select and see any single particular product detail
+    API-        http://localhost:3000/vendor/login/:id/product/:productid
+    METHOD-     GET METHOD
+
+12. To update selected product details
+    API-        http://localhost:3000/vendor/login/:id/product/:productid
+    METHOD-     PATCH METHOD
+
+13. To remove that selected product
+    API-        http://localhost:3000/vendor/login/:id/product/:productid
+    METHOD-     DELETE METHOD

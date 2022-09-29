@@ -1,4 +1,4 @@
-const vendorcontrol = require('../controller/vendorcontrol');
+const vendorControl = require('../controller/vendorControl');
 
 module.exports = function(app){
     app.route("/vendor").get((req, res)=>{
@@ -6,21 +6,24 @@ module.exports = function(app){
     });
 
     app.route("/vendor/register")
-        .get(vendorcontrol.registerDetail)
-        .post(vendorcontrol.registerVendor);
+        .get(vendorControl.registerDetail)
+        .post(vendorControl.registerVendor);
     
     app.route("/vendor/login")
-        .get(vendorcontrol.loginDetail)
-        .post(vendorcontrol.loginVendor);
+        .get(vendorControl.loginDetail)
+        .post(vendorControl.loginVendor);
 
     app.route("/vendor/login/:id")
-        .get(vendorcontrol.vendorDetail)
-        .patch(vendorcontrol.updateDetail)
-        .delete(vendorcontrol.deleteVendor);
+        .get(vendorControl.vendorDetail)
+        .patch(vendorControl.updateDetail)
+        .delete(vendorControl.deleteVendor);
 
     app.route("/vendor/login/:id/product")
-        .get(vendorcontrol.productDisplay)
-        .post(vendorcontrol.addProduct)
-        .patch(vendorcontrol.updateProduct)
-        .delete(vendorcontrol.deleteProduct);
+        .get(vendorControl.productDisplay)
+        .post(vendorControl.addProduct);
+    
+    app.route("/vendor/login/:id/product/:productid")
+        .get(vendorControl.productDetail)
+        .patch(vendorControl.updateProduct)
+        .delete(vendorControl.deleteProduct);
 }

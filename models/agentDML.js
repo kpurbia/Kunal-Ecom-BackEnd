@@ -1,4 +1,4 @@
-const agent = require('./dbserver.js');
+const agent = require('./dbServer/dbserver.js');
 
 //////////////////////////////////////////////////////Adding agent data to agent table
 exports.register = function(data){

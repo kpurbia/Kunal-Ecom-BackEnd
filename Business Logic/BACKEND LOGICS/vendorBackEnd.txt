@@ -1,0 +1,39 @@
+
+--------------------------------------------Product Vendor Scenarios (vendorDML.sql)-----------------------------------------
+
+    1.  To add vendor details in database                       --SQL QUERY 1
+    2.  To check duplicate registration                         --SQL QUERY 2
+    3.  If duplicate registration found then deleting           --SQL QUERY 3
+
+    4.  To check details from table and loggin in               --SQL QUERY 4
+    5.  To view profile of vendor                               --SQL QUERY 5
+    6.  To update profile of vendor                             --SQL QUERY 6
+    7.  To delete vendor account                                --SQL QUERY 7
+
+    8.  To see all products uploaded by vendor                  --SQL QUERY 8
+    9.  To add more products to sell                            --SQL QUERY 9
+
+    10. To see any product full details                         --SQL QUERY 10
+    11. To update detail of product                             --SQL QUERY 11
+    12. To delete product                                       --SQL QUERY 12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

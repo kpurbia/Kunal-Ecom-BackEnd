@@ -1,5 +1,5 @@
 
--- 1.   INSERTING AGENT DATA IN DATABASE
+-- 1.   INSERTING AGENT DATA IN AGENT TABLE DATABASE
 INSERT INTO agent (agent_name, 
      agent_email, 
      agent_password, 

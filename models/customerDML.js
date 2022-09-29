@@ -1,4 +1,4 @@
-const customer = require('./dbserver.js');
+const customer = require('./dbServer/dbserver.js');
 
 //////////////////////////////////////////////////////Products display for guests
 exports.guestProduct = function(){

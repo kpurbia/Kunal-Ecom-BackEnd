@@ -1,4 +1,4 @@
-const agentController = require('../controllers/agentControllerler');
+const agentController = require('../controllers/agentController');
 
 module.exports = function(app){
     app.route("/agent").get((req, res)=>{

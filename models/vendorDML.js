@@ -1,4 +1,4 @@
-const vendor = require('./dbserver.js');
+const vendor = require('./dbServer/dbserver.js');
 
 //////////////////////////////////////////////////////Adding vendor data to vendor table
 exports.register = function(data){

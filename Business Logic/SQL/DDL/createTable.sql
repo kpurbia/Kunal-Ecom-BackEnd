@@ -8,7 +8,7 @@ SHOW DATABASES;
 USE ecommerce;
 
 -------------------------------------------------------------------CREATING VENDOR TABLE
-CREATE TABLE `ecommerce`.`vendor` (
+CREATE TABLE `ecommerce`.`vendors` (
   `vendor_id` INT NOT NULL AUTO_INCREMENT,
   `vendor_name` VARCHAR(100) NULL,
   `vendor_govt_id` VARCHAR(100) NULL,
@@ -18,6 +18,7 @@ CREATE TABLE `ecommerce`.`vendor` (
   `vendor_category` VARCHAR(100) NULL,
   `vendor_state` VARCHAR(100) NULL,
   `vendor_city` VARCHAR(100) NULL,
+  `vendor_product_count` INT NULL,
   PRIMARY KEY (`vendor_id`));
 
 -------------------------------------------------------------------VENDOR DATA FORMAT
@@ -35,7 +36,7 @@ CREATE TABLE `ecommerce`.`vendor` (
 }
 
 -------------------------------------------------------------------CREATING PRODUCT TABLE
-CREATE TABLE `ecommerce`.`product` (
+CREATE TABLE `ecommerce`.`products` (
   `product_id` INT NOT NULL AUTO_INCREMENT,
   `product_vendor_id` INT NULL,
   `product_name` VARCHAR(100) NULL,
@@ -60,7 +61,7 @@ CREATE TABLE `ecommerce`.`product` (
 }
 
 -------------------------------------------------------------------CREATING USER TABLE
-CREATE TABLE `ecommerce`.`customer` (
+CREATE TABLE `ecommerce`.`customers` (
   `customer_id` INT NOT NULL AUTO_INCREMENT,
   `customer_name` VARCHAR(100) NULL,
   `customer_email` VARCHAR(100) NULL,
@@ -68,6 +69,8 @@ CREATE TABLE `ecommerce`.`customer` (
   `customer_contact` INT NULL,
   `customer_state` VARCHAR(100) NULL,
   `customer_city` VARCHAR(100) NULL,
+  `customer_orders_count` INT NULL,
+  `customer_total_expense` FLOAT NULL,
   PRIMARY KEY (`customer_id`));
 
 -------------------------------------------------------------------USER DATA FORMAT
@@ -88,6 +91,7 @@ CREATE TABLE `ecommerce`.`cart` (
   `cart_customer_id` INT NULL,
   `cart_product_id` INT NULL,
   `cart_product_quantity` INT NULL,
+  `cart_total_price` FLOAT NULL
   PRIMARY KEY (`cart_id`),
   INDEX `customer_id_idx` (`cart_customer_id` ASC) VISIBLE,
   INDEX `product_id_idx` (`cart_product_id` ASC) VISIBLE,
@@ -108,10 +112,9 @@ CREATE TABLE `ecommerce`.`cart` (
 }
 
 -------------------------------------------------------------------CREATE ORDER TABLE
-CREATE TABLE `ecommerce`.`order` (
+CREATE TABLE `ecommerce`.`orders` (
   `order_id` INT NOT NULL AUTO_INCREMENT,
   `order_cart_id` INT NULL,
-  `order_tracking_id` INT NULL,
   `order_customer_id` INT NULL,
   `order_delivery_name` VARCHAR(100) NULL,
   `order_delivery_contact` INT NULL,
@@ -120,6 +123,7 @@ CREATE TABLE `ecommerce`.`order` (
   `order_delivery_state` VARCHAR(100) NULL,
   `order_place_date` VARCHAR(100) NULL,
   `order_status` VARCHAR(100) NULL,
+  `order_payment` FLOAT,
   PRIMARY KEY (`order_id`),
   INDEX `customer_id_idx` (`order_customer_id` ASC) VISIBLE,
   INDEX `cart_id_idx` (`order_cart_id` ASC) VISIBLE,
@@ -144,7 +148,7 @@ CREATE TABLE `ecommerce`.`order` (
 }
 
 -------------------------------------------------------------------CREATING DELIVERY AGENT TABLE
-CREATE TABLE `ecommerce`.`agent` (
+CREATE TABLE `ecommerce`.`agents` (
   `agent_id` INT NOT NULL AUTO_INCREMENT,
   `agent_name` VARCHAR(100) NULL,
   `agent_email` VARCHAR(100) NULL,
@@ -170,7 +174,6 @@ CREATE TABLE `ecommerce`.`agent` (
 -------------------------------------------------------------------CREATING TRACKING TABLE
 CREATE TABLE `ecommerce`.`tracking` (
   `tracking_id` INT NOT NULL AUTO_INCREMENT,
-  `tracking_track_id` INT NULL,
   `tracking_order_id` INT NULL,
   `tracking_agent_id` INT NULL,
   `tracking_employee_name` VARCHAR(100) NULL,
@@ -202,7 +205,7 @@ CREATE TABLE `ecommerce`.`tracking` (
 }
 
 -------------------------------------------------------------------CREATING ADMIN TABLE
-CREATE TABLE `ecommerce`.`admin` (
+CREATE TABLE `ecommerce`.`admins` (
   `admin_id` INT NOT NULL AUTO_INCREMENT,
   `admin_name` VARCHAR(100) NULL,
   `admin_company_id` VARCHAR(100) NULL,

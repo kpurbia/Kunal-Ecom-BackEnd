@@ -1,9 +1,9 @@
-const customerDB = require('../model/customerdb');
+const customerDML = require('../models/customerDML');
 let customer_id;
 
 //////////////////////////////////////////////////////PRODUCT DISPLAY FOR GUEST
 exports.guestDisplay = async function(req, res){
-    let productDisplay = await customerDB.guestProduct();
+    let productDisplay = await customerDML.guestProduct();
     productDisplay = JSON.stringify(productDisplay);
     res.send("<h1>As a guest you can only see our products</h1><h3>To buy them, you need to register or login your account</h3>"+productDisplay);
 }
@@ -18,15 +18,15 @@ exports.registerCustomer = async function(req, res){
     let customerData = req.body;
     if(customerData.password == customerData.conpassword){
         // res.send("Ínside If")
-        let customer = await customerDB.register(customerData);
+        let customer = await customerDML.register(customerData);
         // console.log(customer);
-        let checkCustomer = await customerDB.checkCustomer(customerData);
+        let checkCustomer = await customerDML.checkCustomer(customerData);
         // console.log(checkCustomer);
         if(checkCustomer.length == 1){
             res.send("<h1>Your account is registered, " +customer.name+"</h1>");
         } else{
             // console.log("Inside else");
-            customerDB.remove(checkCustomer);
+            customerDML.remove(checkCustomer);
             res.send("<h1>Your account is already registered, try login</h1>");
         }
 
@@ -43,7 +43,7 @@ exports.loginDetail = function(req, res){
 
 exports.loginCustomer = async function(req, res){
     let customerData = req.body;
-    let customerDetail = await customerDB.login(customerData);
+    let customerDetail = await customerDML.login(customerData);
     // console.log(customerDetail);
     if(customerDetail.length == 0){
         res.send("<h1>Incorrect login details</h1>");
@@ -61,7 +61,7 @@ exports.customerDetail = async function(req, res){
     // console.log(customer_id);
     // console.log(customerId);
     if(customer_id == customerId){
-        let customerDetail = await customerDB.searchcustomer(customerId);
+        let customerDetail = await customerDML.searchcustomer(customerId);
         customerDetail = JSON.stringify(customerDetail);
         res.send(customerDetail);
     } else{
@@ -75,8 +75,8 @@ exports.updateDetail = async function(req, res){
     // console.log(customerData.id);
     // console.log(customer_id);
     if(customerData.id == customer_id){
-        customerDB.updatecustomer(customerData, customer_id);
-        let customerDetail = await customerDB.searchcustomer(customerData.id);
+        customerDML.updatecustomer(customerData, customer_id);
+        let customerDetail = await customerDML.searchcustomer(customerData.id);
         customerDetail = JSON.stringify(customerDetail);
         res.send("<h1>Your details are updated, New details are--</h1>"+customerDetail);   
     } else{
@@ -88,7 +88,7 @@ exports.updateDetail = async function(req, res){
 exports.deletecustomer = function(req, res){
     let customerId = req.params.id;
     if(customer_id == customerId){
-        customerDB.deletecustomer(customerId);
+        customerDML.deletecustomer(customerId);
         res.send("<h1>Your account is deleted</h1>")
     } else{
         res.send("<h1>You are not logged in, login again</h1>")
@@ -100,7 +100,7 @@ exports.deletecustomer = function(req, res){
 exports.productDisplay = async function(req, res){
     let customerId = req.params.id;
     if(customer_id == customerId){
-       let products = await customerDB.allProductDisplay();
+       let products = await customerDML.allProductDisplay();
         res.send(products);
     } else{
         res.send("<h1>Session expired, login again</h1>")
@@ -113,7 +113,7 @@ exports.productDetail = async function(req, res){
     let customerId = req.params.id;
     let productId = req.params.productid;
     if(customerId == customer_id){
-        let productDetail = await customerDB.productDisplay(productId);
+        let productDetail = await customerDML.productDisplay(productId);
         productDetail = JSON.stringify(productDetail);
         res.send(productDetail+"<h1>To add this product to cart, add quantity of products you want to buy in body</h1>");
     } else{
@@ -128,15 +128,15 @@ exports.addToCart = async function(req, res){
     let productId = req.params.productid;
     let productQuantity = req.body.quantity;
     if(customerId == customer_id){
-        customerDB.addToCart(productId, customerId, productQuantity);
-        let searchItem = await customerDB.searchItem(customerId, productId);
+        customerDML.addToCart(productId, customerId, productQuantity);
+        let searchItem = await customerDML.searchItem(customerId, productId);
         if(searchItem.length == 1){
             searchItem = JSON.stringify(searchItem)
             res.send("<h1>Product added to cart</h1>" + searchItem); 
         } else{
             // console.log(searchItem);
-            customerDB.removeItem(searchItem);
-            let cartDisplay = await customerDB.cartDisplay(customerId);
+            customerDML.removeItem(searchItem);
+            let cartDisplay = await customerDML.cartDisplay(customerId);
             cartDisplay = JSON.stringify(cartDisplay);
             res.send("<h1>Product is already inside cart, check your cart and place order</h1><h3>Or if you want to update or delete your cart item, use respective cart id</h3>"+cartDisplay);
         }
@@ -150,7 +150,7 @@ exports.addToCart = async function(req, res){
 exports.cartDetail = async function(req, res){
     let customerId = req.params.id;
     if(customerId == customer_id){
-        let cartDisplay = await customerDB.cartDisplay(customerId);
+        let cartDisplay = await customerDML.cartDisplay(customerId);
         cartDisplay = JSON.stringify(cartDisplay);
         res.send("<h1>Select any cart id and place order</h1>"+cartDisplay);
     } else{
@@ -163,7 +163,7 @@ exports.cartItemDetail = async function(req, res) {
     let cartId = req.params.cartid;
     let customerId = req.params.id;
     if(customerId == customer_id){
-        let cartItemDisplay = await customerDB.cartItemDisplay(cartId);
+        let cartItemDisplay = await customerDML.cartItemDisplay(cartId);
         // console.log(cartItemDisplay);
         cartItemDisplay = JSON.stringify(cartItemDisplay);
         res.send("<h1>To order this item in cart use cart id and place order</h1>" +cartItemDisplay);   
@@ -177,7 +177,7 @@ exports.removeItem = function(req, res){
     let cartId = req.params.cartid;
     let customerId = req.params.id;
     if(customerId == customer_id){
-        customerDB.removeCartItem(cartId);
+        customerDML.removeCartItem(cartId);
         res.send("Item removed from cart");
     } else{
         res.send("<h1>Session expired, login again</h1>");
@@ -196,9 +196,9 @@ exports.placeOrder = async function (req, res) {
     let customerId = req.params.id;
     let orderDetail = req.body;     
     if(customerId == customer_id){
-        let cartIdReturn = await customerDB.placeOrder(orderDetail, cartId, customerId);
+        let cartIdReturn = await customerDML.placeOrder(orderDetail, cartId, customerId);
         if(cartIdReturn != null || cartIdReturn != undefined || cartIdReturn != 0){
-            let similarOrder = await customerDB.searchOrder(cartIdReturn);
+            let similarOrder = await customerDML.searchOrder(cartIdReturn);
             let lastOrder = similarOrder[similarOrder.length - 1]
             // console.log(lastOrder);
             res.send("<h1>Your order is placed successfully</h1><ul><li>Your order id: "+lastOrder.order_id+"</li><li>Your tracking id: "+lastOrder.order_tracking_id+"</li></ul>");
@@ -215,7 +215,7 @@ exports.getAllOrders = async function(req, res){
     let customerId = req.params.id;
     // console.log(customer_id);
     if(customerId == customer_id){
-        let allOrders = await customerDB.allOrders(customerId);
+        let allOrders = await customerDML.allOrders(customerId);
         if(allOrders.length == 0){
             res.send("<h1>No orders placed yet, check your cart and place order</h1>")
         } else{
@@ -232,7 +232,7 @@ exports.getOrderDetail = async function(req, res){
     let customerId = req.params.id;
     let orderId = req.params.orderid;
     if(customerId == customer_id){
-        let orderDisplay = await customerDB.orderDisplay(orderId)
+        let orderDisplay = await customerDML.orderDisplay(orderId)
         res.send(orderDisplay);
     } else{
         res.send("<h1>Session expired, login again</h1>");
@@ -244,7 +244,7 @@ exports.deleteOrder = function(req, res){
     let customerId = req.params.id;
     let orderId = req.params.orderid;
     if(customerId == customer_id){
-        customerDB.deleteOrder(orderId);
+        customerDML.deleteOrder(orderId);
         res.send("<h1>Order deleted successfully.</h1>")
     } else{
         res.send("<h1>Session expired, login again</h1>");

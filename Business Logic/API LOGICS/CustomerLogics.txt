@@ -1,0 +1,92 @@
+
+--------------------------------------------Customer SIDE APIs-----------------------------------------
+1. Welcome page for customer:
+    API-        http://localhost:3000/customer
+    METHOD-     GET METHOD
+
+2.  To see ecommerce as a guest
+    API-        http://localhost:3000/customer/guest
+    METHOD- 	GET METHOD
+
+3. To get details required to register
+    API-        http://localhost:3000/customer/register
+    METHOD-     GET METHOD
+
+4. To register account
+    API-        http://localhost:3000/customer/register
+    METHOD-     POST METHOD
+
+5. To get details required to login
+    API-        http://localhost:3000/customer/login
+    METHOD-     GET METHOD
+
+6. To login account
+    API-        http://localhost:3000/customer/login
+    METHOD-     POST METHOD
+
+7. To get customer own details
+    API-        http://localhost:3000/customer/login/:id
+    METHOD-     GET METHOD
+
+8. To update customer own details
+    API-        http://localhost:3000/customer/login/:id
+    METHOD-     PATCH METHOD
+
+9. To delete customer own account
+    API-        http://localhost:3000/customer/login/:id
+    METHOD-     DELETE METHOD
+
+10. To see all product available to buy
+    API-        http://localhost:3000/customer/login/:id/product
+    METHOD-     GET METHOD
+
+11. To see any single product full details
+    API-        http://localhost:3000/customer/login/:id/product/:productid
+    METHOD-     GET METHOD
+
+12. To add that product to cart
+    API-        http://localhost:3000/customer/login/:id/product/:productid
+    METHOD-     POST METHOD
+
+13. To see all products added inside cart
+    API-        http://localhost:3000/customer/login/:id/cart
+    METHOD-      GET METHOD
+
+14. To see any particular product inside cart in detail
+    API-        http://localhost:3000/customer/login/:id/cart/:cartid
+    METHOD-     GET METHOD
+
+15. To remove that selected item from cart
+    API-        http://localhost:3000/customer/login/:id/cart/:cartid
+    METHOD-     DELETE METHOD
+
+16. To see all details required to place order
+    API-        http://localhost:3000/customer/login/:id/cart/:cartid/order
+    METHOD-     GET METHOD
+
+17. To add detils and place order
+    API-        http://localhost:3000/customer/login/:id/cart/:cartid/order
+    METHOD-     POST METHOD
+
+18. To see all orders placed by customer
+    API-        http://localhost:3000/customer/login/:id/order
+    METHOD-     GET METHOD
+
+19. To see any particular order in detail
+    API-        http://localhost:3000/customer/login/:id/order/:orderid
+    METHOD-     GET METHOD
+
+20. To remove/cancel that order
+    API-        http://localhost:3000/customer/login/:id/order/:orderid
+    METHOD-     DELETE METHOD
+
+
+
+
+
+
+
+
+
+
+

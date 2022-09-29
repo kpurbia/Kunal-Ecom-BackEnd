@@ -1,11 +1,11 @@
-const customerDB = require('./dbserver.js');
+const customer = require('./dbserver.js');
 
 //////////////////////////////////////////////////////Products display for guests
 exports.guestProduct = function(){
     // console.log("Inside db");
     return new Promise((resolve) => {
         let searchQuery = "SELECT product.product_name, product.product_price, vendor.vendor_name FROM `product` INNER JOIN `vendor` ON product.product_vendor_id = vendor.vendor_id";
-        customerDB.query(searchQuery, (err, result)=>{
+        customer.query(searchQuery, (err, result)=>{
             if(err){
                 throw err;
             } else{
@@ -20,8 +20,8 @@ exports.guestProduct = function(){
 exports.register = function(data){
     return new Promise((resolve) => {
         let registerQuery = "INSERT INTO customer (customer_name, customer_email, customer_password, customer_contact, customer_state, customer_city) VALUES (?, ?, ?, ?, ?, ?);"
-        let registerData = customerDB.format(registerQuery, [data.name, data.email, data.password, data.contact, data.state, data.city]);
-        customerDB.query(registerData, (err, result)=>{
+        let registerData = customer.format(registerQuery, [data.name, data.email, data.password, data.contact, data.state, data.city]);
+        customer.query(registerData, (err, result)=>{
             if(err){
                 throw err;
             } else{
@@ -36,7 +36,7 @@ exports.checkCustomer = function(data){
     return new Promise((resolve)=>{
         let searchQuery = "SELECT * FROM customer WHERE customer_email = '"+data.email + "'";
         // console.log(searchQuery);
-        customerDB.query(searchQuery, (err, result)=>{
+        customer.query(searchQuery, (err, result)=>{
             if(err){
                 throw err;
             } else{
@@ -52,7 +52,7 @@ exports.remove = function(data){
     // console.log(data);
     let removeQuery = 'DELETE FROM customer WHERE customer_id ='+data[1].customer_id;
     // console.log(removeQuery);
-    customerDB.query(removeQuery, (err, result)=>{
+    customer.query(removeQuery, (err, result)=>{
         if(err){
             throw err;
         } else{
@@ -65,9 +65,9 @@ exports.remove = function(data){
 exports.login = function(data){
     return new Promise((resolve)=>{
         let searchCmd = "SELECT * FROM customer WHERE customer_email = ? AND customer_password = ?"
-        let searchQuery = customerDB.format(searchCmd, [data.email, data.password])
+        let searchQuery = customer.format(searchCmd, [data.email, data.password])
         // console.log(searchQuery);
-        customerDB.query(searchQuery, (err, result)=>{
+        customer.query(searchQuery, (err, result)=>{
             if(err){
                 throw err;
             } else{
@@ -82,7 +82,7 @@ exports.login = function(data){
 exports.searchcustomer = function(id){
     return new Promise((resolve) => {
         let searchQuery = "SELECT * FROM customer WHERE customer_id = "+id;
-        customerDB.query(searchQuery, (err, result)=>{
+        customer.query(searchQuery, (err, result)=>{
             if(err){
                 throw err;
             } else{
@@ -95,7 +95,7 @@ exports.searchcustomer = function(id){
 //////////////////////////////////////////////////////Customer updating own data stored in account
 exports.updatecustomer = function(data, id){
     let updateQuery = "UPDATE customer SET customer_name = '"+data.name+"', customer_email= '"+data.email+"', customer_password = '"+data.password+"', customer_contact = '"+data.contact+"', customer_state = '"+data.state+"', customer_city = '"+data.city+"' WHERE customer_id =" +id;
-    customerDB.query(updateQuery, (err, result)=>{
+    customer.query(updateQuery, (err, result)=>{
         if(err){
             throw err;
         }
@@ -105,7 +105,7 @@ exports.updatecustomer = function(data, id){
 //////////////////////////////////////////////////////Customer deleting own account
 exports.deletecustomer = function(id){
     let deleteQuery = "DELETE FROM customer WHERE customer_id = "+id;
-    customerDB.query(deleteQuery, (err, result)=>{
+    customer.query(deleteQuery, (err, result)=>{
         if(err){
             throw err;
         }
@@ -116,7 +116,7 @@ exports.deletecustomer = function(id){
 exports.allProductDisplay = function(){
     return new Promise((resolve) => {
         let searchQuery = "SELECT product.product_id, product.product_name, product.product_price, vendor.vendor_name FROM `product` INNER JOIN `vendor` ON product.product_vendor_id = vendor.vendor_id";
-        customerDB.query(searchQuery, (err, result)=>{
+        customer.query(searchQuery, (err, result)=>{
             if(err){
                 throw err;
             } else{
@@ -132,7 +132,7 @@ exports.allProductDisplay = function(){
 exports.productDisplay = function(product_id){
     return new Promise((resolve) => {
         let searchQuery = "SELECT * FROM product WHERE product_id = "+product_id;
-        customerDB.query(searchQuery, (err, result)=>{
+        customer.query(searchQuery, (err, result)=>{
             if(err){
                 throw err;
             } else{
@@ -145,8 +145,8 @@ exports.productDisplay = function(product_id){
 //////////////////////////////////////////////////////Adding product to cart using post
 exports.addToCart = function(product_id, customerId, productQuantity){
     let insertCmd = "INSERT INTO cart (cart_product_id, cart_customer_id, cart_product_quantity) VALUES (?, ?, ?)";
-    let insertQuery = customerDB.format(insertCmd, [product_id, customerId, productQuantity]);
-    customerDB.query(insertQuery, (err, resut)=>{
+    let insertQuery = customer.format(insertCmd, [product_id, customerId, productQuantity]);
+    customer.query(insertQuery, (err, resut)=>{
         if(err){
             throw err;
         }
@@ -157,7 +157,7 @@ exports.addToCart = function(product_id, customerId, productQuantity){
 exports.searchItem = function(customerId, productId){
     return new Promise((resolve) => {
         let searchQuery = "SELECT * FROM cart WHERE cart_customer_id = "+customerId+" AND cart_product_id = "+productId;
-        customerDB.query(searchQuery, (err, result)=>{
+        customer.query(searchQuery, (err, result)=>{
             if(err){
                 throw err;
             } else{
@@ -172,7 +172,7 @@ exports.searchItem = function(customerId, productId){
 //////////////////////////////////////////////////////Removing duplicate item in cart
 exports.removeItem = function(data) {
     let removeQuery = "DELETE FROM cart WHERE cart_id = "+data[1].cart_id;
-    customerDB.query(removeQuery, (err, result)=>{
+    customer.query(removeQuery, (err, result)=>{
         if(err){
             throw err;
         }
@@ -183,7 +183,7 @@ exports.removeItem = function(data) {
 exports.cartDisplay = function (id) {
     return new Promise((resolve) => {
         let displayQuery = "SELECT * FROM cart WHERE cart_customer_id = "+id;
-        customerDB.query(displayQuery, (err, result)=>{
+        customer.query(displayQuery, (err, result)=>{
             if(err){
                 throw err;
             } else{
@@ -198,7 +198,7 @@ exports.cartDisplay = function (id) {
 exports.cartItemDisplay = function(cartid){
     return new Promise((resolve)=>{
         let displayQuery = "SELECT * FROM cart WHERE cart_id = "+cartid;
-        customerDB.query(displayQuery, (err, result)=>{
+        customer.query(displayQuery, (err, result)=>{
             if(err){
                 throw err;
             } else{
@@ -211,7 +211,7 @@ exports.cartItemDisplay = function(cartid){
 //////////////////////////////////////////////////////Remove selected cart item or cart item placed for order
 exports.removeCartItem = function(cartId){
     let deleteItemQuery = "DELETE FROM cart WHERE cart_id = "+cartId;
-    customerDB.query(deleteItemQuery, (err, result)=>{
+    customer.query(deleteItemQuery, (err, result)=>{
         if(err){
             throw err;
         }
@@ -226,8 +226,8 @@ exports.placeOrder = function(data, cartId, customerId){
         const today = new Date(timeElapsed);
         const placeDate = today.toDateString();
         let insertCmd = "INSERT INTO `order` (order_cart_id, order_tracking_id, order_customer_id, order_delivery_name, order_delivery_contact, order_delivery_address, order_delivery_city, order_delivery_state, order_place_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"
-        let insertQuery = customerDB.format(insertCmd, [cartId, trackId, customerId, data.name, data.contact, data.address, data.city, data.state, placeDate]);
-        customerDB.query(insertQuery, (err, result)=>{
+        let insertQuery = customer.format(insertCmd, [cartId, trackId, customerId, data.name, data.contact, data.address, data.city, data.state, placeDate]);
+        customer.query(insertQuery, (err, result)=>{
         if(err){
             throw err;
         } else{
@@ -241,7 +241,7 @@ exports.placeOrder = function(data, cartId, customerId){
 exports.searchOrder = function(cartId){
     return new Promise((resolve) => {
         let searchQuery = "SELECT * FROM `order` WHERE order_cart_id = "+cartId;
-        customerDB.query(searchQuery, (err, result)=>{
+        customer.query(searchQuery, (err, result)=>{
             if(err){
                 throw err;
             } else{
@@ -255,7 +255,7 @@ exports.searchOrder = function(cartId){
 exports.allOrders = function(customerId){
     return new Promise((resolve) => {
         let searchQuery = "SELECT * FROM `order` WHERE order_customer_id = "+customerId;
-        customerDB.query(searchQuery, (err, result)=>{
+        customer.query(searchQuery, (err, result)=>{
             if(err){
                 throw err;
             } else{
@@ -269,7 +269,7 @@ exports.allOrders = function(customerId){
 exports.orderDisplay = function(orderId){
     return new Promise((resolve)=>{
         let searchQuery = "SELECT * FROM `order` WHERE order_id = "+orderId;
-        customerDB.query(searchQuery, (err, result)=>{
+        customer.query(searchQuery, (err, result)=>{
             if(err){
                 throw err;
             } else{
@@ -283,7 +283,7 @@ exports.orderDisplay = function(orderId){
 //////////////////////////////////////////////////////Delete selected order
 exports.deleteOrder = function(orderId){
     let updateQuery = "UPDATE `order` SET order_status = 'cancelled' WHERE order_id = "+orderId;
-    customerDB.query(updateQuery, (err, result)=>{
+    customer.query(updateQuery, (err, result)=>{
         if(err){
             throw err;
         }

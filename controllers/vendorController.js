@@ -1,4 +1,4 @@
-const vendorDB = require('../model/vendordb');
+const vendorDML = require('../models/vendorDML');
 let vendor_id;
 
 //////////////////////////////////////////////////////Display of details required for registration
@@ -10,15 +10,15 @@ exports.registerDetail = function(req, res){
 exports.registerVendor = async function(req, res){
     let vendorData = req.body;
     if(vendorData.password == vendorData.conpassword){
-        let vendor = await vendorDB.register(vendorData);
+        let vendor = await vendorDML.register(vendorData);
         // console.log(vendor);
-        let checkVendor = await vendorDB.checkVendor(vendorData);
+        let checkVendor = await vendorDML.checkVendor(vendorData);
         // console.log(checkVendor);
         if(checkVendor.length == 1){
             res.send("<h1>Your account is registered, " +vendor.name+"</h1>");
         } else{
             // console.log("Inside else");
-            vendorDB.remove(checkVendor);
+            vendorDML.remove(checkVendor);
             res.send("<h1>Your account is already registered, try login</h1>");
         }
 
@@ -35,7 +35,7 @@ exports.loginDetail = function(req, res){
 //////////////////////////////////////////////////////Login Vendor
 exports.loginVendor = async function(req, res){
     let vendorData = req.body;
-    let vendorDetail = await vendorDB.login(vendorData);
+    let vendorDetail = await vendorDML.login(vendorData);
     // console.log(vendorDetail);
     if(vendorDetail.length == 0){
         res.send("<h1>Incorrect login details</h1>");
@@ -51,7 +51,7 @@ exports.vendorDetail = async function(req, res){
     let vendorId = req.params.id;
     console.log(vendorId);
     if(vendor_id == vendorId){
-        let vendorDetail = await vendorDB.searchVendor(vendorId);
+        let vendorDetail = await vendorDML.searchVendor(vendorId);
         vendorDetail = JSON.stringify(vendorDetail);
         res.send(vendorDetail);
     } else{
@@ -63,8 +63,8 @@ exports.vendorDetail = async function(req, res){
 exports.updateDetail = async function(req, res){
     let vendorData = req.body;
     if(vendorData.id == vendor_id){
-        vendorDB.updateVendor(vendorData, vendor_id);
-        let vendorDetail = await vendorDB.searchVendor(vendorData.id);
+        vendorDML.updateVendor(vendorData, vendor_id);
+        let vendorDetail = await vendorDML.searchVendor(vendorData.id);
         vendorDetail = JSON.stringify(vendorDetail);
         res.send("<h1>Your details are updated, New details are--</h1>"+vendorDetail);   
     } else{
@@ -76,7 +76,7 @@ exports.updateDetail = async function(req, res){
 exports.deleteVendor = function(req, res){
     let vendorId = req.body.id;
     if(vendor_id == vendorId){
-        vendorDB.deleteVendor(vendorId);
+        vendorDML.deleteVendor(vendorId);
         res.send("<h1>Your account is deleted</h1>")
     } else{
         res.send("<h1>You are not logged in, login again</h1>")
@@ -87,16 +87,16 @@ exports.deleteVendor = function(req, res){
 exports.addProduct = async function(req, res){
     let productData = req.body;
     let productAdded = {}
-    productAdded = await vendorDB.addProduct(productData, vendor_id);
+    productAdded = await vendorDML.addProduct(productData, vendor_id);
     // console.log(productAdded);
-    let checkProduct = await vendorDB.searchProduct(productData, vendor_id);
+    let checkProduct = await vendorDML.searchProduct(productData, vendor_id);
     // console.log(checkProduct);
     if(checkProduct.length == 1){
-        let vendor_product = await vendorDB.productDisplay(vendor_id);
+        let vendor_product = await vendorDML.productDisplay(vendor_id);
         let displayProduct = JSON.stringify(vendor_product);
         res.send("<h1>Product added</h1>"+displayProduct+"\n<h1>Add more products to sell</h1><h3>Details of product required:</h3><ul><li>Product Name</li><li>Product Category</li><li>Product Price</li><li>Product quantity</li></ul>");
     } else{
-        vendorDB.removeDuplicateProduct(checkProduct);
+        vendorDML.removeDuplicateProduct(checkProduct);
         res.send("<h1>This product is already added, you can update the details if you want</h1>");
     }
 }
@@ -106,7 +106,7 @@ exports.productDisplay = async function(req, res){
     let vendor_login_id = req.params.id;
     // console.log(vendor_id);
     if(vendor_id == vendor_login_id){
-        let vendor_product = await vendorDB.productDisplay(vendor_login_id);
+        let vendor_product = await vendorDML.productDisplay(vendor_login_id);
         if(vendor_product.length == 0){
             res.send("<h1>No products added, add your products to sell</h1><h3>Details of product required:</h3><ul><li>Product Name</li><li>Product Category</li><li>Product Price</li><li>Product quantity</li></ul>")
         } else{
@@ -120,11 +120,18 @@ exports.productDisplay = async function(req, res){
 }
 
 
+productDetail
+
+updateProduct
+
+deleteProduct
+
+
 //////////////////////////////////////////////////////Updating detail of product
 exports.updateProduct = async function(req, res){
     let updateData = req.body;
-    vendorDB.updateProduct(updateData, vendor_id);
-    let vendor_product = await vendorDB.productDisplay(vendor_id);
+    vendorDML.updateProduct(updateData, vendor_id);
+    let vendor_product = await vendorDML.productDisplay(vendor_id);
     let displayProduct = JSON.stringify(vendor_product);
     res.send(displayProduct+"\n<h1>Add more products to sell</h1><h3>Details of product required:</h3><ul><li>Product Name</li><li>Product Category</li><li>Product Price</li><li>Product quantity</li></ul>");
 }
@@ -132,8 +139,8 @@ exports.updateProduct = async function(req, res){
 //////////////////////////////////////////////////////Deleting product
 exports.deleteProduct = async function(req, res){
     let delete_product = req.body;
-    vendorDB.deleteProduct(delete_product);
-    let vendor_product = await vendorDB.productDisplay(vendor_id);
+    vendorDML.deleteProduct(delete_product);
+    let vendor_product = await vendorDML.productDisplay(vendor_id);
     let displayProduct = JSON.stringify(vendor_product);
     res.send(displayProduct+"\n<h1>Add more products to sell</h1><h3>Details of product required:</h3><ul><li>Product Name</li><li>Product Category</li><li>Product Price</li><li>Product quantity</li></ul>");
 }

@@ -1,4 +1,4 @@
-const agentDB = require('../model/agentdb');
+const agentDML = require('../models/agentDML');
 let agent_id;
 
 //////////////////////////////////////////////////////Display of details required for registration
@@ -10,15 +10,15 @@ exports.registerDetail = function(req, res){
 exports.registerAgent = async function(req, res){
     let agentData = req.body;
     if(agentData.password == agentData.conpassword){
-        let agent = await agentDB.register(agentData);
+        let agent = await agentDML.register(agentData);
         // console.log(agent);
-        let checkagent = await agentDB.checkagent(agentData);
+        let checkagent = await agentDML.checkagent(agentData);
         // console.log(checkagent);
         if(checkagent.length == 1){
             res.send("<h1>Your account is registered, " +agent.name+"</h1><h3>Login your account using-- http://localhost:300/agent/login</h3>");
         } else{
             // console.log("Inside else");
-            agentDB.remove(checkagent);
+            agentDML.remove(checkagent);
             res.send("<h1>Your account is already registered, try login</h1>");
         }
 
@@ -35,7 +35,7 @@ exports.loginDetail = function(req, res){
 //////////////////////////////////////////////////////Login agent
 exports.loginAgent = async function(req, res){
     let agentData = req.body;
-    let agentDetail = await agentDB.login(agentData);
+    let agentDetail = await agentDML.login(agentData);
     // console.log(agentDetail);
     if(agentDetail.length == 0){
         res.send("<h1>Incorrect login details</h1>");
@@ -51,7 +51,7 @@ exports.agentDetail = async function(req, res){
     let agentId = req.params.id;
     console.log(agentId);
     if(agent_id == agentId){
-        let agentDetail = await agentDB.searchagent(agentId);
+        let agentDetail = await agentDML.searchagent(agentId);
         agentDetail = JSON.stringify(agentDetail);
         res.send(agentDetail);
     } else{
@@ -64,8 +64,8 @@ exports.updateDetail = async function(req, res){
     let agentId = req.params.id;
     let agentData = req.body;
     if(agentId == agent_id){
-        agentDB.updateagent(agentData, agent_id);
-        let agentDetail = await agentDB.searchagent(agentData.id);
+        agentDML.updateagent(agentData, agent_id);
+        let agentDetail = await agentDML.searchagent(agentData.id);
         agentDetail = JSON.stringify(agentDetail);
         res.send("<h1>Your details are updated, New details are--</h1>"+agentDetail);   
     } else{
@@ -77,7 +77,7 @@ exports.updateDetail = async function(req, res){
 exports.deleteAgent = function(req, res){
     let agentId = req.params.id;
     if(agent_id == agentId){
-        agentDB.deleteagent(agentId);
+        agentDML.deleteagent(agentId);
         res.send("<h1>Your account is deleted</h1>")
     } else{
         res.send("<h1>Session expired, login again</h1>");
@@ -88,7 +88,7 @@ exports.deleteAgent = function(req, res){
 exports.orderDisplay = async function(req, res){
     let agentId = req.params.id;
     if(agent_id == agentId){
-        let allOrders = await agentDB.getOrders();
+        let allOrders = await agentDML.getOrders();
         if(allOrders.length == 0){
             res.send("<h1>OOPS, no orders are there for delivery, lets wait for sometime</h1>")
         } else{
@@ -105,7 +105,7 @@ exports.orderDetail = async function(req, res){
     let agentId = req.params.id;
     let orderId = req.params.orderid;
     if(agentId == agent_id){
-        let orderDetail = await agentDB.orderDetail(orderId)
+        let orderDetail = await agentDML.orderDetail(orderId)
         if(orderDetail.length == 0){
             res.send("<h1>Order id not found, check and try again</h1>")
         } else{
@@ -123,21 +123,21 @@ exports.addTrack = async function(req, res){
     let orderId = req.params.orderid;
     let deliveryDetail = req.body;
     if(agentId == agent_id){
-        let trackDetail = await agentDB.searchTrackId(orderId);
+        let trackDetail = await agentDML.searchTrackId(orderId);
         let trackId = trackDetail[0].order_tracking_id; 
         // console.log(trackId);
-        agentDB.addToTrack(agentId, orderId, trackId, deliveryDetail);
-        let checkTrack = await agentDB.checkTrack(orderId, trackId);
+        agentDML.addToTrack(agentId, orderId, trackId, deliveryDetail);
+        let checkTrack = await agentDML.checkTrack(orderId, trackId);
         let status = checkTrack[0].tracking_delivery_status;
         // console.log(checkTrack);
         if(checkTrack.length == 1){
             checkTrack = JSON.stringify(checkTrack)
-            agentDB.updateOrder(orderId, status);
+            agentDML.updateOrder(orderId, status);
             res.send("<h1>Delivery of order is assigned to " + deliveryDetail.name + "</h1>"); 
         } else{
             // console.log(checkTrack);
-            agentDB.removeTrack(checkTrack);
-            let trackDisplay = await agentDB.trackDisplay(orderId);
+            agentDML.removeTrack(checkTrack);
+            let trackDisplay = await agentDML.trackDisplay(orderId);
             // console.log(trackDisplay);
             let employeeName = trackDisplay[0].tracking_employee_name;
             res.send("<h1>Product is already assigned to "+employeeName+"</h1>");
@@ -151,7 +151,7 @@ exports.addTrack = async function(req, res){
 exports.fullTrackDisplay = async function(req, res){
     let agentId = req.params.id;
     if(agentId == agent_id){
-        let trackDetail = await agentDB.searchFullTrack(agentId);
+        let trackDetail = await agentDML.searchFullTrack(agentId);
         trackDetail = JSON.stringify(trackDetail);
         res.send("<h1>All orders are under your responsibility</h1><h3>"+trackDetail+"</h3><h4>To update any track use track id-- http://localhost:3000/agent/login/:id/track/:trackid");
     } else{
@@ -164,7 +164,7 @@ exports.trackDetail = async function(req, res){
     let agentId = req.params.id;
     let trackId = req.params.trackid;
     if(agentId == agent_id){
-        let trackDetail = await agentDB.trackDetail(agentId, trackId)
+        let trackDetail = await agentDML.trackDetail(agentId, trackId)
         if(trackDetail.length == 1){
             trackDetail = JSON.stringify(trackDetail);
             res.send("<h1>All details of track: </h1><h2>"+trackDetail+"</h2><h1>You can update delivery status or delivery date using track id</h1>")
@@ -183,12 +183,12 @@ exports.trackUpdate = async function(req, res){
     let updateData = req.body;
     let status = updateData.status;
     if(agentId = agent_id){
-        let trackDetail = await agentDB.trackDetail(agentId, trackId)
+        let trackDetail = await agentDML.trackDetail(agentId, trackId)
         let orderId = trackDetail[0].tracking_order_id;
         if(trackDetail.length == 1){
-            agentDB.updateTrack(agentId, trackId, updateData)
-            agentDB.updateOrder(orderId, status);
-            let trackDetail = await agentDB.trackDetail(agentId, trackId);
+            agentDML.updateTrack(agentId, trackId, updateData)
+            agentDML.updateOrder(orderId, status);
+            let trackDetail = await agentDML.trackDetail(agentId, trackId);
             trackDetail = JSON.stringify(trackDetail);
             res.send("<h1>Details of track updated</h1>");
         } else{

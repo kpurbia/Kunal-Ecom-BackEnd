@@ -1,11 +1,11 @@
 const agent = require('./dbServer/dbserver.js');
 
 //////////////////////////////////////////////////////Adding agent data to agent table
-exports.register = function(data){
+exports.register = function(data, id){
     return new Promise((resolve)=>{
         // let agentData = data;
-        let registerQuery = "INSERT INTO agent (agent_name, agent_email, agent_password, agent_govt_id, agent_contact, agent_state, agent_city) VALUES (?, ?, ?, ?, ?, ?, ?);"
-        let registerData = agent.format(registerQuery, [data.name, data.email, data.password, data.govtid, data.contact, data.state, data.city]);
+        let registerQuery = "INSERT INTO agents (agent_govt_id, agent_user_id) VALUES (?, ?);"
+        let registerData = agent.format(registerQuery, [data.govtid, id]);
         agent.query(registerData, (err, result)=>{
             if(err){
                 throw err;
@@ -17,9 +17,9 @@ exports.register = function(data){
 }
 
 //////////////////////////////////////////////////////Checking repeat agent registered in agent table
-exports.checkagent = function(data){
+exports.checkAgent = function(data){
     return new Promise((resolve)=>{
-        let searchQuery = "SELECT * FROM agent WHERE agent_govt_id = '"+data.govtid + "'";
+        let searchQuery = "SELECT * FROM agents WHERE agent_govt_id = '"+data.govtid + "'";
         // console.log(searchQuery);
         agent.query(searchQuery, (err, result)=>{
             if(err){
@@ -33,15 +33,10 @@ exports.checkagent = function(data){
 
 //////////////////////////////////////////////////////Removing repeated agent detail
 exports.remove = function(data){
-    // console.log("Inside remove");
-    // console.log(data);
-    let removeQuery = 'DELETE FROM agent WHERE agent_id='+data[1].agent_id;
-    // console.log(removeQuery);
+    let removeQuery = 'DELETE FROM agents WHERE agent_id ='+data[1].agent_id;
     agent.query(removeQuery, (err, result)=>{
         if(err){
             throw err;
-        } else{
-            console.log("Duplicate data removed");
         }
     })
 }
@@ -49,7 +44,7 @@ exports.remove = function(data){
 //////////////////////////////////////////////////////Checking agent table and log in agent
 exports.login = function(data){
     return new Promise((resolve)=>{
-        let searchCmd = "SELECT * FROM agent WHERE agent_email = ? AND agent_password = ? AND agent_govt_id = ?"
+        let searchCmd = "SELECT * FROM agents WHERE agent_email = ? AND agent_password = ? AND agent_govt_id = ?"
         let searchQuery = agent.format(searchCmd, [data.email, data.password, data.govtid])
         // console.log(searchQuery);
         agent.query(searchQuery, (err, result)=>{
@@ -66,7 +61,7 @@ exports.login = function(data){
 //////////////////////////////////////////////////////Searching agent data using agent id
 exports.searchagent = function(id){
     return new Promise((resolve) => {
-        let searchQuery = "SELECT * FROM agent WHERE agent_id = "+id;
+        let searchQuery = "SELECT * FROM agents WHERE agent_id = "+id;
         agent.query(searchQuery, (err, result)=>{
             if(err){
                 throw err;
@@ -79,7 +74,7 @@ exports.searchagent = function(id){
 
 //////////////////////////////////////////////////////Deleting agent data from agent table
 exports.deleteagent = function(id){
-    let deleteQuery = "DELETE FROM agent WHERE agent_id = "+id;
+    let deleteQuery = "DELETE FROM agents WHERE agent_id = "+id;
     agent.query(deleteQuery, (err, result)=>{
         if(err){
             throw err;
@@ -89,7 +84,7 @@ exports.deleteagent = function(id){
 
 //////////////////////////////////////////////////////Updating agent data in agent table
 exports.updateagent = function(data, id){
-    let updateQuery = "UPDATE agent SET agent_name = '"+data.name+"', agent_email= '"+data.email+"', agent_password = '"+data.password+"', agent_govt_id = '"+data.govtid+"', agent_contact = '"+data.contact+"', agent_state = '"+data.state+"', agent_city = '"+data.city+"' WHERE agent_id =" +id;
+    let updateQuery = "UPDATE agents SET agent_name = '"+data.name+"', agent_email= '"+data.email+"', agent_password = '"+data.password+"', agent_govt_id = '"+data.govtid+"', agent_contact = '"+data.contact+"', agent_state = '"+data.state+"', agent_city = '"+data.city+"' WHERE agent_id =" +id;
     agent.query(updateQuery, (err, result)=>{
         if(err){
             throw err;

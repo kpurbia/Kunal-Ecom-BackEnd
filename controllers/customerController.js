@@ -13,7 +13,7 @@ exports.registerCustomer = async function(req, res){
     let role = "Customer"
     if(customerData.password == customerData.password2){
         userDML.register(customerData, role)
-        let checkUser = await userDML.checkUser(customerData, role);
+        let checkUser = await userDML.checkUser(customerData);
         // console.log(checkUser);        
         let userId = checkUser[0].user_id
         if(checkUser.length == 1){

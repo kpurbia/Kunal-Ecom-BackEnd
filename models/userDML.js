@@ -13,7 +13,7 @@ exports.register = function(data, role){
 
 
 //////////////////////////////////////////////////////Checking duplicate data
-exports.checkUser = function(data, role){
+exports.checkUser = function(data){
     return new Promise((resolve) => {
         let searchQuery = "SELECT * FROM users WHERE user_email = '"+data.email+"'";
         user.query(searchQuery, (err, result)=>{

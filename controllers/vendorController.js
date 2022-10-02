@@ -14,7 +14,7 @@ exports.registerVendor = async function(req, res){
     let role = "Vendor"
     if(vendorData.password == vendorData.password2){
         userDML.register(vendorData, role)
-        let checkUser = await userDML.checkUser(vendorData, role);
+        let checkUser = await userDML.checkUser(vendorData);
         let userId = checkUser[0].user_id
         if(checkUser.length == 1){
             vendorDML.register(vendorData, userId);

@@ -2,6 +2,7 @@ const userRoutes = require('./routes/userRoutes')
 const vendorRoutes = require('./routes/vendorRoutes');
 const customerRoutes = require('./routes/customerRoutes');
 const agentRoutes = require('./routes/agentRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 const express = require('express');
 const app = express();
 const port = 3000;
@@ -16,7 +17,8 @@ app.use(express.static("public"));
 userRoutes(app)
 vendorRoutes(app);
 customerRoutes(app);
-// agentRoutes(app);
+agentRoutes(app);
+adminRoutes(app)
 
 //Starting server
 app.listen(port, ()=>{

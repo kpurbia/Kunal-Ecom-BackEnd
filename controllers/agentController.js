@@ -1,31 +1,69 @@
 const agentDML = require('../models/agentDML');
+const userDML = require('../models/userDML');
+const alert = require('alert')
 let agent_id;
 
 //////////////////////////////////////////////////////Display of details required for registration
 exports.registerDetail = function(req, res){
-    res.render("agents/registerAgent");
+    res.render("agent/registerAgent");
 }
 
 //////////////////////////////////////////////////////Registering Agent
 exports.registerAgent = async function(req, res){
     let agentData = req.body;
-    if(agentData.password == agentData.conpassword){
-        let agent = await agentDML.register(agentData);
-        let checkagent = await agentDML.checkagent(agentData);
-        if(checkagent.length == 1){
-            alert("Your account is registered, login and explore");
-            res.render("login");
+    let role = "Agent"
+    if(agentData.password == agentData.password2){
+        userDML.register(agentData, role)
+        let checkUser = await userDML.checkUser(agentData);
+        let userId = checkUser[0].user_id
+        if(checkUser.length == 1){
+            agentDML.register(agentData, userId);
+            let checkAgent = await agentDML.checkAgent(agentData);
+            if(checkAgent.length == 1){
+                alert("Your account is registered, login and explore");
+                res.render("login");
+            } else{
+                userDML.removegovtid(checkUser);
+                agentDML.remove(checkAgent);
+                alert("Your government id is already in use, please check");
+                res.render("login");
+            }
         } else{
-            agentDML.remove(checkagent);
-            alert("Your account is already registered, try login");
+            userDML.remove(checkUser);
+            alert("Your email is already in use, try login");
             res.render("login");
         }
 
     } else {
         alert("Password do not match, try again");
-        res.render("agents/registerAgent");
+        res.render("agent/registerAgent")
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //////////////////////////////////////////////////////Login agent
 exports.loginAgent = async function(req, res){

@@ -3,7 +3,7 @@ let agent_id;
 
 //////////////////////////////////////////////////////Display of details required for registration
 exports.registerDetail = function(req, res){
-    res.send("<h3>Hello delivery partner, welcome to registration page, follow the instructions given below</h3><p>Fill all the required details and press send</p><p><b>Details required for registering your account as our delivery partner</b></p><ul><li>Name</li><li>Email</li><li>Password</li><li>Confirm Password</li><li>Govt Id</li><li>Contact</li><li>State</li><li>City</li></ul>");
+    res.render("agents/registerAgent");
 }
 
 //////////////////////////////////////////////////////Registering Agent
@@ -11,25 +11,20 @@ exports.registerAgent = async function(req, res){
     let agentData = req.body;
     if(agentData.password == agentData.conpassword){
         let agent = await agentDML.register(agentData);
-        // console.log(agent);
         let checkagent = await agentDML.checkagent(agentData);
-        // console.log(checkagent);
         if(checkagent.length == 1){
-            res.send("<h1>Your account is registered, " +agent.name+"</h1><h3>Login your account using-- http://localhost:300/agent/login</h3>");
+            alert("Your account is registered, login and explore");
+            res.render("login");
         } else{
-            // console.log("Inside else");
             agentDML.remove(checkagent);
-            res.send("<h1>Your account is already registered, try login</h1>");
+            alert("Your account is already registered, try login");
+            res.render("login");
         }
 
     } else {
-        res.send("<h1>Password do not match, try again</h1>")
+        alert("Password do not match, try again");
+        res.render("agents/registerAgent");
     }
-}
-
-//////////////////////////////////////////////////////Display of details required for login
-exports.loginDetail = function(req, res){
-    res.send("<h3>Hello agent, welcome to login page, please be ready with the following details to login to your account</h3><ul><li>Email</li><li>Password</li><li>GovtId</li></ul>");
 }
 
 //////////////////////////////////////////////////////Login agent

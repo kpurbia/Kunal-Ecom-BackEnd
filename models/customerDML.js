@@ -17,61 +17,30 @@ exports.guestProduct = function(){
 }
 
 //////////////////////////////////////////////////////Registration of customer
-exports.register = function(data){
+exports.register = function(id){
     return new Promise((resolve) => {
-        let registerQuery = "INSERT INTO customer (customer_name, customer_email, customer_password, customer_contact, customer_state, customer_city) VALUES (?, ?, ?, ?, ?, ?);"
-        let registerData = customer.format(registerQuery, [data.name, data.email, data.password, data.contact, data.state, data.city]);
+        let registerQuery = "INSERT INTO customers (customer_user_id) VALUES (?);"
+        let registerData = customer.format(registerQuery, [id]);
         customer.query(registerData, (err, result)=>{
             if(err){
                 throw err;
-            } else{
-                resolve(data);
             }
         })
     })
 }
 
-//////////////////////////////////////////////////////Checking data duplication of existing customer (Already registered)
-exports.checkCustomer = function(data){
-    return new Promise((resolve)=>{
-        let searchQuery = "SELECT * FROM customer WHERE customer_email = '"+data.email + "'";
-        // console.log(searchQuery);
-        customer.query(searchQuery, (err, result)=>{
-            if(err){
-                throw err;
-            } else{
-                resolve(result);
-            }
-        })
-    });
-}
 
-//////////////////////////////////////////////////////Removing duplicate data of cutomer
-exports.remove = function(data){
-    // console.log("Inside remove");
-    // console.log(data);
-    let removeQuery = 'DELETE FROM customer WHERE customer_id ='+data[1].customer_id;
-    // console.log(removeQuery);
-    customer.query(removeQuery, (err, result)=>{
-        if(err){
-            throw err;
-        } else{
-            console.log("Duplicate data removed");
-        }
-    })
-}
+
 
 //////////////////////////////////////////////////////Login of customer
 exports.login = function(data){
     return new Promise((resolve)=>{
         let searchCmd = "SELECT * FROM customer WHERE customer_email = ? AND customer_password = ?"
         let searchQuery = customer.format(searchCmd, [data.email, data.password])
-        // console.log(searchQuery);
         customer.query(searchQuery, (err, result)=>{
             if(err){
                 throw err;
             } else{
-                // console.log(result);
                 resolve(result);
             }
         })

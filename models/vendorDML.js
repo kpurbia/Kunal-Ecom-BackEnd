@@ -1,11 +1,10 @@
 const vendor = require('./dbServer/dbserver.js');
 
 //////////////////////////////////////////////////////Adding vendor data to vendor table
-exports.register = function(data){
+exports.register = function(data, id){
     return new Promise((resolve)=>{
-        // let vendorData = data;
-        let registerQuery = "INSERT INTO vendor (vendor_name, vendor_govt_id, vendor_email, vendor_password, vendor_category, vendor_state, vendor_city) VALUES (?, ?, ?, ?, ?, ?, ?);"
-        let registerData = vendor.format(registerQuery, [data.name, data.govtid, data.email, data.password, data.category, data.state, data.city]);
+        let registerQuery = "INSERT INTO vendors (vendor_user_id, vendor_govt_id, vendor_category) VALUES (?, ?, ?);"
+        let registerData = vendor.format(registerQuery, [id, data.govtid, data.category]);
         vendor.query(registerData, (err, result)=>{
             if(err){
                 throw err;
@@ -19,8 +18,7 @@ exports.register = function(data){
 //////////////////////////////////////////////////////Checking repeat vendor registered in vendor table
 exports.checkVendor = function(data){
     return new Promise((resolve)=>{
-        let searchQuery = "SELECT * FROM vendor WHERE vendor_govt_id = '"+data.govtid + "'";
-        // console.log(searchQuery);
+        let searchQuery = "SELECT * FROM vendors WHERE vendor_govt_id = '"+data.govtid + "'";
         vendor.query(searchQuery, (err, result)=>{
             if(err){
                 throw err;
@@ -33,24 +31,39 @@ exports.checkVendor = function(data){
 
 //////////////////////////////////////////////////////Removing repeated vendor detail
 exports.remove = function(data){
-    // console.log("Inside remove");
-    // console.log(data);
-    let removeQuery = 'DELETE FROM vendor WHERE vendor_id='+data[1].vendor_id;
-    // console.log(removeQuery);
+    let removeQuery = 'DELETE FROM vendors WHERE vendor_id='+data[1].vendor_id;
     vendor.query(removeQuery, (err, result)=>{
         if(err){
             throw err;
-        } else{
-            console.log("Duplicate data removed");
         }
     })
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //////////////////////////////////////////////////////Checking vendor table and log in vendor
 exports.login = function(data){
     return new Promise((resolve)=>{
-        let searchCmd = "SELECT * FROM vendor WHERE vendor_email = ? AND vendor_password = ? AND vendor_govt_id = ?"
-        let searchQuery = vendor.format(searchCmd, [data.email, data.password, data.govtid])
+        let searchCmd = "SELECT * FROM vendor WHERE vendor_email = ? AND vendor_password = ?"
+        let searchQuery = vendor.format(searchCmd, [data.email, data.password])
         // console.log(searchQuery);
         vendor.query(searchQuery, (err, result)=>{
             if(err){

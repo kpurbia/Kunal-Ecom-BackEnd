@@ -1,3 +1,4 @@
+const userRoutes = require('./routes/userRoutes')
 const vendorRoutes = require('./routes/vendorRoutes');
 const customerRoutes = require('./routes/customerRoutes');
 const agentRoutes = require('./routes/agentRoutes');
@@ -8,16 +9,14 @@ const port = 3000;
 //Setting Middlewares
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-
-//Displaying homepage
-app.get("/", (req, res)=>{
-    res.send("<h3>Hello, welcome to home page of our ecommerce, follow the instructions given below</h3><h5>Check your category of access and use the respective way</h5><p>If you are a vendor, access our page using:</p><ul><li>http://localhost:3000/vendor</li></ul><p>If you are a customer, access our page using:</p><ul><li>http://localhost:3000/customer</li></ul><p>If you are an agent, access our page using:</p><ul><li>http://localhost:3000/agent</li></ul>");
-})
+app.set("view engine", "ejs");
+app.use(express.static("public"));
 
 //Initializing router
+userRoutes(app)
 vendorRoutes(app);
 customerRoutes(app);
-agentRoutes(app);
+// agentRoutes(app);
 
 //Starting server
 app.listen(port, ()=>{

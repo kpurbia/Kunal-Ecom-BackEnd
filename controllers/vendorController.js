@@ -1,47 +1,58 @@
 const vendorDML = require('../models/vendorDML');
+const userDML = require('../models/userDML');
+const alert = require('alert');
 let vendor_id;
 
 //////////////////////////////////////////////////////Display of details required for registration
 exports.registerDetail = function(req, res){
-    res.send("<h3>Hello vendor, welcome to registration page, follow the instructions given below</h3><p>Fill all the required details and press send</p><h5>Details required for registering your account as a vendor</h5><ul><li>Company Name</li><li>GovtId</li><li>Email</li><li>Password</li><li>Confirm Password</li><li>Product Category (if any specific)</li><li>State</li><li>City</li></ul>");
+    res.render("vendors/registerVendor");
 }
 
 //////////////////////////////////////////////////////Registering vendor
 exports.registerVendor = async function(req, res){
     let vendorData = req.body;
-    if(vendorData.password == vendorData.conpassword){
-        let vendor = await vendorDML.register(vendorData);
-        // console.log(vendor);
-        let checkVendor = await vendorDML.checkVendor(vendorData);
-        // console.log(checkVendor);
-        if(checkVendor.length == 1){
-            res.send("<h1>Your account is registered, " +vendor.name+"</h1>");
+    let role = "Vendor"
+    if(vendorData.password == vendorData.password2){
+        userDML.register(vendorData, role)
+        let checkUser = await userDML.checkUser(vendorData, role);
+        let userId = checkUser[0].user_id
+        if(checkUser.length == 1){
+            vendorDML.register(vendorData, userId);
+            let checkVendor = await vendorDML.checkVendor(vendorData);
+            if(checkVendor.length == 1){
+                alert("Your account is registered, login and explore");
+                res.render("login");
+            } else{
+                userDML.removegovtid(checkUser);
+                vendorDML.remove(checkVendor);
+                alert("Your government id is already in use, please check");
+                res.render("login");
+            }
         } else{
-            // console.log("Inside else");
-            vendorDML.remove(checkVendor);
-            res.send("<h1>Your account is already registered, try login</h1>");
+            userDML.remove(checkUser);
+            alert("Your email is already in use, try login");
+            res.render("login");
         }
 
     } else {
-        res.send("<h1>Password do not match, try again</h1>")
+        alert("Password do not match, try again");
+        res.render("vendors/registerVendor")
     }
 }
 
 //////////////////////////////////////////////////////Display of details required for login
 exports.loginDetail = function(req, res){
-    res.send("<h3>Hello vendor, welcome to login page, please be ready with the following details to login to your account</h3><ul><li>Email</li><li>Password</li><li>GovtId</li></ul>");
+    res.render("login");
 }
 
 //////////////////////////////////////////////////////Login Vendor
 exports.loginVendor = async function(req, res){
     let vendorData = req.body;
     let vendorDetail = await vendorDML.login(vendorData);
-    // console.log(vendorDetail);
     if(vendorDetail.length == 0){
         res.send("<h1>Incorrect login details</h1>");
     } else{
         vendor_id = vendorDetail[0].vendor_id;
-        // console.log(vendor_id);
         res.send("<h1>Welcome, "+vendorDetail[0].vendor_name+ "</h1><h3>Your id for further use is "+vendor_id+"</h3><p>Use <ul><li>To get your all details and to update or delete your account--    'http://localhost:3000/vendor/login/:id'</li><li>To add, update, display or delete your products--    'http://localhost:3000/vendor/login/:id/product'</p></li></ul>");
     }
 }

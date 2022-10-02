@@ -1,45 +1,37 @@
 const customerDML = require('../models/customerDML');
+const userDML = require('../models/userDML');
+const alert = require('alert');
 let customer_id;
-
-//////////////////////////////////////////////////////PRODUCT DISPLAY FOR GUEST
-exports.guestDisplay = async function(req, res){
-    let productDisplay = await customerDML.guestProduct();
-    productDisplay = JSON.stringify(productDisplay);
-    res.send("<h1>As a guest you can only see our products</h1><h3>To buy them, you need to register or login your account</h3>"+productDisplay);
-}
-
 
 //////////////////////////////////////////////////////Regitration of User
 exports.registerDetail = function(req, res){
-    res.send("<h3>Hello customer, welcome to registration page, follow the instructions given below</h3><p>Fill all the required details and press send</p><h5>Details required for registering your account as a customer</h5><ul><li>Name</li><li>Email</li><li>Password</li><li>Confirm Password</li><li>Contact</li><li>State</li><li>City</li></ul>");
+    res.render("customer/registerCustomer");
 }
 
 exports.registerCustomer = async function(req, res){
     let customerData = req.body;
-    if(customerData.password == customerData.conpassword){
-        // res.send("Ínside If")
-        let customer = await customerDML.register(customerData);
-        // console.log(customer);
-        let checkCustomer = await customerDML.checkCustomer(customerData);
-        // console.log(checkCustomer);
-        if(checkCustomer.length == 1){
-            res.send("<h1>Your account is registered, " +customer.name+"</h1>");
+    let role = "Customer"
+    if(customerData.password == customerData.password2){
+        userDML.register(customerData, role)
+        let checkUser = await userDML.checkUser(customerData, role);
+        // console.log(checkUser);        
+        let userId = checkUser[0].user_id
+        if(checkUser.length == 1){
+            customerDML.register(userId);
+            alert("Your account is registered, login and explore");
+            res.render("login");
         } else{
-            // console.log("Inside else");
-            customerDML.remove(checkCustomer);
-            res.send("<h1>Your account is already registered, try login</h1>");
+            userDML.remove(checkUser);
+            alert("Your email is already in use, try login");
+            res.render("login");
         }
 
     } else {
-        res.send("<h1>Password do not match, try again</h1>")
+        alert("Password do not match, try again");
+        res.render("customer/registerCustomer")
     }
 }
 
-
-//////////////////////////////////////////////////////Login of User
-exports.loginDetail = function(req, res){
-    res.send("<h3>Hello customer, welcome to login page, please be ready with the following details to login to your account</h3><ul><li>Email</li><li>Password</li></ul>");
-}
 
 exports.loginCustomer = async function(req, res){
     let customerData = req.body;

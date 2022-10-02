@@ -39,6 +39,6 @@ exports.home = function(req, res){
     res.render("home.ejs", {newItems: foundItems});
 }
 
-exports.login = function(req, res){
-    res.render("login")
+exports.loginForm = function(req, res){
+    res.render("login");
 }

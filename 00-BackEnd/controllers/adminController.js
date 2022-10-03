@@ -2,10 +2,7 @@ const adminDML = require('../models/adminDML');
 const userDML = require('../models/userDML');
 const alert = require('alert');
 
-//////////////////////////////////////////////////////Display of details required for registration
-exports.registerDetail = function(req, res){
-    res.render("admin/registerAdmin");
-}
+
 
 //////////////////////////////////////////////////////Registering admin
 exports.registerAdmin = async function(req, res){

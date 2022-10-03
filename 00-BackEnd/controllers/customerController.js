@@ -3,10 +3,7 @@ const userDML = require('../models/userDML');
 const alert = require('alert');
 let customer_id;
 
-//////////////////////////////////////////////////////Regitration of User
-exports.registerDetail = function(req, res){
-    res.render("customer/registerCustomer");
-}
+
 
 exports.registerCustomer = async function(req, res){
     let customerData = req.body;

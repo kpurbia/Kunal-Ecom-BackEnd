@@ -2,9 +2,7 @@ const vendorControl = require('../controllers/vendorController');
 
 module.exports = function(app){
 
-    app.route("/vendor/register")
-        .get(vendorControl.registerDetail)
-        .post(vendorControl.registerVendor);
+    app.route("/vendor/register").post(vendorControl.registerVendor);
     
     // app.route("/vendor/login/:id")
     //     .get(vendorControl.vendorDetail)

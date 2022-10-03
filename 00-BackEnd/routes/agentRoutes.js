@@ -1,9 +1,7 @@
 const agentController = require('../controllers/agentController');
 
 module.exports = function(app){
-    app.route("/agent/register")
-        .get(agentController.registerDetail)
-        .post(agentController.registerAgent);
+    app.route("/agent/register").post(agentController.registerAgent);
     
     // app.route("/agent/login")
     //     .get(agentController.loginDetail)

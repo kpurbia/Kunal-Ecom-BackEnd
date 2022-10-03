@@ -14,7 +14,7 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 
 //Initializing router
-userRoutes(app)
+// userRoutes(app);
 vendorRoutes(app);
 customerRoutes(app);
 agentRoutes(app);

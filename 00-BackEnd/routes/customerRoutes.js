@@ -2,9 +2,7 @@ const customerController = require('../controllers/customerController');
 
 module.exports = function(app){
 
-    app.route("/customer/register")
-        .get(customerController.registerDetail)
-        .post(customerController.registerCustomer);
+    app.route("/customer/register").post(customerController.registerCustomer);
 
     // app.route("/customer/login")
     //     .get(customerController.loginDetail)

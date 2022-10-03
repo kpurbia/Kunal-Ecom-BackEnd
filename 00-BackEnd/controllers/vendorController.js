@@ -3,10 +3,7 @@ const userDML = require('../models/userDML');
 const alert = require('alert');
 let vendor_id;
 
-//////////////////////////////////////////////////////Display of details required for registration
-exports.registerDetail = function(req, res){
-    res.render("vendors/registerVendor");
-}
+
 
 //////////////////////////////////////////////////////Registering vendor
 exports.registerVendor = async function(req, res){

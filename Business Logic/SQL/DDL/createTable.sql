@@ -7,7 +7,7 @@ SHOW DATABASES;
 -------------------------------------------------------------------TO USE DATABASE
 USE ecommerce;
 
--------------------------------------------------------------------CREATE USER TABLE
+-------------------------------------------------------------------CREATE USERS TABLE
 CREATE TABLE `ecommerce`.`users` (
   `user_id` INT NOT NULL AUTO_INCREMENT,
   `user_name` VARCHAR(100) NULL,
@@ -19,7 +19,7 @@ CREATE TABLE `ecommerce`.`users` (
   `user_role` VARCHAR(100) NULL,
   PRIMARY KEY (`user_id`));
 
--------------------------------------------------------------------CREATE CUSTOMER TABLE
+-------------------------------------------------------------------CREATE CUSTOMERS TABLE
 CREATE TABLE `ecommerce`.`customers` (
   `customer_id` INT NOT NULL AUTO_INCREMENT,
   `customer_user_id` INT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE `ecommerce`.`customers` (
   `customer_total_expenses` FLOAT NULL,
   PRIMARY KEY (`customer_id`));
 
--------------------------------------------------------------------CREATE VENDOR TABLE
+-------------------------------------------------------------------CREATE VENDORS TABLE
 CREATE TABLE `ecommerce`.`vendors` (
   `vendor_id` INT NOT NULL AUTO_INCREMENT,
   `vendor_user_id` INT NULL,
@@ -37,19 +37,51 @@ CREATE TABLE `ecommerce`.`vendors` (
   `vendor_product_sell_counts` INT NULL,
   PRIMARY KEY (`vendor_id`));
 
--------------------------------------------------------------------CREATE DELIVERY AGENT TABLE 
+-------------------------------------------------------------------CREATE DELIVERY AGENTS TABLE 
 CREATE TABLE `ecommerce`.`agents` (
   `agent_id` INT NOT NULL AUTO_INCREMENT,
   `agent_user_id` INT NULL,
   `agent_govt_id` VARCHAR(100) NULL,
   PRIMARY KEY (`agent_id`));
 
--------------------------------------------------------------------CREATE ADMIN TABLE
+-------------------------------------------------------------------CREATE ADMINS TABLE
 CREATE TABLE `ecommerce`.`admins` (
   `admin_id` INT NOT NULL AUTO_INCREMENT,
   `admin_user_id` VARCHAR(100) NULL,
   `admin_company_id` VARCHAR(100) NULL,
   PRIMARY KEY (`admin_id`));
+
+-------------------------------------------------------------------CREATE PRODUCTS TABLE
+CREATE TABLE `ecommerce`.`products` (
+  `product_id` INT NOT NULL AUTO_INCREMENT,
+  `product_vendor_id` INT NULL,
+  `product_name` VARCHAR(100) NULL,
+  `product_category` VARCHAR(100) NULL,
+  `product_price` FLOAT NULL,
+  `product_description` VARCHAR(100) NULL,
+  `product_quantity` INT NULL,
+  `product_feedback_id` INT NULL,
+  PRIMARY KEY (`product_id`),
+  INDEX `vendor_id_idx` (`product_vendor_id` ASC) VISIBLE,
+  CONSTRAINT `vendor_id`
+    FOREIGN KEY (`product_vendor_id`)
+    REFERENCES `ecommerce`.`vendor` (`vendor_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -114,24 +146,6 @@ CREATE TABLE `ecommerce`.`payments` (
     "city":"Udaipur"
 }
 
--------------------------------------------------------------------CREATING PRODUCT TABLE
-CREATE TABLE `ecommerce`.`products` (
-  `product_id` INT NOT NULL AUTO_INCREMENT,
-  `product_vendor_id` INT NULL,
-  `product_name` VARCHAR(100) NULL,
-  `product_category` VARCHAR(100) NULL,
-  `product_price` FLOAT NULL,
-  `product_description` VARCHAR(100) NULL,
-  `product_quantity` INT NULL,
-  `product_rating` INT NULL
-  `product_feedback` VARCHAR(100) NULL,
-  PRIMARY KEY (`product_id`),
-  INDEX `vendor_id_idx` (`product_vendor_id` ASC) VISIBLE,
-  CONSTRAINT `vendor_id`
-    FOREIGN KEY (`product_vendor_id`)
-    REFERENCES `ecommerce`.`vendor` (`vendor_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
 
 -------------------------------------------------------------------PRODUCT DATA FORMAT
 {

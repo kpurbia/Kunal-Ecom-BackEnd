@@ -6,12 +6,17 @@ const adminRoutes = require('./routes/adminRoutes');
 const express = require('express');
 const app = express();
 const port = 9000;
+const cors=require('cors');
+
+//USE THEM WHERE REQUIRED
+// const jwt=require('jsonwebtoken');
+// let jwtSecretKey="I_am_a_top_secret";
+
+app.use(cors())
 
 //Setting Middlewares
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-app.set("view engine", "ejs");
-app.use(express.static("public"));
 
 //Initializing router
 // userRoutes(app);

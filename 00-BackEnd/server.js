@@ -5,7 +5,7 @@ const agentRoutes = require('./routes/agentRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const express = require('express');
 const app = express();
-const port = 9000;
+const port = 7000;
 const cors=require('cors');
 
 //USE THEM WHERE REQUIRED
@@ -20,10 +20,10 @@ app.use(express.json());
 
 //Initializing router
 // userRoutes(app);
-vendorRoutes(app);
-customerRoutes(app);
+// vendorRoutes(app);
+// customerRoutes(app);
 agentRoutes(app);
-adminRoutes(app)
+// adminRoutes(app)
 
 //Starting server
 app.listen(port, ()=>{

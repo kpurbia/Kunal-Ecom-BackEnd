@@ -20,6 +20,6 @@ app.get("/agent/register", (req, res)=>{
 app.get("/admin/register", (req, res)=>{
     res.sendFile(__dirname + '/public/registration/registerAdmin.html');
 });
-app.listen(3000, ()=>{
-    console.log("Server listening on 3000");
+app.listen(9000, ()=>{
+    console.log("Server listening on 9000");
 });

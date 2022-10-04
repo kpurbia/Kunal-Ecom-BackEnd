@@ -1,6 +1,5 @@
 const customerDML = require('../models/customerDML');
 const userDML = require('../models/userDML');
-const alert = require('alert');
 let customer_id;
 
 
@@ -15,16 +14,13 @@ exports.registerCustomer = async function(req, res){
         let userId = checkUser[0].user_id
         if(checkUser.length == 1){
             customerDML.register(userId);
-            alert("Your account is registered, login and explore");
             res.render("login");
         } else{
             userDML.remove(checkUser);
-            alert("Your email is already in use, try login");
             res.render("login");
         }
 
     } else {
-        alert("Password do not match, try again");
         res.render("customer/registerCustomer")
     }
 }

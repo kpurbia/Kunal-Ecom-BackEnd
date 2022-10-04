@@ -1,6 +1,5 @@
 const vendorDML = require('../models/vendorDML');
 const userDML = require('../models/userDML');
-const alert = require('alert');
 let vendor_id;
 
 
@@ -17,22 +16,18 @@ exports.registerVendor = async function(req, res){
             vendorDML.register(vendorData, userId);
             let checkVendor = await vendorDML.checkVendor(vendorData);
             if(checkVendor.length == 1){
-                alert("Your account is registered, login and explore");
                 res.render("login");
             } else{
                 userDML.removegovtid(checkUser);
                 vendorDML.remove(checkVendor);
-                alert("Your government id is already in use, please check");
                 res.render("login");
             }
         } else{
             userDML.remove(checkUser);
-            alert("Your email is already in use, try login");
             res.render("login");
         }
 
     } else {
-        alert("Password do not match, try again");
         res.render("vendors/registerVendor")
     }
 }

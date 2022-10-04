@@ -1,13 +1,14 @@
 const agentDML = require('../models/agentDML');
 const userDML = require('../models/userDML');
-const alert = require('alert')
 let agent_id;
 
 
 
 //////////////////////////////////////////////////////Registering Agent
 exports.registerAgent = async function(req, res){
+    console.log("Can you see me");
     let agentData = req.body;
+    console.log(agentData);
     let role = "Agent"
     if(agentData.password == agentData.password2){
         userDML.register(agentData, role)
@@ -17,23 +18,19 @@ exports.registerAgent = async function(req, res){
             agentDML.register(agentData, userId);
             let checkAgent = await agentDML.checkAgent(agentData);
             if(checkAgent.length == 1){
-                alert("Your account is registered, login and explore");
-                res.render("login");
+                res.send("Registered");
             } else{
                 userDML.removegovtid(checkUser);
                 agentDML.remove(checkAgent);
-                alert("Your government id is already in use, please check");
-                res.render("login");
+                res.send("Govt id already registered");
             }
         } else{
             userDML.remove(checkUser);
-            alert("Your email is already in use, try login");
-            res.render("login");
+            res.send("Email already registered");
         }
 
     } else {
-        alert("Password do not match, try again");
-        res.render("agent/registerAgent")
+        res.send("agent/registerAgent")
     }
 }
 

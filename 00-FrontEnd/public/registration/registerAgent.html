@@ -10,10 +10,13 @@
         integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <title>Register Delivery Agent</title>
 </head>
+
 <body>
-    <nav class="navbar bg-success">
+    <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid justify-content-start">
-            <button class="btn bg-warning btn-outline-success me-2" type="button"><a class="dropdown-item" href="/login">Login</a></button>
+            <a class="navbar-brand" style="font-family: cursive; color: #fff; font-size: 2rem;" href="/">E-STORE</a>
+            <button class="btn bg-warning btn-outline-success me-3" type="button"><a class="dropdown-item"
+                    href="/login">Login</a></button>
             <div class="dropdown">
                 <button class="btn bg-warning btn-outline-success me-2" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
@@ -31,7 +34,7 @@
     <div style="display: block; margin:3rem 5rem;" method="post">
         <center>
             <h1 style="font-family: cursive;"><u>Hello Delivery Agent</u></h1>
-            <h4>Register your account with us and let's grow together.</h4>
+            <h4>Register your account and let's grow together.</h4>
             <h5 style="border-bottom: 2px dashed black;">"DO REMEMBER, TIME IS MONEY"</h5>
         </center>
         <div class="mb-2">
@@ -43,12 +46,12 @@
             <input type="text" class="form-control" id="govtid" name="govtid">
         </div>
         <div class="mb-2">
-          <label for="email" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="email" name="email">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" name="email">
         </div>
         <div class="mb-2">
-          <label for="password" class="form-label">Password</label>
-          <input type="password" class="form-control" id="password" name="password">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password">
         </div>
         <div class="mb-2">
             <label for="password2" class="form-label">Confirm Password</label>
@@ -66,16 +69,26 @@
             <label for="city" class="form-label">City</label>
             <input type="text" class="form-control" id="city" name="city">
         </div>
-        <button type="submit" class="btn btn-primary" style="margin-bottom: 3rem;">Submit</button>
-      </div>
+        <button type="submit" class="btn btn-primary" style="margin-bottom: 3rem;"
+            onclick="registerAgent()">Submit</button>
+    </div>
+    <nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">&copy; 2021 KUNAL PURBIA</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
 
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
-integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
-crossorigin="anonymous"></script>
-<!-- Local Javascript File -->
-<script src="/scripts/app.js"></script>
-<script src="/scripts/jquery.js"></script>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+        crossorigin="anonymous"></script>
+    <!-- Local Javascript File -->
+    <script src="/scripts/app.js"></script>
+    <script src="/scripts/jquery.js"></script>
 </body>
 
 </html>

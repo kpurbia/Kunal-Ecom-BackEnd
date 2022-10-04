@@ -11,10 +11,11 @@
     <title>HOME</title>
 </head>
 
-<body>
-    <nav class="navbar bg-success">
+<body onload="getProducts()">
+    <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid justify-content-start">
-            <button class="btn bg-warning btn-outline-success me-2" type="button"><a class="dropdown-item"
+            <a class="navbar-brand" style="font-family: cursive; color: #fff; font-size: 2rem;" href="/">E-STORE</a>
+            <button class="btn bg-warning btn-outline-success me-3" type="button"><a class="dropdown-item"
                     href="/login">Login</a></button>
             <div class="dropdown">
                 <button class="btn bg-warning btn-outline-success me-2" type="button" data-bs-toggle="dropdown"
@@ -30,7 +31,8 @@
             </div>
         </div>
     </nav>
-    <div class="card" style="width: 18rem; margin:3rem; display: inline-block; margin-bottom: 5rem; visibility: hidden;" id="card">
+    <div class="card" style="width: 18rem; margin:3rem; display: inline-block; margin-bottom: 5rem; visibility: hidden;"
+        id="card">
         <img class="card-img-top" alt="..." id="imgsrc">
         <div class="card-body">
             <h5 class="card-title" id="cardTitle"></h5>

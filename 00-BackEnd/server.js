@@ -19,7 +19,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 //Initializing router
-// userRoutes(app);
+userRoutes(app);
 vendorRoutes(app);
 customerRoutes(app);
 agentRoutes(app);

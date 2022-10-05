@@ -14,14 +14,14 @@ exports.registerCustomer = async function(req, res){
         let userId = checkUser[0].user_id
         if(checkUser.length == 1){
             customerDML.register(userId);
-            res.render("login");
+            res.send("login");
         } else{
             userDML.remove(checkUser);
-            res.render("login");
+            res.send("login");
         }
 
     } else {
-        res.render("customer/registerCustomer")
+        res.send("customer/registerCustomer")
     }
 }
 

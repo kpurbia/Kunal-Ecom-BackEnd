@@ -16,25 +16,25 @@ exports.registerVendor = async function(req, res){
             vendorDML.register(vendorData, userId);
             let checkVendor = await vendorDML.checkVendor(vendorData);
             if(checkVendor.length == 1){
-                res.render("login");
+                res.send("login");
             } else{
                 userDML.removegovtid(checkUser);
                 vendorDML.remove(checkVendor);
-                res.render("login");
+                res.send("login");
             }
         } else{
             userDML.remove(checkUser);
-            res.render("login");
+            res.send("login");
         }
 
     } else {
-        res.render("vendors/registerVendor")
+        res.send("vendors/registerVendor")
     }
 }
 
 //////////////////////////////////////////////////////Display of details required for login
 exports.loginDetail = function(req, res){
-    res.render("login");
+    res.send("login");
 }
 
 //////////////////////////////////////////////////////Login Vendor

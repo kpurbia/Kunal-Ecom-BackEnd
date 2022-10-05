@@ -5,6 +5,7 @@ const userDML = require('../models/userDML');
 
 //////////////////////////////////////////////////////Registering admin
 exports.registerAdmin = async function(req, res){
+    console.log("Can you see me");
     let adminData = req.body;
     let role = "Admin"
     if(adminData.password == adminData.password2){
@@ -14,19 +15,19 @@ exports.registerAdmin = async function(req, res){
         if(checkUser.length == 1){
             adminDML.register(adminData, userId);
             let checkAdmin = await adminDML.checkAdmin(adminData);
-            if(checkAdmin.length == 1){
-                res.render("login");
+            if(checkAdmin.length <= 1){
+                res.send("Registered");
             } else{
                 userDML.removegovtid(checkUser);
                 adminDML.remove(checkAdmin);
-                res.render("login");
+                res.send("Govt id already registered");
             }
         } else{
             userDML.remove(checkUser);
-            res.render("login");
+            res.send("Email already registered");
         }
 
     } else {
-        res.render("admin/registerAdmin")
+        res.send("Admin/registerAdmin")
     }
 }

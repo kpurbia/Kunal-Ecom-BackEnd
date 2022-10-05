@@ -20,10 +20,10 @@ app.use(express.json());
 
 //Initializing router
 // userRoutes(app);
-// vendorRoutes(app);
-// customerRoutes(app);
+vendorRoutes(app);
+customerRoutes(app);
 agentRoutes(app);
-// adminRoutes(app)
+adminRoutes(app)
 
 //Starting server
 app.listen(port, ()=>{

@@ -36,9 +36,9 @@ exports.home = function(req, res){
         "description": "Hello I am google"
     }]
     
-    res.render("home.ejs", {newItems: foundItems});
+    res.send("home.ejs", {newItems: foundItems});
 }
 
 exports.loginForm = function(req, res){
-    res.render("login");
+    res.send("login");
 }

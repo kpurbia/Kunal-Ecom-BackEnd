@@ -1,0 +1,79 @@
+--CUSTOMER POINT OF VIEW
+Home page
+Register (check duplicate registration with email)
+LOGIN 
+Home page with profile button (on navbar)
+Home page with products and sorting(price and categories)
+Access to see products details 
+Access to wallet
+Access to order history
+Access to cart
+Place order (stored producer with transction) and update quantity and update account
+Cancle order (rollback) and update quantity and update account
+Track orders
+
+
+---vendors point of view
+Home page
+Register (check duplicate registration with email)
+LOGIN 
+Home page with profile button (on navbar)
+(how many delivery he had done)
+How many orders are in pending status
+Picking according to the address provided
+Feeding the details of delivery boy
+updating the tracking status of delivery
+
+
+
+---product seller point of view
+Home page 
+Register (check duplicate registration with email)
+LOGIN
+Home page profile button (on navbar)
+(add new products,
+see all your products (sorting), 
+see out of stock products, 
+update product with quantity, price and discounts, 
+update profile with basic detail)
+
+
+
+--Admin point of views
+Home page 
+Register (check duplicate registration with email)
+LOGIN
+Check all customers orders,new added customers, unregister customers, check top customers
+Check type of products and categories of product
+Check all products, top 10 products, check feedback and rating of product
+Check all transactions (successfull or not)
+Check all orders and status 
+Check all vendors, and there delivery time and check update staus
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

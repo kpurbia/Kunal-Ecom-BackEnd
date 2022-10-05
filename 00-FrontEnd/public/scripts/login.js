@@ -17,6 +17,7 @@ var doLogin = () => {
         timeout: 15000,
         success: (data, status) => {
             if(data[0].user_role === "Customer"){
+                window.location.href = "/customer"
                 console.log("Customer");
             } else if(data[0].user_role === "Agent"){
                 console.log("Agent");

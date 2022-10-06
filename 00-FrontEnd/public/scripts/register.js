@@ -26,7 +26,6 @@ var registerAgent = () => {
             userDetail.city = city;
 
             userDetail = JSON.stringify(userDetail);
-            console.log(userDetail);
 
             let registerURL = "http://localhost:7000/agent/register"
             $.ajax({
@@ -36,9 +35,22 @@ var registerAgent = () => {
                 data: userDetail,
                 timeout: 15000,
                 success: (data, status) => {
-                    console.log("on successfull login");
-                    console.log(status);
-                    console.log(data);
+                    if (data === "Email already registered") {
+                        document.getElementById("detailWarning").style.display = "none";
+                        document.getElementById("passwordWarning").style.display = "none";
+                        document.getElementById("idWarning").style.display = "none";
+                        document.getElementById("emailWarning").style.display = "block";
+                    } else {
+                        if (data === "Id already registered") {
+                            document.getElementById("detailWarning").style.display = "none";
+                            document.getElementById("passwordWarning").style.display = "none";
+                            document.getElementById("idWarning").style.display = "block";
+                            document.getElementById("emailWarning").style.display = "none";
+                        } else {
+                            window.location.href = "/login";
+                            
+                        }
+                    }
                 }
             });
         } else {
@@ -74,7 +86,6 @@ var registerVendor = () => {
             userDetail.city = city;
 
             userDetail = JSON.stringify(userDetail);
-            console.log(userDetail);
 
             let registerURL = "http://localhost:7000/vendor/register"
             $.ajax({
@@ -84,9 +95,21 @@ var registerVendor = () => {
                 data: userDetail,
                 timeout: 15000,
                 success: (data, status) => {
-                    console.log("on successfull login");
-                    console.log(status);
-                    console.log(data);
+                    if (data === "Email already registered") {
+                        document.getElementById("detailWarning").style.display = "none";
+                        document.getElementById("passwordWarning").style.display = "none";
+                        document.getElementById("idWarning").style.display = "none";
+                        document.getElementById("emailWarning").style.display = "block";
+                    } else {
+                        if (data === "Id already registered") {
+                            document.getElementById("detailWarning").style.display = "none";
+                            document.getElementById("passwordWarning").style.display = "none";
+                            document.getElementById("idWarning").style.display = "block";
+                            document.getElementById("emailWarning").style.display = "none";
+                        } else {
+                            window.location.href = "/login";
+                        }
+                    }
                 }
             });
         } else {
@@ -118,7 +141,6 @@ var registerCustomer = () => {
             userDetail.city = city;
 
             userDetail = JSON.stringify(userDetail);
-            console.log(userDetail);
 
             let registerURL = "http://localhost:7000/customer/register"
             $.ajax({
@@ -128,9 +150,13 @@ var registerCustomer = () => {
                 data: userDetail,
                 timeout: 15000,
                 success: (data, status) => {
-                    console.log("on successfull login");
-                    console.log(status);
-                    console.log(data);
+                    if (data === "Email already registered") {
+                        document.getElementById("detailWarning").style.display = "none";
+                        document.getElementById("passwordWarning").style.display = "none";
+                        document.getElementById("emailWarning").style.display = "block"
+                    } else {
+                        window.location.href = "/login";
+                    }
                 }
             });
         } else {
@@ -164,7 +190,6 @@ var registerAdmin = () => {
             userDetail.city = city;
 
             userDetail = JSON.stringify(userDetail);
-            console.log(userDetail);
 
             let registerURL = "http://localhost:7000/admin/register"
             $.ajax({
@@ -174,9 +199,21 @@ var registerAdmin = () => {
                 data: userDetail,
                 timeout: 15000,
                 success: (data, status) => {
-                    console.log("on successfull login");
-                    console.log(status);
-                    console.log(data);
+                    if (data === "Email already registered") {
+                        document.getElementById("detailWarning").style.display = "none";
+                        document.getElementById("passwordWarning").style.display = "none";
+                        document.getElementById("idWarning").style.display = "none";
+                        document.getElementById("emailWarning").style.display = "block";
+                    } else {
+                        if (data === "Id already registered") {
+                            document.getElementById("detailWarning").style.display = "none";
+                            document.getElementById("passwordWarning").style.display = "none";
+                            document.getElementById("idWarning").style.display = "block";
+                            document.getElementById("emailWarning").style.display = "none";
+                        } else {
+                            window.location.href = "/login";
+                        }
+                    }
                 }
             });
         } else {

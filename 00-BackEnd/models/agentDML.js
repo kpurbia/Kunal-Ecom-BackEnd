@@ -114,7 +114,7 @@ exports.orderDetail = function(orderId){
             if(err){
                 throw err;
             } else{
-                console.log(result);
+                // console.log(result);
                 resolve(result);
             }
         })

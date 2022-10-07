@@ -1,8 +1,12 @@
-const customerController = require('../controllers/customerController');
+import CustomerController from '../controllers/CustomerController.js';
 
-module.exports = function(app){
+const customerController = new CustomerController();
 
+export default function(app){
     app.route("/customer/register").post(customerController.registerCustomer);
+}
+
+// module.exports = function(app){
 
     // app.route("/customer/login")
     //     .get(customerController.loginDetail)
@@ -35,4 +39,4 @@ module.exports = function(app){
     // app.route("/customer/login/:id/order/:orderid")
     //     .get(customerController.getOrderDetail)
     //     .delete(customerController.deleteOrder);
-}
+// }

@@ -1,8 +1,13 @@
-const agentController = require('../controllers/agentController');
+import AgentController from '../controllers/AgentController.js';
 
-module.exports = function(app){
+const agentController = new AgentController();
+
+export default function(app){
     app.route("/agent/register").post(agentController.registerAgent);
-    
+}
+
+// module.exports = function(app){
+       
     // app.route("/agent/login")
     //     .get(agentController.loginDetail)
     //     .post(agentController.loginAgent);
@@ -23,4 +28,4 @@ module.exports = function(app){
     // app.route("/agent/login/:id/track/:trackid")
     //     .get(agentController.trackDetail)
     //     .patch(agentController.trackUpdate);   
-}
+// }

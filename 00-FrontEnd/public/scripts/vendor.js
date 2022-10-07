@@ -28,6 +28,24 @@ var addToInventory = () => {
         pDetails.pQuantity = pQuantity;
 
         pDetails = JSON.stringify(pDetails);
-        alert(pDetails);
+        
+        let token = localStorage.getItem("token");
+        let checkURL = "http://localhost:7000/addproduct";
+        $.ajax({
+            headers: {
+                "header": token
+            },
+            contentType: "application/json",
+            url: checkURL,
+            type: "POST",
+            data: pDetails,
+            success: (data, status)=>{
+                if(data === "Added"){
+                    window.location.href = "/vendor"
+                } else{
+                    document.getElementById("productWarning").style.display = "block"
+                }
+            }
+        });
     }
 }

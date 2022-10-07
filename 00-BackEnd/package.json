@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "This is backend of ecommerce project which is connected with mysql database.",
   "main": "server.js",
+  "type":"module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -29,7 +29,7 @@ var doLogin = () => {
                 window.location.href = "/admin"
                 console.log("Admin");
             } else{
-                console.log("Hello");
+                document.getElementById("loginWarning").style.display = "block"
             }
         }
     });

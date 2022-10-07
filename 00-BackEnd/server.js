@@ -4,6 +4,8 @@ const customerRoutes = require('./routes/customerRoutes');
 const agentRoutes = require('./routes/agentRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const express = require('express');
+const session = require('express-session');
+const cookie = require('cookie-parser');
 const app = express();
 const port = 7000;
 const cors=require('cors');
@@ -12,11 +14,17 @@ const cors=require('cors');
 // const jwt=require('jsonwebtoken');
 // let jwtSecretKey="I_am_a_top_secret";
 
-app.use(cors())
-
 //Setting Middlewares
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use(cors());
+app.use(cookie());
+
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true
+}));
 
 //Initializing router
 userRoutes(app);

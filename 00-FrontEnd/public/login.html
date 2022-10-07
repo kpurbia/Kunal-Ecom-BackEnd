@@ -15,10 +15,10 @@
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid justify-content-start">
             <a class="navbar-brand" style="font-family: cursive; color: #fff; font-size: 2rem;" href="/">E-STORE</a>
-            <button class="btn bg-warning btn-outline-success me-3" type="button"><a class="dropdown-item"
+            <button class="btn btn-outline-info me-3" type="button"><a class="dropdown-item"
                     href="/login">Login</a></button>
             <div class="dropdown">
-                <button class="btn bg-warning btn-outline-success me-2" type="button" data-bs-toggle="dropdown"
+                <button class="btn btn-outline-info me-2" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
                     Register
                 </button>
@@ -35,6 +35,9 @@
         <center>
             <h1 style="font-family: cursive;"><u>Hello User</u></h1>
         </center>
+        <div class="alert alert-danger" style="display: none;" id="loginWarning">
+            <strong>Warning!</strong> Wrong email and password.
+        </div>
         <div class="mb-2">
             <label for="email" class="form-label">Email address</label>
             <input type="email" class="form-control" id="email" name="email">

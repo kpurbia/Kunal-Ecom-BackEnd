@@ -1,27 +1,28 @@
+const env = require('dotenv');
+const express = require('express');
+const cors=require('cors');
+const session = require('express-session');
+const cookie = require('cookie-parser');
+
 const userRoutes = require('./routes/userRoutes')
 const vendorRoutes = require('./routes/vendorRoutes');
 const customerRoutes = require('./routes/customerRoutes');
 const agentRoutes = require('./routes/agentRoutes');
 const adminRoutes = require('./routes/adminRoutes');
-const express = require('express');
-const session = require('express-session');
-const cookie = require('cookie-parser');
+
+
 const app = express();
 const port = 7000;
-const cors=require('cors');
-
-//USE THEM WHERE REQUIRED
-// const jwt=require('jsonwebtoken');
-// let jwtSecretKey="I_am_a_top_secret";
 
 //Setting Middlewares
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(cors());
 app.use(cookie());
+env.config();
 
 app.use(session({
-    secret: 'keyboard cat',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true
 }));

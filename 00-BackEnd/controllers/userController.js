@@ -1,4 +1,5 @@
 const userDML = require('../models/userDML');
+const jwt = require('jsonwebtoken');
 
 exports.home = function(req, res){
     foundItems = [{
@@ -49,9 +50,22 @@ exports.login = async function(req, res){
     let userDetail = req.body;
     let foundUser = await userDML.login(userDetail);
     if(foundUser.length == 1){
+        req.session.userId = foundUser[0].user_id;
         req.session.user = foundUser[0].user_name;
-        req.session.role =foundUser[0].user_role;
-        res.send(req.session);
+        req.session.email = foundUser[0].user_email;
+        req.session.role = foundUser[0].user_role;
+        
+        let data = {};
+        data.userId = req.session.userId;
+        data.user = req.session.user;
+        data.email = req.session.email;
+        data.role = req.session.role;
+        
+        let token = jwt.sign(data, process.env.TOKEN_SECRET);
+        let frontEndData = []
+        frontEndData.push(token);
+        frontEndData.push(data.role);
+        res.send(frontEndData);
     } else{
         res.send("User Not Found");
     }

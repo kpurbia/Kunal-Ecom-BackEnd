@@ -16,13 +16,17 @@ var doLogin = () => {
         data: credential,
         timeout: 15000,
         success: (data, status) => {
-            if(data.role === "Customer"){
+            if(data[1] === "Customer"){
+                localStorage.setItem("token", data[0]);
                 window.location.href = "/customer"
-            } else if(data.role === "Agent"){
+            } else if(data[1] === "Agent"){
+                localStorage.setItem("token", data[0]);
                 window.location.href = "/agent"
-            } else if(data.role === "Vendor"){
+            } else if(data[1] === "Vendor"){
+                localStorage.setItem("token", data[0]);
                 window.location.href = "/vendor"
-            } else if(data.role === "Admin"){
+            } else if(data[1] === "Admin"){
+                localStorage.setItem("token", data[0]);
                 window.location.href = "/admin"
             } else{
                 document.getElementById("loginWarning").style.display = "block"

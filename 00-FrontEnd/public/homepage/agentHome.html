@@ -2,52 +2,65 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <title>Delivery Agent HomePage</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <title>Delivery Agent HomePage</title>
 </head>
 
 <body onload="getProducts()">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand me-1" style="font-family: cursive; color: #fff; font-size: 2rem; padding-left: 1rem;" href="#">E-STORE</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand me-1" style="font-family: cursive; color: #fff; font-size: 2rem; padding-left: 1rem;"
+      href="#">E-STORE</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="#"><button class="btn btn-outline-info" onclick="getProfile()">Profile</button></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><button class="btn btn-outline-info" onclick="getProducts()">Your
+              Products</button></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><button class="btn btn-outline-info" onclick="addProduct()">Add
+              Product</button></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="card" style="width: 18rem; margin:3rem; display: inline-block; margin-bottom: 5rem; visibility: hidden;"
+    id="card">
+    <div class="card-body">
+      <h5 class="card-title" id="cardTitle"></h5>
+      <p class="card-text" id="cardText"></p>
+      <a href="#" class="btn btn-primary">ADD TO CART</a>
+    </div>
+  </div>
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+    crossorigin="anonymous"></script>
+  <!-- Local Javascript File -->
+  <script src="/scripts/app.js"></script>
+  <script src="/scripts/jquery.js"></script>
+</body>
+<footer>
+  <nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">&copy; 2021 KUNAL PURBIA</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="#"><button class="btn btn-outline-info" onclick="getProfile()">Profile</button></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#"><button class="btn btn-outline-info" onclick="getProducts()">Your Products</button></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#"><button class="btn btn-outline-info" onclick="addProduct()">Add Product</button></a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
-        crossorigin="anonymous"></script>
-    <!-- Local Javascript File -->
-    <script src="/scripts/app.js"></script>
-    <script src="/scripts/jquery.js"></script>
-</body>
-    <footer>
-        <nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">&copy; 2021 KUNAL PURBIA</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-        </nav>
-    </footer>
+    </div>
+  </nav>
+</footer>
+
 </html>

@@ -49,7 +49,9 @@ exports.login = async function(req, res){
     let userDetail = req.body;
     let foundUser = await userDML.login(userDetail);
     if(foundUser.length == 1){
-        res.send(foundUser);
+        req.session.user = foundUser[0].user_name;
+        req.session.role =foundUser[0].user_role;
+        res.send(req.session);
     } else{
         res.send("User Not Found");
     }

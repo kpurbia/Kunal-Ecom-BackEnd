@@ -1,0 +1,3 @@
+var getProducts = () => {
+    alert("Home");
+}

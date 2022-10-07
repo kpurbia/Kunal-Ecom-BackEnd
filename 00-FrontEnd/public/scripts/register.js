@@ -1,7 +1,3 @@
-var getProducts = () => {
-    alert("Home");
-}
-
 var registerAgent = () => {
     let name = document.getElementById("name").value;
     let email = document.getElementById("email").value;

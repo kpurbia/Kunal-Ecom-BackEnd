@@ -1,31 +1,40 @@
-const vendorDML = require('../models/vendorDML');
-const userDML = require('../models/userDML');
-let vendor_id;
+import VendorDML from '../models/VendorDML.js';
+import UserDML from '../models/UserDML.js';
 
+const vendorDML = new VendorDML();
+const userDML = new UserDML();
 
+export default class Vendor {
 
-//////////////////////////////////////////////////////Registering vendor
-exports.registerVendor = async function (req, res) {
-    let vendorData = req.body;
-    let role = "Vendor"
-    userDML.register(vendorData, role)
-    let checkUser = await userDML.checkUser(vendorData);
-    let userId = checkUser[0].user_id
-    if (checkUser.length == 1) {
-        vendorDML.register(vendorData, userId);
-        let checkVendor = await vendorDML.checkVendor(vendorData);
-        if (checkVendor.length == 1) {
-            res.send("success");
+    //////////////////////////////////////////////////////Registering vendor
+    async registerVendor(req, res) {
+        let vendorData = req.body;
+        let role = "Vendor"
+        userDML.register(vendorData, role)
+        let checkUser = await userDML.checkUser(vendorData);
+        let userId = checkUser[0].user_id
+        if (checkUser.length == 1) {
+            vendorDML.register(vendorData, userId);
+            let checkVendor = await vendorDML.checkVendor(vendorData);
+            if (checkVendor.length == 1) {
+                res.send("success");
+            } else {
+                userDML.removegovtid(checkUser);
+                vendorDML.remove(checkVendor);
+                res.send("Id already registered");
+            }
         } else {
-            userDML.removegovtid(checkUser);
-            vendorDML.remove(checkVendor);
-            res.send("Id already registered");
+            userDML.remove(checkUser);
+            res.send("Email already registered");
         }
-    } else {
-        userDML.remove(checkUser);
-        res.send("Email already registered");
     }
 }
+
+// 
+// exports.registerVendor = async function (req, res) {
+
+// }
+
 
 // //////////////////////////////////////////////////////Display of details required for login
 // exports.loginDetail = function (req, res) {

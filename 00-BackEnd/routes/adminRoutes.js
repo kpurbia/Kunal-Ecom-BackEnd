@@ -1,5 +1,7 @@
-const adminController = require('../controllers/adminController');
+import AdminController from '../controllers/AdminController.js';
 
-module.exports = function(app){
+const adminController = new AdminController();
+
+export default function(app){
     app.route("/admin/register").post(adminController.registerAdmin);
 }

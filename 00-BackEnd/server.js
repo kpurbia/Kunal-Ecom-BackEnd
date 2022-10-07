@@ -1,14 +1,14 @@
-const env = require('dotenv');
-const express = require('express');
-const cors=require('cors');
-const session = require('express-session');
-const cookie = require('cookie-parser');
+import env from 'dotenv';
+import express from 'express';
+import cors from 'cors';
+import session from 'express-session';
+import cookie from 'cookie-parser';
 
-const userRoutes = require('./routes/userRoutes')
-const vendorRoutes = require('./routes/vendorRoutes');
-const customerRoutes = require('./routes/customerRoutes');
-const agentRoutes = require('./routes/agentRoutes');
-const adminRoutes = require('./routes/adminRoutes');
+import userRoutes from './routes/userRoutes.js';
+import vendorRoutes from './routes/vendorRoutes.js';
+import customerRoutes from './routes/customerRoutes.js';
+import agentRoutes from './routes/agentRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 
 
 const app = express();
@@ -26,6 +26,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
+
 
 //Initializing router
 userRoutes(app);

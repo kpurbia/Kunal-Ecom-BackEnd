@@ -1,8 +1,15 @@
-const vendorControl = require('../controllers/vendorController');
+import VendorControl from '../controllers/VendorController.js';
 
-module.exports = function(app){
+const vendorControl = new VendorControl();
 
+export default function(app){
     app.route("/vendor/register").post(vendorControl.registerVendor);
+
+}
+
+// module.exports = function(app){
+
+    // app.route("/addproduct").post(vendorControl.addProduct);
     
     // app.route("/vendor/login/:id")
     //     .get(vendorControl.vendorDetail)
@@ -17,4 +24,4 @@ module.exports = function(app){
     //     .get(vendorControl.productDetail)
     //     .patch(vendorControl.updateProduct)
     //     .delete(vendorControl.deleteProduct);
-}
+// }

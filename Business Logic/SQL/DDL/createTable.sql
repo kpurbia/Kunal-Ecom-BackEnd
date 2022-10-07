@@ -60,12 +60,11 @@ CREATE TABLE `ecommerce`.`products` (
   `product_price` FLOAT NULL,
   `product_description` VARCHAR(100) NULL,
   `product_quantity` INT NULL,
-  `product_feedback_id` INT NULL,
   PRIMARY KEY (`product_id`),
   INDEX `vendor_id_idx` (`product_vendor_id` ASC) VISIBLE,
   CONSTRAINT `vendor_id`
     FOREIGN KEY (`product_vendor_id`)
-    REFERENCES `ecommerce`.`vendor` (`vendor_id`)
+    REFERENCES `ecommerce`.`vendors` (`vendor_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 

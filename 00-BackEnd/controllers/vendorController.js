@@ -45,11 +45,11 @@ export default class Vendor {
                 vendorInfo.push(vendorDetail[0]);
                 res.status(200).send(vendorInfo)
             } else{
-                console.log("Not Vendor");
+                req.session.destroy();
                 res.status(400).send("Error occured");
             }
         } else{
-            console.log("Not in session");
+            req.session.destroy();
             res.status(400).send("Session Expired");
         }
     }
@@ -68,11 +68,11 @@ export default class Vendor {
                 userDML.updateUser(userId, updateData);
                 res.status(200).send("User updated");
             } else{
-                console.log("Not Vendor");
+                req.session.destroy();
                 res.status(400).send("Error occured");
             }
         } else{
-            console.log("Not in session");
+            req.session.destroy();
             res.status(400).send("Session Expired");
         }
     }
@@ -88,15 +88,19 @@ export default class Vendor {
                 if(checkVendor[0].user_password === vendorData.password){
                     vendorDML.deleteVendor(checkVendor[0].user_id);
                     userDML.deleteUser(checkVendor[0].user_id);
+                    req.session.destroy();
                     res.status(200).send("Account Deleted");
                 } else{
+                    req.session.destroy();
                     res.status(400).send("Invalid Password");    
                 }
             } else {
+                req.session.destroy();
                 res.status(400).send("Error occured");
             }
         } 
         else{
+            req.session.destroy();
             res.status(400).send("Session Expired");
         }
     }
@@ -112,9 +116,11 @@ export default class Vendor {
                 vendorDML.addProduct(productDetail, vendorId);
                 res.status(200).send("Added successfully");
             } else {
+                req.session.destroy();
                 res.status(400).send("Error occured");
             }
         } else{
+            req.session.destroy();
             res.status(400).send("Session Expired");
         }
     }

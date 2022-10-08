@@ -110,7 +110,8 @@ var deleteVendor = () => {
             type: "DELETE",
             data: userData,
             success: (data, status) => {
-                window.location.href = "/vendor/register"
+                localStorage.clear();
+                window.location.href = "/vendor/register";
             },
             error: (data, status) =>{
                 alert("You are not authenticated to access");

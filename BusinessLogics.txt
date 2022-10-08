@@ -1,0 +1,83 @@
+------------------------------------------------------------------COMMON FOR ALL
+--> Common Homepage for all with login and register buttons
+
+--> On registering account:-
+        a)  Checking all details must be filled by users
+        b)  If all details not filled completely then display of warning message to fill complete details
+        c)  Checking Password and Confirm Password matches with each other
+        d)  If password and confirm password not matching then display of warning message of password not matching
+        e)  Checking of duplicate email for all type of users (customer, vendor, agent, admin)
+        f)  If duplicate email found then deleting all saved data and display warning message of duplicate Email
+        g)  Checking of duplicate IDs (Government ID or Company ID) of users (vendor, agent, admin)
+        h)  If duplicate ID found then deleting all save data and  display warning message of duplicate ID
+        i)  On successfull registration shifting to login page
+
+--> On login of account:-
+        a)  Checking all details must be filled by users
+        b)  If all details not filled completely then display of warning message to fill complete details
+        c)  Matching Email and Password with database
+            (i)     If email and password do not match then display of warning message of incorrect email and password
+            (ii)    If email and password matches successfully then shifting user to its respective homepage
+                    ------- In backend, creating a session and JWT token for respective user and storing that token in local storage of browser
+
+
+------------------------------------------------------------------AFTER SUCCESSFULL LOGIN
+
+----------------------------------PRODUCT VENDOR SIDE
+--> Display of vendor homepage with all products on screen with 4 button (Profile, Add Product, Your Products, Your Wallet)
+
+--> On clicking "Profile" button vendor will shift to its own profile and see its existing details.
+        a)  There user will get 2 options of update profile and delete account
+        b)  To update profile, browser and server will check
+            ------- user who is updating detail is the actual vendor or not (VERIFICATION USING JWT TOKEN)
+            ------- if user is not matching then it will destroy session and clear local storage and display login page
+            ------- if user is correct then all the details are filled or not (if not display of warning message)
+            ------- if password is changed then it matches with confirm password or not (if not then display warning message)
+            ------- if everything goes correctly then profile will get update and display of message
+        c)  On clicking "Delete Account" button, it will display a form to validate the user via email and password
+        d)  If user enters the correct email and password then user data will get deleted from main user table as well as from there respective table and user account also gets deleted
+        e)  At last local storage will get cleared and session will be destroyed
+
+--> On clicking "Add Product" button, vendor will be shift to add product page where it will display form to add product
+        a)  on submitting that form by clicking add product button, browser and server will check
+            ------- all details are properly filled or not 
+            ------- user who is adding product is the actual vendor or not (VERIFICATION USING JWT TOKEN)
+            ------- if user is not matching then it will destroy session and clear local storage and display login page
+            ------- if user is correct then all details are filled or not (if not display warning message)
+            ------- if details are filled properly then on clicking "Add Product" button product will be added to products table in database with respective user id.
+
+--> On clicking "Your Products" button, vendor will be shift to product page where vendors own product will display
+        a)  There vendor will get 2 button of update product and delete product with every single product
+        b)  To update product, browser and server will check
+            ------- user who is updating detail is the actual vendor or not (VERIFICATION USING JWT TOKEN)
+            ------- if user is not matching then it will destroy session and clear local storage and display login page
+            ------- if user is correct then all the details are filled or not (if not display of warning message)
+            ------- if details are proper then on clicking update product, product will get updated in database with respective vendor id.
+        c)  To delete product, browser and server will check
+            ------- user who is updating detail is the actual vendor or not (VERIFICATION USING JWT TOKEN)
+            ------- if user is not matching then it will destroy session and clear local storage and display login page
+            ------- if user is correct then on clicking delete button product will get deleted from products table in database
+
+--> On clicking "Your Wallet" button, vendor will be shift to wallet page where vendor will see own bank details and wallet
+        a)  If there is no bank added, then it will only display a Add Bank form
+        b)  By submitting the details of bank, bank details and wallet amount will be stored in accounts table in database
+        c)  If there is already bank added, then it will display wallet amount and bank details form which user can update also
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -67,7 +67,7 @@ CREATE TABLE `ecommerce`.`products` (
     FOREIGN KEY (`product_vendor_id`)
     REFERENCES `ecommerce`.`users` (`user_id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION;
+    ON UPDATE CASCADE;
 
 
 

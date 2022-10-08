@@ -9,4 +9,8 @@ module.exports = function(app){
     app.get("/addProduct", (req, res)=>{
         res.sendFile(publicPath + "/vendor/addProduct.html")
     })
+
+    app.get("/vendor/profile", (req, res)=>{
+        res.sendFile(publicPath + "/vendor/vendorProfile.html")
+    })
 }

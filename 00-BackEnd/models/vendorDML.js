@@ -33,6 +33,43 @@ export default class VendorDML {
         })
     }
 
+    //////////////////////////////////////////////////////Fetching all vendor data using its user id from users table
+    getVendorData(id) {
+        return new Promise((resolve) => {
+            let getQuery = "SELECT * FROM users WHERE user_id = " + id;
+            target.query(getQuery, (err, data) => {
+                if (err) {
+                    throw err;
+                } else {
+                    resolve(data)
+                }
+            })
+        })
+    }
+
+    //////////////////////////////////////////////////////Fetching govt id of following vendor_user_id from vendors table
+    getVendorDetail(id){
+        return new Promise((resolve) => {
+            let searchQuery = "SELECT * FROM vendors WHERE vendor_user_id = "+id;
+            target.query(searchQuery, (err, result)=>{
+                if(err){
+                    throw err;
+                } else{
+                    resolve(result);
+                }
+            })
+        })
+
+    }
+
+    //////////////////////////////////////////////////////Removing vendor on delete or update account
+    updateVendor(vendorId, data){
+        let updateQuery = `UPDATE vendors SET vendor_govt_id = '${data.govtid}', vendor_category = '${data.category}' WHERE vendor_id = ${vendorId}`
+        target.query(updateQuery, (err, result)=>{
+            if(err) throw err;
+        })
+    }
+
     //////////////////////////////////////////////////////Adding product to product table
     addProduct(data, vendorId) {
         let insertCmd = "INSERT INTO products (product_vendor_id, product_name, product_category, product_price, product_description, product_quantity) VALUES (?, ?, ?, ?, ?, ?);"

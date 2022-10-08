@@ -60,4 +60,12 @@ export default class UserDML {
             })
         })
     }
+
+    //////////////////////////////////////////////////////Removing user on delete or update account
+    updateUser(userId, data){
+        let updateQuery = `UPDATE users SET user_name = '${data.name}', user_email = '${data.email}', user_password = '${data.password}', user_contact = '${data.contact}', user_state = '${data.state}', user_city = '${data.city}' WHERE user_id = ${userId}`
+        target.query(updateQuery, (err, result)=>{
+            if(err) throw err;
+        })
+    }
 }

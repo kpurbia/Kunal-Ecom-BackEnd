@@ -76,6 +76,31 @@ export default class Vendor {
             res.status(400).send("Session Expired");
         }
     }
+
+    //////////////////////////////////////////////////////Deleting Vendor Account
+    async deleteVendor(req, res){
+        if(req.session){
+            let token = req.header("Authorization");
+            let decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
+            if(decodedToken.role === "Vendor"){
+                let vendorData = req.body;
+                let checkVendor = await userDML.checkUser(vendorData);
+                if(checkVendor[0].user_password === vendorData.password){
+                    vendorDML.deleteVendor(checkVendor[0].user_id);
+                    userDML.deleteUser(checkVendor[0].user_id);
+                    res.status(200).send("Account Deleted");
+                } else{
+                    res.status(400).send("Invalid Password");    
+                }
+            } else {
+                res.status(400).send("Error occured");
+            }
+        } 
+        else{
+            res.status(400).send("Session Expired");
+        }
+    }
+
     //////////////////////////////////////////////////////Adding product to product database
     addProduct(req, res) {
         if (req.session) {

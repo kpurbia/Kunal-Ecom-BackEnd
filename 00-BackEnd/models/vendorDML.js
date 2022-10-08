@@ -62,10 +62,18 @@ export default class VendorDML {
 
     }
 
-    //////////////////////////////////////////////////////Removing vendor on delete or update account
+    //////////////////////////////////////////////////////Updating vendor account in vendors table
     updateVendor(vendorId, data){
         let updateQuery = `UPDATE vendors SET vendor_govt_id = '${data.govtid}', vendor_category = '${data.category}' WHERE vendor_id = ${vendorId}`
         target.query(updateQuery, (err, result)=>{
+            if(err) throw err;
+        })
+    }
+
+    //////////////////////////////////////////////////////Deleting vendor account
+    deleteVendor(vendorId){
+        let deleteQuery = `DELETE FROM vendors WHERE vendor_user_id = ${vendorId};`
+        target.query(deleteQuery,(err, result)=>{
             if(err) throw err;
         })
     }

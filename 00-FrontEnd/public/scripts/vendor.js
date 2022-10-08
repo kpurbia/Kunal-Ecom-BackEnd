@@ -68,10 +68,10 @@ var updateVendor = () => {
                 data: userDetail,
                 timeout: 15000,
                 success: (data, status) => {
-                    if(data === "User updated"){
+                    if (data === "User updated") {
                         document.getElementById("detailWarning").style.display = "none";
                         document.getElementById("passwordWarning").style.display = "none";
-                        document.getElementById("updateSuccess").style.display = "block";            
+                        document.getElementById("updateSuccess").style.display = "block";
                     }
                 }
             });
@@ -80,6 +80,44 @@ var updateVendor = () => {
             document.getElementById("detailWarning").style.display = "none";
             document.getElementById("passwordWarning").style.display = "block";
         }
+    }
+}
+
+var deleteForm = () => {
+    document.getElementById("deleteForm").style.display = "block";
+    window.scrollTo(0, document.body.scrollHeight);
+}
+
+var deleteVendor = () => {
+    alert("Hi")
+    let email = document.getElementById("deleteEmail").value;
+    let password = document.getElementById("deletePassword").value;
+    if (password === "" || email === "") {
+        document.getElementById("deleteDetailWarning").style.display = "block";
+    } else {
+        let userData = {};
+        userData.email = email;
+        userData.password = password;
+
+        userData = JSON.stringify(userData);
+
+        let token = window.localStorage.getItem("Authorization");
+        let deleteURL = "http://localhost:7000/vendor/deleteProfile";
+        $.ajax({
+            headers: { "Authorization": token },
+            contentType: "application/json",
+            url: deleteURL,
+            type: "DELETE",
+            data: userData,
+            success: (data, status) => {
+                window.location.href = "/vendor/register"
+            },
+            error: (data, status) =>{
+                alert("You are not authenticated to access");
+                localStorage.clear();
+                window.location.href = "/login";
+            }
+        });
     }
 }
 
@@ -111,7 +149,7 @@ var addToInventory = () => {
         pDetails = JSON.stringify(pDetails);
 
         let token = window.localStorage.getItem("Authorization");
-        let checkURL = "http://localhost:7000/addproduct";
+        let checkURL = "http://localhost:7000/vendor/addproduct";
         $.ajax({
             headers: { "Authorization": token },
             contentType: "application/json",
@@ -124,7 +162,7 @@ var addToInventory = () => {
             error: (data, status) => {
                 alert("You are not authenticated to access");
                 localStorage.clear();
-                window.location.href = "/login"
+                window.location.href = "/login";
             }
         });
     }

@@ -19,6 +19,15 @@ CREATE TABLE `ecommerce`.`users` (
   `user_role` VARCHAR(100) NULL,
   PRIMARY KEY (`user_id`));
 
+-------------------------------------------------------------------CREATE ACCOUNTS TABLE
+CREATE TABLE `ecommerce`.`accounts` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `account_user_id` INT NULL,
+  `account_number` VARCHAR(100) NULL,
+  `account_bank` VARCHAR(100) NULL,
+  `account_wallet` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`));
+
 -------------------------------------------------------------------CREATE CUSTOMERS TABLE
 CREATE TABLE `ecommerce`.`customers` (
   `customer_id` INT NOT NULL AUTO_INCREMENT,
@@ -42,6 +51,8 @@ CREATE TABLE `ecommerce`.`agents` (
   `agent_id` INT NOT NULL AUTO_INCREMENT,
   `agent_user_id` INT NULL,
   `agent_govt_id` VARCHAR(100) NULL,
+  `agent_success_delivery_count` INT NULL,
+  `agent_fail_delivery_count` INT NULL,
   PRIMARY KEY (`agent_id`));
 
 -------------------------------------------------------------------CREATE ADMINS TABLE

@@ -5,6 +5,8 @@ const vendorControl = new VendorControl();
 export default function(app){
     app.route("/vendor/register").post(vendorControl.registerVendor);
     app.route("/addProduct").post(vendorControl.addProduct);
+    app.route("/vendor/getProfile").get(vendorControl.getVendorProfile);
+    app.route("/vendor/updateProfile").post(vendorControl.updateVendorProfile);
 
 }
 

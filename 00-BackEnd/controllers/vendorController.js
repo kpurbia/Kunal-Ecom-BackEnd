@@ -30,6 +30,52 @@ export default class Vendor {
         }
     }
 
+    //////////////////////////////////////////////////////Get vendor profile
+    async getVendorProfile(req, res){
+        if(req.session){
+            let token = req.header("Authorization");
+            let decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
+            if(decodedToken.role === "Vendor"){
+                let userId = decodedToken.userId;
+                let vendorData = await vendorDML.getVendorData(userId);
+                let vendor_user_id = vendorData[0].user_id;
+                let vendorDetail = await vendorDML.getVendorDetail(vendor_user_id);
+                let vendorInfo = [];
+                vendorInfo.push(vendorData[0]);
+                vendorInfo.push(vendorDetail[0]);
+                res.status(200).send(vendorInfo)
+            } else{
+                console.log("Not Vendor");
+                res.status(400).send("Error occured");
+            }
+        } else{
+            console.log("Not in session");
+            res.status(400).send("Session Expired");
+        }
+    }
+
+    //////////////////////////////////////////////////////Update vendor profile
+    async updateVendorProfile(req, res){
+        if(req.session){
+            let token = req.header("Authorization");
+            let decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
+            if(decodedToken.role === "Vendor"){
+                let userId = decodedToken.userId;
+                let vendorDetail = await vendorDML.getVendorDetail(userId);
+                let vendorId = vendorDetail[0].vendor_id;
+                let updateData = req.body
+                vendorDML.updateVendor(vendorId, updateData);
+                userDML.updateUser(userId, updateData);
+                res.status(200).send("User updated");
+            } else{
+                console.log("Not Vendor");
+                res.status(400).send("Error occured");
+            }
+        } else{
+            console.log("Not in session");
+            res.status(400).send("Session Expired");
+        }
+    }
     //////////////////////////////////////////////////////Adding product to product database
     addProduct(req, res) {
         if (req.session) {

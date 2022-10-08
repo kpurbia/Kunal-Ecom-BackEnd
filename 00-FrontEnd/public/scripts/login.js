@@ -17,16 +17,16 @@ var doLogin = () => {
         timeout: 15000,
         success: (data, status) => {
             if(data[1] === "Customer"){
-                localStorage.setItem("token", data[0]);
+                localStorage.setItem("Authorization", data[0]);
                 window.location.href = "/customer"
             } else if(data[1] === "Agent"){
-                localStorage.setItem("token", data[0]);
+                localStorage.setItem("Authorization", data[0]);
                 window.location.href = "/agent"
             } else if(data[1] === "Vendor"){
-                localStorage.setItem("token", data[0]);
+                localStorage.setItem("Authorization", data[0]);
                 window.location.href = "/vendor"
             } else if(data[1] === "Admin"){
-                localStorage.setItem("token", data[0]);
+                localStorage.setItem("Authorization", data[0]);
                 window.location.href = "/admin"
             } else{
                 document.getElementById("loginWarning").style.display = "block"

@@ -29,22 +29,21 @@ var addToInventory = () => {
 
         pDetails = JSON.stringify(pDetails);
         
-        let token = localStorage.getItem("token");
+        let token = window.localStorage.getItem("Authorization");
         let checkURL = "http://localhost:7000/addproduct";
         $.ajax({
-            headers: {
-                "header": token
-            },
+            headers: {"Authorization": token},
             contentType: "application/json",
             url: checkURL,
             type: "POST",
             data: pDetails,
             success: (data, status)=>{
-                if(data === "Added"){
-                    window.location.href = "/vendor"
-                } else{
-                    document.getElementById("productWarning").style.display = "block"
-                }
+                window.location.href = "/vendor"
+            },
+            error: (data, status)=>{
+                alert("You are not authenticated to access");
+                localStorage.clear();
+                window.location.href = "/login"
             }
         });
     }

@@ -61,10 +61,18 @@ export default class UserDML {
         })
     }
 
-    //////////////////////////////////////////////////////Removing user on delete or update account
+    //////////////////////////////////////////////////////Updating vendor account in users table 
     updateUser(userId, data){
         let updateQuery = `UPDATE users SET user_name = '${data.name}', user_email = '${data.email}', user_password = '${data.password}', user_contact = '${data.contact}', user_state = '${data.state}', user_city = '${data.city}' WHERE user_id = ${userId}`
         target.query(updateQuery, (err, result)=>{
+            if(err) throw err;
+        })
+    }
+
+    //////////////////////////////////////////////////////Deleting user account
+    deleteUser(userId){
+        let deleteQuery = `DELETE FROM users WHERE user_id = ${userId};`
+        target.query(deleteQuery,(err, result)=>{
             if(err) throw err;
         })
     }

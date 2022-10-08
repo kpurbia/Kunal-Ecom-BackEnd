@@ -1,5 +1,6 @@
 import VendorDML from '../models/VendorDML.js';
 import UserDML from '../models/UserDML.js';
+import jwt from 'jsonwebtoken';
 
 const vendorDML = new VendorDML();
 const userDML = new UserDML();
@@ -28,12 +29,25 @@ export default class Vendor {
             res.send("Email already registered");
         }
     }
+
+    //////////////////////////////////////////////////////Adding product to product database
+    addProduct(req, res) {
+        if (req.session) {
+            let token = req.header("Authorization");
+            let decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
+            if (decodedToken.role === "Vendor") {
+                let productDetail = req.body;
+                let vendorId = decodedToken.userId;
+                vendorDML.addProduct(productDetail, vendorId);
+                res.status(200).send("Added successfully");
+            } else {
+                res.status(400).send("Error occured");
+            }
+        } else{
+            res.status(400).send("Session Expired");
+        }
+    }
 }
-
-// 
-// exports.registerVendor = async function (req, res) {
-
-// }
 
 
 // //////////////////////////////////////////////////////Display of details required for login

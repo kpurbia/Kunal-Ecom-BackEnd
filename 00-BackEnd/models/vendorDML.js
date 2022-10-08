@@ -4,16 +4,10 @@ export default class VendorDML {
 
     //////////////////////////////////////////////////////Adding vendor data to vendor table
     register(data, id) {
-        return new Promise((resolve) => {
-            let registerQuery = "INSERT INTO vendors (vendor_user_id, vendor_govt_id, vendor_category) VALUES (?, ?, ?);"
-            let registerData = target.format(registerQuery, [id, data.govtid, data.category]);
-            target.query(registerData, (err, result) => {
-                if (err) {
-                    throw err;
-                } else {
-                    resolve(data);
-                }
-            })
+        let registerQuery = "INSERT INTO vendors (vendor_user_id, vendor_govt_id, vendor_category) VALUES (?, ?, ?);"
+        let registerData = target.format(registerQuery, [id, data.govtid, data.category]);
+        target.query(registerData, (err, result) => {
+            if (err) throw err;
         })
     }
 
@@ -35,9 +29,16 @@ export default class VendorDML {
     remove(data) {
         let removeQuery = 'DELETE FROM vendors WHERE vendor_id=' + data[1].vendor_id;
         target.query(removeQuery, (err, result) => {
-            if (err) {
-                throw err;
-            }
+            if (err) throw err;
+        })
+    }
+
+    //////////////////////////////////////////////////////Adding product to product table
+    addProduct(data, vendorId) {
+        let insertCmd = "INSERT INTO products (product_vendor_id, product_name, product_category, product_price, product_description, product_quantity) VALUES (?, ?, ?, ?, ?, ?);"
+        let insertQuery = target.format(insertCmd, [vendorId, data.pName, data.pCategory, data.pPrice, data.pDescription, data.pQuantity]);
+        target.query(insertQuery, (err, result) => {
+            if (err) throw err;
         })
     }
 }

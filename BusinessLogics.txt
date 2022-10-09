@@ -1,6 +1,7 @@
 ----------------------------------GUEST SIDE
 --> Display Homepage for guest with "LOGIN" and "REGISTER" buttons and product display with "SEE DETAILS" button
---> If guest clicks on "SEE DETAILS" button, it will not allow guest and show alert to login or register account
+--> If guest clicks on "SEE DETAILS" button
+        It will show alert of Login or Register
 
 --> On registering account:-
         a)  Checking all details must be filled by users
@@ -27,9 +28,12 @@
 ----------------------------------PRODUCT VENDOR SIDE
 --> Display of vendor homepage with all products on screen with 4 button (Profile, Add Product, Your Products, Your Wallet)
 
---> Display screen of vendor homepage contains all products available on site.
+--> Display screen of vendor homepage contains all products available on site with "SEE DETAILS BUTTON"
 
---> On clicking "SEE DETAILS" button below every product vendor will redirect to page where product details will be shown
+--> If vendor clicks on "SEE DETAILS" button
+        It will first save all product info to local storage and using that information,
+        It will redirect user to page where full information of product is displayed with ADD TO CART BUTTON
+        BUT "ADD TO CART" will only work if user register or login as a "CUSTOMER"
 
 --> On clicking "Profile" button vendor will shift to its own profile and see its existing details.
         a)  There user will get 2 options of update profile and delete account

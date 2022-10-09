@@ -36,6 +36,13 @@ export default class User {
         let allProducts = await userDML.getProducts();
         res.send(allProducts);
     }
+
+    //////////////////////////////////////////////////////Checking and displaying product details to user
+    async getProductDetail(req, res){
+        let productId = req.body.id;
+        let productDetail = await userDML.productDetail(productId);
+        res.status(200).send(productDetail[0]);
+    }
 }
 
 

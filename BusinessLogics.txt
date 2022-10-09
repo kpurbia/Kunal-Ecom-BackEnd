@@ -73,7 +73,16 @@
         c)  If there is already bank added, then it will display wallet amount and bank details form which user can update also
 
 
+----------------------------------CUSTOMER SIDE
+--> Display of customer homepage with all products on screen with 4 button (Profile, Your Cart, Your Orders, Your Wallet)
 
+--> Display screen of customer homepage contains all products available on site with "SEE DETAILS BUTTON"
+
+--> If customer clicks on "SEE DETAILS" button
+        It will first save all product info to local storage and using that information,
+        It will redirect user to page where full information of product is displayed with ADD TO CART BUTTON
+        If customer adds the product to cart it will get saved in array of cart which is stored in local storage of browser
+        And customer will be shifted to home page
         
 
 

@@ -1,5 +1,6 @@
-------------------------------------------------------------------COMMON FOR ALL
---> Common Homepage for all with login and register buttons
+----------------------------------GUEST SIDE
+--> Display Homepage for guest with "LOGIN" and "REGISTER" buttons and product display with "SEE DETAILS" button
+--> If guest clicks on "SEE DETAILS" button, it will not allow guest and show alert to login or register account
 
 --> On registering account:-
         a)  Checking all details must be filled by users

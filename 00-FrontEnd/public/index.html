@@ -11,7 +11,7 @@
     <title>HOME</title>
 </head>
 
-<body onload="getProducts()">
+<body onload="productsDisplay()">
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid justify-content-start">
             <a class="navbar-brand" style="font-family: cursive; color: #fff; font-size: 2rem;" href="/">E-STORE</a>
@@ -35,12 +35,13 @@
         <div class="card-body">
             <h5 class="card-title" id="cardTitle"></h5>
             <p class="card-text" id="cardText"></p>
+            <button class="btn btn-primary">SEE DETAILS</button>
         </div>
     </div>
 
     <nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">&copy; 2021 KUNAL PURBIA</a>
+            <a class="navbar-brand">&copy; 2021 KUNAL PURBIA</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

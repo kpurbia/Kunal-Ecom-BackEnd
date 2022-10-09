@@ -122,10 +122,6 @@ var deleteVendor = () => {
     }
 }
 
-var getProducts = () => {
-    alert("Get Products");
-}
-
 var addProduct = () => {
     window.location.href = "/addProduct";
 }

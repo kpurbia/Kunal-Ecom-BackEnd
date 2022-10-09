@@ -5,4 +5,5 @@ const userController = new UserController();
 export default function(app){
     app.route("/login").post(userController.userLogin);
     app.route("/user/productsDisplay").get(userController.getProducts)
+    app.route("/user/productDetails").post(userController.getProductDetail);
 }

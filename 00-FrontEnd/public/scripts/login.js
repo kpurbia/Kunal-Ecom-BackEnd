@@ -16,6 +16,7 @@ var doLogin = () => {
         data: credential,
         timeout: 15000,
         success: (data, status) => {
+            localStorage.clear();
             if(data[1] === "Customer"){
                 localStorage.setItem("Authorization", data[0]);
                 window.location.href = "/customer"

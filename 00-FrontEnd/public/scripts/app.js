@@ -128,10 +128,12 @@ var addToCart = () => {
                 let cartItems = [];
                 let previousItem = localStorage.getItem("cart");
                 if (previousItem === null) {
-                    cartItems.push(cartProduct)
+                    cartItems.push(cartProduct);
+                    window.location.href = "/customer";
                 } else {
                     cartItems.push(previousItem);
                     cartItems.push(cartProduct);
+                    window.location.href = "/customer";
                 }
                 localStorage.setItem("cart", cartItems);
             } else {

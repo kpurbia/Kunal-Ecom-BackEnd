@@ -30,6 +30,12 @@ export default class User {
             res.send("User Not Found");
         }
     }
+
+    //////////////////////////////////////////////////////Get all products to display
+    async getProducts(req, res){
+        let allProducts = await userDML.getProducts();
+        res.send(allProducts);
+    }
 }
 
 

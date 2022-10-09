@@ -69,7 +69,7 @@ CREATE TABLE `ecommerce`.`products` (
   `product_name` VARCHAR(100) NULL,
   `product_category` VARCHAR(100) NULL,
   `product_price` FLOAT NULL,
-  `product_description` VARCHAR(100) NULL,
+  `product_description` MEDIUMTEXT NULL,
   `product_quantity` INT NULL,
   `product_sell_count` INT NULL,
   PRIMARY KEY (`product_id`),

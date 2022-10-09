@@ -1,5 +1,6 @@
 import CustomerDML from '../models/CustomerDML.js';
 import UserDML from '../models/UserDML.js';
+import jwt from 'jsonwebtoken';
 
 const customerDML = new CustomerDML();
 const userDML = new UserDML();
@@ -19,6 +20,17 @@ export default class Customer {
         } else {
             userDML.remove(checkUser);
             res.send("Email already registered");
+        }
+    }
+
+    //////////////////////////////////////////////////////Checking Add to cart only for customers
+    addToCart(req, res){
+        let token = req.header("Authorization");
+        let decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
+        if(decodedToken.role === "Customer"){
+            res.status(200).send("Customer");
+        } else{
+            res.status(200).send("Not Customer");
         }
     }
 }

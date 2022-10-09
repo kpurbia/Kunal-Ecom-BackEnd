@@ -4,6 +4,7 @@ const customerController = new CustomerController();
 
 export default function(app){
     app.route("/customer/register").post(customerController.registerCustomer);
+    app.route("/customer/addToCart").post(customerController.addToCart);
 }
 
 // module.exports = function(app){

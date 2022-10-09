@@ -1,3 +1,4 @@
+//////////////////////////////////////////////////////All product display for every user and guest
 var productsDisplay = () => {
     let token = window.localStorage.getItem("Authorization");
     let checkURL = "http://localhost:7000/user/productsDisplay";
@@ -46,6 +47,8 @@ var productsDisplay = () => {
     });
 }
 
+//////////////////////////////////////////////////////Checking Guest or USER and displaying product details only to user
+//////////////////////////////////////////////////////By using product id storing the product detail in local storage of browser
 var getProductDetail = (element) => {
     let getId = element.path[0].id;
     let product = {};
@@ -65,11 +68,11 @@ var getProductDetail = (element) => {
             headers: { "Authorization": token },
             contentType: "application/json",
             url: checkURL,
-            type:"POST",
+            type: "POST",
             data: product,
-            success: (data, status)=>{
+            success: (data, status) => {
                 data = JSON.stringify(data);
-                localStorage.setItem("productDetail", data);
+                localStorage.setItem("product", data);
                 window.location.href = "/user/productDetails"
             },
             error: (data, status) => {
@@ -81,13 +84,13 @@ var getProductDetail = (element) => {
     }
 }
 
-var showProductDetail = () =>{
-    let product = localStorage.getItem("productDetail");
-    product = JSON.parse(product)
-    
+//////////////////////////////////////////////////////Getting data of product from browser and display on screen
+var showProductDetail = () => {
+    let product = localStorage.getItem("product");
+    product = JSON.parse(product);
 
     document.getElementById("displayTitle").innerHTML = product.product_name;
-    document.getElementById("displayPrice").innerHTML = "Rs. "+product.product_price;
+    document.getElementById("displayPrice").innerHTML = "Rs. " + product.product_price;
     document.getElementById("displayCategory").innerHTML = product.product_category;
     document.getElementById("displayText").innerHTML = product.product_description;
     const addButton = document.createElement("button");
@@ -98,6 +101,51 @@ var showProductDetail = () =>{
     document.getElementById("displayBody").appendChild(addButton)
 }
 
-var addToCart = (product) =>{
-    alert(product.productId);
+//////////////////////////////////////////////////////Fetching authorization token and checking only customer can add to cart
+//////////////////////////////////////////////////////If user is not customer show alert of not customer
+var addToCart = () => {
+    let product = localStorage.getItem("product");
+    product = JSON.parse(product);
+    let cartProduct = {};
+    cartProduct.productId = product.product_id;
+    cartProduct.productName = product.product_name;
+    cartProduct.productPrice = product.product_price
+
+    console.log(cartProduct);
+
+    cartProduct = JSON.stringify(cartProduct);
+
+    let token = window.localStorage.getItem("Authorization");
+    let cartURL = "http://localhost:7000/customer/addToCart";
+
+    $.ajax({
+        headers: { "Authorization": token },
+        contentType: "application/json",
+        url: cartURL,
+        type: "POST",
+        success: (data, status) => {
+            if (data === "Customer") {
+                let cartItems = [];
+                let previousItem = localStorage.getItem("cart");
+                if (previousItem === null) {
+                    cartItems.push(cartProduct)
+                } else {
+                    cartItems.push(previousItem);
+                    cartItems.push(cartProduct);
+                }
+                localStorage.setItem("cart", cartItems);
+            } else {
+                localStorage.removeItem("product");
+                alert("Its not for you")
+            }
+        },
+        error: (data, status) => {
+            console.log(data);
+            data = JSON.stringify(data);
+            alert(data);
+            alert("You are not authenticated to access");
+            localStorage.clear();
+            window.location.href = "/login";
+        }
+    });
 }

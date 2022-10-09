@@ -27,6 +27,10 @@
 ----------------------------------PRODUCT VENDOR SIDE
 --> Display of vendor homepage with all products on screen with 4 button (Profile, Add Product, Your Products, Your Wallet)
 
+--> Display screen of vendor homepage contains all products available on site.
+
+--> On clicking "SEE DETAILS" button below every product vendor will redirect to page where product details will be shown
+
 --> On clicking "Profile" button vendor will shift to its own profile and see its existing details.
         a)  There user will get 2 options of update profile and delete account
         b)  To update profile, browser and server will check

@@ -22,9 +22,6 @@ var productsDisplay = () => {
                 var description = document.createElement("p");
                 description.classList.add("card-text");
                 description.innerHTML = data[i].product_description
-
-                var productId = document.createElement("p");
-                productId.innerHTML = data[i].product_id;
                 
                 var detailButton = document.createElement("button");
                 detailButton.classList.add("btn", "btn-primary", "detail-button");
@@ -32,10 +29,13 @@ var productsDisplay = () => {
                 detailButton.innerHTML = "SEE DETAILS";
                 detailButton.onclick = getProductDetail;
 
+                var line = document.createElement("hr");
+                line.style.padding = "2px"
+
                 document.getElementById("cardBody").appendChild(title);
-                document.getElementById("cardBody").appendChild(productId);
                 document.getElementById("cardBody").appendChild(description);
                 document.getElementById("cardBody").appendChild(detailButton);
+                document.getElementById("cardBody").appendChild(line);
             }
         },
         error: (data, status) => {

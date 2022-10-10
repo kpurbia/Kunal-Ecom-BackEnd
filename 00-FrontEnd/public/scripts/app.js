@@ -9,7 +9,12 @@ var productsDisplay = () => {
         type: "GET",
         success: (data, status) => {
             for (let i = 0; i < data.length; i++) {
-                document.getElementById("card").style.visibility = "visible";
+                document.getElementById("cardPlace").style.visibility = "visible";
+
+                var bodyDiv = document.createElement("div")
+                bodyDiv.classList.add("card","text-center");
+                bodyDiv.setAttribute("id", "card");
+                document.getElementById("cardPlace").appendChild(bodyDiv)
 
                 var division = document.createElement("div");
                 division.classList.add("card-body");

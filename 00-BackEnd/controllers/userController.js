@@ -1,25 +1,22 @@
-import UserDML from '../models/UserDML.js';
 import jwt from 'jsonwebtoken';
-
-const userDML = new UserDML();
 
 export default class User {
 
-    //////////////////////////////////////////////////////Login User using User Table
-    async userLogin(req, res) {
-        let userDetail = req.body;
-        let foundUser = await userDML.login(userDetail);
-        if (foundUser.length == 1) {
-            req.session.userId = foundUser[0].user_id;
-            req.session.user = foundUser[0].user_name;
-            req.session.email = foundUser[0].user_email;
-            req.session.role = foundUser[0].user_role;
+    //////////////////////////////////////////////////////Creating Dependency Injection
+    constructor(mgr){
+        this.userManager = mgr;
+    }
 
+    //////////////////////////////////////////////////////Login User using User Table
+    userLogin = async (req, res) => {
+        let userDetail = req.body;
+        let foundUser = await this.userManager.login(userDetail);
+        if (foundUser.length == 1) {
             let data = {};
-            data.userId = req.session.userId;
-            data.user = req.session.user;
-            data.email = req.session.email;
-            data.role = req.session.role;
+            data.userId = foundUser[0].user_id;
+            data.user = foundUser[0].user_name;
+            data.email = foundUser[0].user_email;
+            data.role = foundUser[0].user_role;
 
             let token = jwt.sign(data, process.env.TOKEN_SECRET);
             let frontEndData = []
@@ -29,19 +26,6 @@ export default class User {
         } else {
             res.send("User Not Found");
         }
-    }
-
-    //////////////////////////////////////////////////////Get all products to display
-    async getProducts(req, res){
-        let allProducts = await userDML.getProducts();
-        res.send(allProducts);
-    }
-
-    //////////////////////////////////////////////////////Checking and displaying product details to user
-    async getProductDetail(req, res){
-        let productId = req.body.id;
-        let productDetail = await userDML.productDetail(productId);
-        res.status(200).send(productDetail[0]);
     }
 }
 

@@ -1,9 +1,8 @@
+import UserServices from '../services/MySQL/UserServices.js'
 import UserController from '../controllers/UserController.js';
 
-const userController = new UserController();
-
 export default function(app){
+    const userServices = new UserServices();
+    const userController = new UserController(userServices);
     app.route("/login").post(userController.userLogin);
-    app.route("/user/productsDisplay").get(userController.getProducts)
-    app.route("/user/productDetails").post(userController.getProductDetail);
 }

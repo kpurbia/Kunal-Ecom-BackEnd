@@ -3,7 +3,7 @@ import target from './dbServer/dbserver.js';
 export default class VendorDML {
 
     //////////////////////////////////////////////////////Adding vendor data to vendor table
-    register(data, id) {
+    register = (data, id) => {
         let registerQuery = "INSERT INTO vendors (vendor_user_id, vendor_govt_id, vendor_category) VALUES (?, ?, ?);"
         let registerData = target.format(registerQuery, [id, data.govtid, data.category]);
         target.query(registerData, (err, result) => {
@@ -12,7 +12,7 @@ export default class VendorDML {
     }
 
     //////////////////////////////////////////////////////Checking repeat vendor registered in vendor table
-    checkVendor(data) {
+    checkVendor = (data) => {
         return new Promise((resolve) => {
             let searchQuery = "SELECT * FROM vendors WHERE vendor_govt_id = '" + data.govtid + "'";
             target.query(searchQuery, (err, result) => {
@@ -26,7 +26,7 @@ export default class VendorDML {
     }
 
     //////////////////////////////////////////////////////Removing repeated vendor detail
-    remove(data) {
+    remove = (data) => {
         let removeQuery = 'DELETE FROM vendors WHERE vendor_id=' + data[1].vendor_id;
         target.query(removeQuery, (err, result) => {
             if (err) throw err;
@@ -34,7 +34,7 @@ export default class VendorDML {
     }
 
     //////////////////////////////////////////////////////Fetching all vendor data using its user id from users table
-    getVendorData(id) {
+    getVendorData = (id) => {
         return new Promise((resolve) => {
             let getQuery = "SELECT * FROM users WHERE user_id = " + id;
             target.query(getQuery, (err, data) => {
@@ -48,7 +48,7 @@ export default class VendorDML {
     }
 
     //////////////////////////////////////////////////////Fetching govt id of following vendor_user_id from vendors table
-    getVendorDetail(id){
+    getVendorDetail = (id) =>{
         return new Promise((resolve) => {
             let searchQuery = "SELECT * FROM vendors WHERE vendor_user_id = "+id;
             target.query(searchQuery, (err, result)=>{
@@ -63,7 +63,7 @@ export default class VendorDML {
     }
 
     //////////////////////////////////////////////////////Updating vendor account in vendors table
-    updateVendor(vendorId, data){
+    updateVendor = (vendorId, data) => {
         let updateQuery = `UPDATE vendors SET vendor_govt_id = '${data.govtid}', vendor_category = '${data.category}' WHERE vendor_id = ${vendorId}`
         target.query(updateQuery, (err, result)=>{
             if(err) throw err;
@@ -71,7 +71,7 @@ export default class VendorDML {
     }
 
     //////////////////////////////////////////////////////Deleting vendor account
-    deleteVendor(vendorId){
+    deleteVendor = (vendorId) => {
         let deleteQuery = `DELETE FROM vendors WHERE vendor_user_id = ${vendorId};`
         target.query(deleteQuery,(err, result)=>{
             if(err) throw err;
@@ -79,7 +79,7 @@ export default class VendorDML {
     }
 
     //////////////////////////////////////////////////////Adding product to product table
-    addProduct(data, vendorId) {
+    addProduct = (data, vendorId) => {
         let insertCmd = "INSERT INTO products (product_vendor_id, product_name, product_category, product_price, product_description, product_quantity) VALUES (?, ?, ?, ?, ?, ?);"
         let insertQuery = target.format(insertCmd, [vendorId, data.pName, data.pCategory, data.pPrice, data.pDescription, data.pQuantity]);
         target.query(insertQuery, (err, result) => {

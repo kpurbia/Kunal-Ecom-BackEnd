@@ -1,16 +1,15 @@
 import target from './dbServer/dbserver.js';
 
-export default class AgentDML{
+export default class AgentServices {
     //////////////////////////////////////////////////////Adding agent data to agent table
-    register(data, id){
-        return new Promise((resolve)=>{
-            // let agentData = data;
+    register = (data, id) => {
+        return new Promise((resolve) => {
             let registerQuery = "INSERT INTO agents (agent_govt_id, agent_user_id) VALUES (?, ?);"
             let registerData = target.format(registerQuery, [data.govtid, id]);
-            target.query(registerData, (err, result)=>{
-                if(err){
+            target.query(registerData, (err, result) => {
+                if (err) {
                     throw err;
-                } else{
+                } else {
                     resolve(data);
                 }
             })
@@ -18,14 +17,13 @@ export default class AgentDML{
     }
 
     //////////////////////////////////////////////////////Checking duplicate agent registered in agent table
-    checkAgent(data){
-        return new Promise((resolve)=>{
-            let searchQuery = "SELECT * FROM agents WHERE agent_govt_id = '"+data.govtid + "'";
-            // console.log(searchQuery);
-            target.query(searchQuery, (err, result)=>{
-                if(err){
+    checkAgent = (data) => {
+        return new Promise((resolve) => {
+            let searchQuery = "SELECT * FROM agents WHERE agent_govt_id = '" + data.govtid + "'";
+            target.query(searchQuery, (err, result) => {
+                if (err) {
                     throw err;
-                } else{
+                } else {
                     resolve(result);
                 }
             })
@@ -33,13 +31,13 @@ export default class AgentDML{
     }
 
     //////////////////////////////////////////////////////Removing repeated agent detail
-    remove(data){
-        let removeQuery = 'DELETE FROM agents WHERE agent_id ='+data[1].agent_id;
-    target.query(removeQuery, (err, result)=>{
-        if(err){
-            throw err;
-        }
-    });
+    remove = (data) => {
+        let removeQuery = 'DELETE FROM agents WHERE agent_id =' + data[1].agent_id;
+        target.query(removeQuery, (err, result) => {
+            if (err) {
+                throw err;
+            }
+        });
     }
 }
 
@@ -91,7 +89,7 @@ export default class AgentDML{
 //         if(err){
 //             throw err;
 //         }
-//     })  
+//     })
 // }
 
 // //////////////////////////////////////////////////////Displaying all orders which are not picked by any agent
@@ -139,7 +137,7 @@ export default class AgentDML{
 
 // //////////////////////////////////////////////////////Adding order to track
 // exports.addToTrack = function(agentId, orderId, trackId, data){
-//     let insertCmd = "INSERT INTO tracking (tracking_track_id, tracking_order_id, tracking_agent_id, tracking_employee_name, tracking_employee_contact, tracking_expect_date, tracking_delivery_status) VALUES (?, ?, ?, ?, ?, ?, ?)" 
+//     let insertCmd = "INSERT INTO tracking (tracking_track_id, tracking_order_id, tracking_agent_id, tracking_employee_name, tracking_employee_contact, tracking_expect_date, tracking_delivery_status) VALUES (?, ?, ?, ?, ?, ?, ?)"
 //     let insertQuery = target.format(insertCmd, [trackId, orderId, agentId, data.name, data.contact, data.date, data.status]);
 //     target.query(insertQuery, (err, result)=>{
 //         if(err){
@@ -161,7 +159,7 @@ export default class AgentDML{
 // //////////////////////////////////////////////////////Searching track for duplicate data
 // exports.checkTrack = function(orderId, trackId){
 //     return new Promise((resolve) => {
-//         let searchQuery = "SELECT * FROM tracking WHERE tracking_order_id = "+orderId+" AND tracking_track_id = "+trackId; 
+//         let searchQuery = "SELECT * FROM tracking WHERE tracking_order_id = "+orderId+" AND tracking_track_id = "+trackId;
 //         target.query(searchQuery, (err, result)=>{
 //             if(err){
 //                 throw err;
@@ -188,7 +186,7 @@ export default class AgentDML{
 //         let searchQuery = "SELECT * FROM tracking WHERE tracking_order_id = "+orderId;
 //         target.query(searchQuery, (err, result)=>{
 //         if(err){
-//             throw err 
+//             throw err
 //         } else{
 //             resolve(result)
 //         }

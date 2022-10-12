@@ -1,29 +1,30 @@
-import AgentDML from '../models/AgentDML.js';
-import UserDML from '../models/UserDML.js';
+export default class Agent {
+    
+    //////////////////////////////////////////////////////Creating Dependency Injection
+    constructor(agentMgr, userMgr){
+        this.agentManager = agentMgr;
+        this.userManager = userMgr;
+    }
 
-const agentDML = new AgentDML();
-const userDML = new UserDML();
-
-//////////////////////////////////////////////////////Registering Agent
-export default class Agent{
-    async registerAgent(req, res) {
+    //////////////////////////////////////////////////////Registering Agent
+    registerAgent = async (req, res) => {
         let agentData = req.body;
         let role = "Agent"
-        userDML.register(agentData, role)
-        let checkUser = await userDML.checkUser(agentData);
+        this.userManager.register(agentData, role)
+        let checkUser = await this.userManager.checkUser(agentData);
         let userId = checkUser[0].user_id
         if (checkUser.length == 1) {
-            agentDML.register(agentData, userId);
-            let checkAgent = await agentDML.checkAgent(agentData);
+            this.agentManager.register(agentData, userId);
+            let checkAgent = await this.agentManager.checkAgent(agentData);
             if (checkAgent.length == 1) {
                 res.send("success");
             } else {
-                userDML.removegovtid(checkUser);
-                agentDML.remove(checkAgent);
+                this.userManager.removegovtid(checkUser);
+                this.agentManager.remove(checkAgent);
                 res.send("Id already registered");
             }
         } else {
-            userDML.remove(checkUser);
+            this.userManager.remove(checkUser);
             res.send("Email already registered");
         }
     }

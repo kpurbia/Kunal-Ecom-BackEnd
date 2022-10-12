@@ -1,9 +1,7 @@
 //////////////////////////////////////////////////////All product display for every user and guest
 var productsDisplay = () => {
-    let token = window.localStorage.getItem("Authorization");
-    let checkURL = "http://localhost:7000/user/productsDisplay";
+    let checkURL = "http://localhost:7000/productsDisplay";
     $.ajax({
-        headers: { "Authorization": token },
         contentType: "application/json",
         url: checkURL,
         type: "GET",
@@ -67,7 +65,7 @@ var getProductDetail = (element) => {
         localStorage.clear();
         window.location.href = "/login";
     } else {
-        let checkURL = "http://localhost:7000/user/productDetails";
+        let checkURL = "http://localhost:7000/productDetails";
 
         $.ajax({
             headers: { "Authorization": token },
@@ -113,21 +111,20 @@ var addToCart = () => {
     product = JSON.parse(product);
     let cartProduct = {};
     cartProduct.productId = product.product_id;
-    cartProduct.productName = product.product_name;
-    cartProduct.productPrice = product.product_price
 
     console.log(cartProduct);
 
     cartProduct = JSON.stringify(cartProduct);
 
     let token = window.localStorage.getItem("Authorization");
-    let cartURL = "http://localhost:7000/customer/addToCart";
+    let cartURL = "http://localhost:7000/cart";
 
     $.ajax({
         headers: { "Authorization": token },
         contentType: "application/json",
         url: cartURL,
         type: "POST",
+        data: cartProduct,
         success: (data, status) => {
             if (data === "Customer") {
                 let cartItems = [];
@@ -141,15 +138,13 @@ var addToCart = () => {
                     window.location.href = "/customer";
                 }
                 localStorage.setItem("cart", cartItems);
+                localStorage.removeItem("product");
             } else {
                 localStorage.removeItem("product");
                 alert("Its not for you")
             }
         },
         error: (data, status) => {
-            console.log(data);
-            data = JSON.stringify(data);
-            alert(data);
             alert("You are not authenticated to access");
             localStorage.clear();
             window.location.href = "/login";

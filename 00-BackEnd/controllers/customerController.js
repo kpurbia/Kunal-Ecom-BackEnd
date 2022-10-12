@@ -1,38 +1,36 @@
-import CustomerDML from '../models/CustomerDML.js';
-import UserDML from '../models/UserDML.js';
+import CustomerDML from '../services/MySQL/CustomerServices.js';
+import UserServices from '../services/MySQL/UserServices.js'
 import jwt from 'jsonwebtoken';
-
-const customerDML = new CustomerDML();
-const userDML = new UserDML();
 
 export default class Customer {
 
+    //////////////////////////////////////////////////////Creating Dependency Injection
+    constructor(userMgr, customerMgr){
+        this.customerManager = customerMgr;
+        this.userManager = userMgr;
+    }
+
     //////////////////////////////////////////////////////Registering customer
-    async registerCustomer(req, res) {
+    registerCustomer = async (req, res) => {
         let customerData = req.body;
         let role = "Customer"
-        userDML.register(customerData, role)
-        let checkUser = await userDML.checkUser(customerData);
+        this.userManager.register(customerData, role)
+        let checkUser = await this.userManager.checkUser(customerData);
         let userId = checkUser[0].user_id
         if (checkUser.length == 1) {
-            customerDML.register(userId);
+            this.customerManager.register(userId);
             res.send("success");
         } else {
-            userDML.remove(checkUser);
+            this.userManager.remove(checkUser);
             res.send("Email already registered");
         }
     }
 
-    //////////////////////////////////////////////////////Checking Add to cart only for customers
-    addToCart(req, res){
-        let token = req.header("Authorization");
-        let decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
-        if(decodedToken.role === "Customer"){
-            res.status(200).send("Customer");
-        } else{
-            res.status(200).send("Not Customer");
-        }
+    //////////////////////////////////////////////////////
+    cartDisplay = (req, res) => {
+        console.log("Wait");
     }
+
 }
 
 

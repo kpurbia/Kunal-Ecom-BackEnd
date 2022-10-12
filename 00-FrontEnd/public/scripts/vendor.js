@@ -89,7 +89,6 @@ var deleteForm = () => {
 }
 
 var deleteVendor = () => {
-    alert("Hi")
     let email = document.getElementById("deleteEmail").value;
     let password = document.getElementById("deletePassword").value;
     if (password === "" || email === "") {

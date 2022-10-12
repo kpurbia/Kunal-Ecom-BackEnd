@@ -1,10 +1,14 @@
+import UserServices from '../services/MySQL/UserServices.js';
+import CustomerServices from '../services/MySQL/CustomerServices.js';
 import CustomerController from '../controllers/CustomerController.js';
 
-const customerController = new CustomerController();
-
 export default function(app){
+    const userServices = new UserServices();
+    const customerServices = new CustomerServices();
+    const customerController = new CustomerController(userServices, customerServices);
+
     app.route("/customer/register").post(customerController.registerCustomer);
-    app.route("/customer/addToCart").post(customerController.addToCart);
+    app.route("/cart").get(customerController.cartDisplay);
 }
 
 // module.exports = function(app){

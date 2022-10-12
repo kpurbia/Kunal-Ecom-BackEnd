@@ -1,7 +1,7 @@
 import target from './dbServer/dbserver.js';
 
-export default class CustomerDML{
-    register(id){
+export default class CustomerServices{
+    register = (id) =>{
         return new Promise((resolve) => {
             let registerQuery = "INSERT INTO customers (customer_user_id) VALUES (?);"
             let registerData = target.format(registerQuery, [id]);

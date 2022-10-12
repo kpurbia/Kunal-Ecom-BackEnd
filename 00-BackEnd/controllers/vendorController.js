@@ -1,45 +1,46 @@
-import VendorDML from '../models/VendorDML.js';
-import UserDML from '../models/UserDML.js';
 import jwt from 'jsonwebtoken';
-
-const vendorDML = new VendorDML();
-const userDML = new UserDML();
 
 export default class Vendor {
 
+    //////////////////////////////////////////////////////Creating Dependency Injection
+    constructor(userMgr, vendorMgr){
+        this.vendorManager = vendorMgr;
+        this.userManager = userMgr;
+    }
+
     //////////////////////////////////////////////////////Registering vendor
-    async registerVendor(req, res) {
+    registerVendor = async (req, res) => {
         let vendorData = req.body;
         let role = "Vendor"
-        userDML.register(vendorData, role)
-        let checkUser = await userDML.checkUser(vendorData);
+        this.userManager.register(vendorData, role)
+        let checkUser = await this.userManager.checkUser(vendorData);
         let userId = checkUser[0].user_id
         if (checkUser.length == 1) {
-            vendorDML.register(vendorData, userId);
-            let checkVendor = await vendorDML.checkVendor(vendorData);
+            this.vendorManager.register(vendorData, userId);
+            let checkVendor = await this.vendorManager.checkVendor(vendorData);
             if (checkVendor.length == 1) {
                 res.send("success");
             } else {
-                userDML.removegovtid(checkUser);
-                vendorDML.remove(checkVendor);
+                this.userManager.removegovtid(checkUser);
+                this.vendorManager.remove(checkVendor);
                 res.send("Id already registered");
             }
         } else {
-            userDML.remove(checkUser);
+            this.userManager.remove(checkUser);
             res.send("Email already registered");
         }
     }
 
     //////////////////////////////////////////////////////Get vendor profile
-    async getVendorProfile(req, res){
+    getVendorProfile = async (req, res) => {
         if(req.session){
             let token = req.header("Authorization");
             let decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
             if(decodedToken.role === "Vendor"){
                 let userId = decodedToken.userId;
-                let vendorData = await vendorDML.getVendorData(userId);
+                let vendorData = await this.vendorManager.getVendorData(userId);
                 let vendor_user_id = vendorData[0].user_id;
-                let vendorDetail = await vendorDML.getVendorDetail(vendor_user_id);
+                let vendorDetail = await this.vendorManager.getVendorDetail(vendor_user_id);
                 let vendorInfo = [];
                 vendorInfo.push(vendorData[0]);
                 vendorInfo.push(vendorDetail[0]);
@@ -55,17 +56,17 @@ export default class Vendor {
     }
 
     //////////////////////////////////////////////////////Update vendor profile
-    async updateVendorProfile(req, res){
+    updateVendorProfile = async (req, res) => {
         if(req.session){
             let token = req.header("Authorization");
             let decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
             if(decodedToken.role === "Vendor"){
                 let userId = decodedToken.userId;
-                let vendorDetail = await vendorDML.getVendorDetail(userId);
+                let vendorDetail = await this.vendorManager.getVendorDetail(userId);
                 let vendorId = vendorDetail[0].vendor_id;
                 let updateData = req.body
-                vendorDML.updateVendor(vendorId, updateData);
-                userDML.updateUser(userId, updateData);
+                this.vendorManager.updateVendor(vendorId, updateData);
+                this.userManager.updateUser(userId, updateData);
                 res.status(200).send("User updated");
             } else{
                 req.session.destroy();
@@ -78,16 +79,16 @@ export default class Vendor {
     }
 
     //////////////////////////////////////////////////////Deleting Vendor Account
-    async deleteVendor(req, res){
+    deleteVendor = async (req, res) => {
         if(req.session){
             let token = req.header("Authorization");
             let decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
             if(decodedToken.role === "Vendor"){
                 let vendorData = req.body;
-                let checkVendor = await userDML.checkUser(vendorData);
+                let checkVendor = await this.userManager.checkUser(vendorData);
                 if(checkVendor[0].user_password === vendorData.password){
-                    vendorDML.deleteVendor(checkVendor[0].user_id);
-                    userDML.deleteUser(checkVendor[0].user_id);
+                    this.vendorManager.deleteVendor(checkVendor[0].user_id);
+                    this.userManager.deleteUser(checkVendor[0].user_id);
                     req.session.destroy();
                     res.status(200).send("Account Deleted");
                 } else{
@@ -106,14 +107,14 @@ export default class Vendor {
     }
 
     //////////////////////////////////////////////////////Adding product to product database
-    addProduct(req, res) {
+    addProduct = (req, res) => {
         if (req.session) {
             let token = req.header("Authorization");
             let decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
             if (decodedToken.role === "Vendor") {
                 let productDetail = req.body;
                 let vendorId = decodedToken.userId;
-                vendorDML.addProduct(productDetail, vendorId);
+                this.vendorManager.addProduct(productDetail, vendorId);
                 res.status(200).send("Added successfully");
             } else {
                 req.session.destroy();
@@ -135,7 +136,7 @@ export default class Vendor {
 // //////////////////////////////////////////////////////Login Vendor
 // exports.loginVendor = async function (req, res) {
 //     let vendorData = req.body;
-//     let vendorDetail = await vendorDML.login(vendorData);
+//     let vendorDetail = await this.vendorManager.login(vendorData);
 //     if (vendorDetail.length == 0) {
 //         res.send("<h1>Incorrect login details</h1>");
 //     } else {
@@ -149,7 +150,7 @@ export default class Vendor {
 //     let vendorId = req.params.id;
 //     console.log(vendorId);
 //     if (vendor_id == vendorId) {
-//         let vendorDetail = await vendorDML.searchVendor(vendorId);
+//         let vendorDetail = await this.vendorManager.searchVendor(vendorId);
 //         vendorDetail = JSON.stringify(vendorDetail);
 //         res.send(vendorDetail);
 //     } else {
@@ -161,8 +162,8 @@ export default class Vendor {
 // exports.updateDetail = async function (req, res) {
 //     let vendorData = req.body;
 //     if (vendorData.id == vendor_id) {
-//         vendorDML.updateVendor(vendorData, vendor_id);
-//         let vendorDetail = await vendorDML.searchVendor(vendorData.id);
+//         this.vendorManager.updateVendor(vendorData, vendor_id);
+//         let vendorDetail = await this.vendorManager.searchVendor(vendorData.id);
 //         vendorDetail = JSON.stringify(vendorDetail);
 //         res.send("<h1>Your details are updated, New details are--</h1>" + vendorDetail);
 //     } else {
@@ -174,7 +175,7 @@ export default class Vendor {
 // exports.deleteVendor = function (req, res) {
 //     let vendorId = req.body.id;
 //     if (vendor_id == vendorId) {
-//         vendorDML.deleteVendor(vendorId);
+//         this.vendorManager.deleteVendor(vendorId);
 //         res.send("<h1>Your account is deleted</h1>")
 //     } else {
 //         res.send("<h1>You are not logged in, login again</h1>")
@@ -185,16 +186,16 @@ export default class Vendor {
 // exports.addProduct = async function (req, res) {
 //     let productData = req.body;
 //     let productAdded = {}
-//     productAdded = await vendorDML.addProduct(productData, vendor_id);
+//     productAdded = await this.vendorManager.addProduct(productData, vendor_id);
 //     // console.log(productAdded);
-//     let checkProduct = await vendorDML.searchProduct(productData, vendor_id);
+//     let checkProduct = await this.vendorManager.searchProduct(productData, vendor_id);
 //     // console.log(checkProduct);
 //     if (checkProduct.length == 1) {
-//         let vendor_product = await vendorDML.productDisplay(vendor_id);
+//         let vendor_product = await this.vendorManager.productDisplay(vendor_id);
 //         let displayProduct = JSON.stringify(vendor_product);
 //         res.send("<h1>Product added</h1>" + displayProduct + "\n<h1>Add more products to sell</h1><h3>Details of product required:</h3><ul><li>Product Name</li><li>Product Category</li><li>Product Price</li><li>Product quantity</li></ul>");
 //     } else {
-//         vendorDML.removeDuplicateProduct(checkProduct);
+//         this.vendorManager.removeDuplicateProduct(checkProduct);
 //         res.send("<h1>This product is already added, you can update the details if you want</h1>");
 //     }
 // }
@@ -204,7 +205,7 @@ export default class Vendor {
 //     let vendor_login_id = req.params.id;
 //     // console.log(vendor_id);
 //     if (vendor_id == vendor_login_id) {
-//         let vendor_product = await vendorDML.productDisplay(vendor_login_id);
+//         let vendor_product = await this.vendorManager.productDisplay(vendor_login_id);
 //         if (vendor_product.length == 0) {
 //             res.send("<h1>No products added, add your products to sell</h1><h3>Details of product required:</h3><ul><li>Product Name</li><li>Product Category</li><li>Product Price</li><li>Product quantity</li></ul>")
 //         } else {
@@ -228,8 +229,8 @@ export default class Vendor {
 // //////////////////////////////////////////////////////Updating detail of product
 // exports.updateProduct = async function (req, res) {
 //     let updateData = req.body;
-//     vendorDML.updateProduct(updateData, vendor_id);
-//     let vendor_product = await vendorDML.productDisplay(vendor_id);
+//     this.vendorManager.updateProduct(updateData, vendor_id);
+//     let vendor_product = await this.vendorManager.productDisplay(vendor_id);
 //     let displayProduct = JSON.stringify(vendor_product);
 //     res.send(displayProduct + "\n<h1>Add more products to sell</h1><h3>Details of product required:</h3><ul><li>Product Name</li><li>Product Category</li><li>Product Price</li><li>Product quantity</li></ul>");
 // }
@@ -237,8 +238,8 @@ export default class Vendor {
 // //////////////////////////////////////////////////////Deleting product
 // exports.deleteProduct = async function (req, res) {
 //     let delete_product = req.body;
-//     vendorDML.deleteProduct(delete_product);
-//     let vendor_product = await vendorDML.productDisplay(vendor_id);
+//     this.vendorManager.deleteProduct(delete_product);
+//     let vendor_product = await this.vendorManager.productDisplay(vendor_id);
 //     let displayProduct = JSON.stringify(vendor_product);
 //     res.send(displayProduct + "\n<h1>Add more products to sell</h1><h3>Details of product required:</h3><ul><li>Product Name</li><li>Product Category</li><li>Product Price</li><li>Product quantity</li></ul>");
 // }

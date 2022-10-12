@@ -1,8 +1,9 @@
 import target from './dbServer/dbserver.js';
 
-export default class AdminDML {
+export default class AdminServices {
+
     //////////////////////////////////////////////////////Adding admin data to admin table
-    register(data, id) {
+    register = (data, id) => {
         return new Promise((resolve) => {
             // let adminData = data;
             let registerQuery = "INSERT INTO admins (admin_company_id, admin_user_id) VALUES (?, ?);"
@@ -18,7 +19,7 @@ export default class AdminDML {
     }
 
     //////////////////////////////////////////////////////Checking repeat admin registered in admin table
-    checkAdmin(data) {
+    checkAdmin = (data) => {
         return new Promise((resolve) => {
             let searchQuery = "SELECT * FROM admins WHERE admin_company_id = '" + data.companyid + "'";
             target.query(searchQuery, (err, result) => {
@@ -32,7 +33,7 @@ export default class AdminDML {
     }
 
     //////////////////////////////////////////////////////Removing repeated admin detail
-    remove(data) {
+    remove = (data) => {
         let removeQuery = 'DELETE FROM admins WHERE admin_id =' + data[1].admin_id;
         target.query(removeQuery, (err, result) => {
             if (err) {

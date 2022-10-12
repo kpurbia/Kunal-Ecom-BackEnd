@@ -1,8 +1,11 @@
+import AgentServices from '../services/MySQL/AgentServices.js';
+import UserServices from '../services/MySQL/UserServices.js'
 import AgentController from '../controllers/AgentController.js';
 
-const agentController = new AgentController();
-
 export default function(app){
+    const agentServices = new AgentServices();
+    const userServices = new UserServices();
+    const agentController = new AgentController(agentServices, userServices)
     app.route("/agent/register").post(agentController.registerAgent);
 }
 

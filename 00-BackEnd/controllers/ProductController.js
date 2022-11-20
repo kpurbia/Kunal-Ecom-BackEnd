@@ -30,4 +30,23 @@ export default class ProductController {
             res.status(200).send("Not Customer");
         }
     }
+
+    //////////////////////////////////////////////////////Display single vendor's all products uploaded
+    getVendorProducts = async (req, res) =>{
+        if(req.session){
+                console.log(req.header);
+                console.log(req.header("Authorization"));
+                let token = req.header("Authorization");
+                console.log(token);
+                let decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
+                if(decodedToken.role === "Vendor"){
+                    let vendorId = decodedToken.userId;
+                    let vendorAllProduct = await this.productManager.getVendorsProduct(vendorId);
+                    res.status(200).send(vendorAllProduct);
+                }
+        } else{
+            req.session.destroy();
+            res.status(400).send("Session Expired");
+        }
+    }
 }

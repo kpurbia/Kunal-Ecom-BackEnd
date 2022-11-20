@@ -8,9 +8,13 @@ module.exports = function(app){
 
     app.get("/addProduct", (req, res)=>{
         res.sendFile(publicPath + "/vendor/addProduct.html")
-    })
+    });
 
     app.get("/vendor/profile", (req, res)=>{
         res.sendFile(publicPath + "/vendor/vendorProfile.html")
+    });
+
+    app.get("/vendor/products", (req, res)=>{
+        res.sendFile(publicPath + "/vendor/vendorAllProducts.html")
     })
 }

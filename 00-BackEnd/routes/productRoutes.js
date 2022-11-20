@@ -7,4 +7,5 @@ export default function(app){
     app.route("/productsDisplay").get(productController.getProducts);
     app.route("/productDetails").post(productController.getProductDetail);
     app.route("/cart").post(productController.addToCart);
+    app.route("/vendor/vendorProducts").get(productController.getVendorProducts);
 }
